@@ -1,0 +1,4 @@
+Background Grey: 	#2D3133
+Red: 				#D9305B
+Teal:				#33B1a9
+Light Grey:			#C8C7C7
