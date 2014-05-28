@@ -1,3 +1,14 @@
+<?php
+    include_once '/includes/dbconnect.php';
+    include_once '/includes/functions.php';
+    
+    session_start();
+
+    if(login_check() == false){
+        header("location: /index.php");
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -49,7 +60,7 @@
   		            <li><a href="browse.php">browse</a></li>
   		            <li><a href="resources.php">resources</a></li>
   		            <li><a href="#">citation shelfmarks</a></li>
-  		            <li class="active"><a href="user.php">user</a></li>
+  		            <li class="active"><a href="user.php"><?php echo $_SESSION['name'];?></a></li>
             		</ul>
           	</div>
       	</div>
