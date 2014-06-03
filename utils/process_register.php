@@ -11,16 +11,16 @@ include_once '../includes/functions.php';
 
 session_start();
 
-if(isset($_POST['email'],$_POST['pass'])){
+if(isset($_POST['email'],$_POST['pass'],$_POST['name'])){
     $email = $_POST['email'];
     $password = $_POST['pass'];
-    
-    if(login($email, $password, $mysqli)){
-        //Login success
-        header("location: ../user.php");
+    $name = $_POST['name'];
+    if(register($name, $email, $password, $mysqli)){
+        //after successful registaration navigate user to index page asking him to login.
+        header("location: ../index.php?reg=1");
     }else{
         //Login failed
-        header("location: ../index.php?log_err=1");
+        header("location: ../index.php?reg_error=1");
     }
          
 }else{

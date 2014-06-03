@@ -32,9 +32,14 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         
+        <script src="js/gen_validatorv31.js" type="text/javascript"></script>
         <script type="text/javascript">
             function login_form_submit(form){                
                 $(form).submit(); 
+            }
+            
+            function register_form_submit(form){
+                $(form).submit();
             }
         </script>
     </head>
@@ -62,33 +67,70 @@
                     <div class="col-md-6 col-md-offset-1">
                         <div id="register-box">
                             <h3>Register</h3>
-                            <form role="form">
+                            <span style="color: green">
+                                <?php                                    
+                                    if( isset($_GET['reg_suc']) ){                                        
+                                        echo $_GET['reg_suc'];
+                                        unset($_GET['reg_suc']);
+                                    }
+                                ?>                                    
+                                </span>
+                                 <span style="color: red">
+                                <?php                                    
+                                    if( isset($_GET['reg_error']) ){                                        
+                                        echo $_GET['reg_error'];
+                                        unset($_GET['reg_error']);
+                                    }
+                                ?>
+                                    
+                                </span>
+                            <form role="form" name="reg_form" action="utils/process_register.php" method="post">
 
-                                <div class="form-group">
+                                <div class="form-group" >
                                     <label for="inputName">Name</label>
-                                    <input type="name" class="form-control" id="inputName" placeholder="Enter name">
+                                    <input type="name" name="name" class="form-control" id="inputName" placeholder="Enter name">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="inputEmail">Email address</label>
-                                    <input type="email" class="form-control" id="inputEmail" placeholder="Enter email">
+                                    <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Enter email">
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPassword">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                    <input type="password" name="pass" class="form-control" id="inputPassword" placeholder="Password">
                                 </div>
                                 <div class="form-group">
                                     <label for="confirmPassword">Confirm password</label>
-                                    <input type="password" class="form-control" id="confirmPassword" placeholder="Password">
-                                </div>
-                                <button type="submit" class="btn btn-default pull-right">Submit</button>
+                                    <input type="password" name="confirm_pass" class="form-control" id="confirmPassword" placeholder="Password">
+                                </div>                                
                             </form>
+                            <button type="submit" class="btn btn-default pull-right" onclick="register_form_submit(document.getElementsByName('reg_form'))">Submit</button>                  
+                            <script>
+                                var reg_form_validator = new Validator("reg_form");
+//                                    reg_form_validator.EnableOnPageErrorDisplay();
+                                reg_form_validator.EnableMsgsTogether();
+                                reg_form_validator.addValidation('name','req','Please enter your name');
+                                reg_form_validator.addValidation('email','req','Please enter your email');
+                                reg_form_validator.addValidation('pass','req','Please enter your password');
+                                reg_form_validator.addValidation("pass","minlen=7","Minimum length for Password is 7");
+                                reg_form_validator.addValidation('confirm_pass','req','Please retype your password');
 
+                            </script>
                         </div>
                     </div>
                     <div class="col-md-3 col-md-offset-2">
                         <div id="login-box-login-page">
                             <h3>Login</h3>
+                            
+                            <span style="color: red">   <!-- for error display -->
+                                <?php                                    
+                                    if( isset($_GET['login_error']) ){                                        
+                                        echo $_GET['login_error'];
+                                        unset($_GET['login_error']);
+                                    }
+                                ?>
+                            </span>
+                            
                             <form name="login_form" role="form" action="utils/process_login.php" method="post">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
