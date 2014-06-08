@@ -15,7 +15,7 @@ if(isset($_POST['email'],$_POST['pass'])){
     $email = $_POST['email'];
     $password = $_POST['pass'];
     
-    if(login($email, $password, $mysqli)){
+    if(login($email, $password)){
         //Login success
         header("location: ../user.php");
     }else{

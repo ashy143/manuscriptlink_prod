@@ -1,5 +1,5 @@
 <?php
-include_once 'config.php';
+include_once 'dbconnect.php';
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,8 +7,10 @@ include_once 'config.php';
  */
 
 
-function login($email, $password, $mysqli){
+
+function login($email, $password){
     //Use of prepared statements to login
+        global $mysqli;
         $statement = $mysqli->prepare('SELECT user_id, email, name FROM users where email = ? and password = ?' );
         $statement->bind_param('ss',$email,$password);
         $statement->execute();
@@ -43,7 +45,8 @@ function login_check(){
     }
 }
 
-function register($name, $email, $pass, $mysqli){
+function register($name, $email, $pass){
+    global $mysqli;
     $statement = $mysqli->prepare('INSERT into users (email, name, password) values (?, ?, ?)' );
     $statement->bind_param('sss',$email,$name, $pass);
     $statement->execute();
@@ -60,5 +63,10 @@ function register($name, $email, $pass, $mysqli){
         $statement->close();
         return false;
     }
+    
 }
+
+
+
+
 
