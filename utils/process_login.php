@@ -6,7 +6,6 @@
  * and open the template in the editor.
  */
 
-include_once '../includes/dbconnect.php';
 include_once '../includes/functions.php';
 
 session_start();
