@@ -1,3 +1,20 @@
+<?php
+    
+    include_once './includes/functions.php';
+    require './utils/process_search.php';
+    
+    session_start();
+    
+    if (login_check() == true) {
+        $logged = 'in';
+    } else {
+        $logged = 'out';
+    }
+    
+    $search_util = new SearchUtil();
+    $result_set = $search_util->process_search();
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -46,6 +63,17 @@
                     <!-- THis is the line where you will output the search terms, all of which wrapped in a span tag with class search-terms -->
                     <h4>Showing results for: <small><span class="search-terms">Old Documents</span>, <span class="search-terms">1420 — 1611</span>.</small></h4>
                 
+                    
+                        <!--Here we will display the search results-->
+                    <?php foreach($result_set as $folio_obj){ ?>
+                        <div class="search-result" data-folioId = "<?php echo $folio_obj->folio_id; ?>" data-mscriptId = "<?php echo $folio_obj->mscript_id; ?>"  >
+                            <h4><a href="record.php?id=<?php echo $folio_obj->mscript_id ; ?>"><?php echo htmlspecialchars($folio_obj->abbreviated_shelf) . ", Fol. " . htmlspecialchars($folio_obj->folio_num) . " " . htmlspecialchars($folio_obj->folio_side) ; ?></a></h4>                        
+                            <p><?php echo $folio_obj->title . " . " . $folio_obj->folio_location->country . " (" . $folio_obj->folio_location->municipality . ") " . $folio_obj->date_text  ;  ?> <br />
+                               <?php echo htmlspecialchars($folio_obj->height) . " x " . htmlspecialchars($folio_obj->width) . " mm. ". htmlspecialchars($folio_obj->no_of_cols) . " column, " . htmlspecialchars($folio_obj->no_of_lines) . " lines."; ?></br> 
+                               <?php echo "Artist: " . htmlspecialchars($folio_obj->author) ; ?>
+                        </div>
+                    <?php } ?>
+                        
                     <div class="search-result">
                         <h4><a href="record.php">Duke Early MS 22 Fol. 4r</a></h4>
                         <p>Breviary. Vellu. Italy (Naples), ca. 1460<br />
