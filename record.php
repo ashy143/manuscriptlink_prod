@@ -1,11 +1,19 @@
 <?php 
     require_once './includes/functions.php';
     session_start();
+//    var_dump($_POST['data']);
+    $manuscript_id = $_POST['id'];
+    $json_decoded_data = json_decode($_POST['data']);
     
-    $manuscript_id = $_GET['id'];
+    $query = "SELECT * "
+            . "FROM manuscript LEFT JOIN origin ON manuscript.mscript_id = origin.mscript_id " 
+            . "WHERE manuscript.mscript_id = ". $manuscript_id ;
+//    echo $query;
     $manuscript_obj = getManuscriptById($manuscript_id);
     //echo var_dump($manuscript_obj);
     $folio_objs = getFoliosByManuscriptId($manuscript_id);
+    
+    
     
     
 ?>
@@ -54,7 +62,7 @@
                   <div class="metadata">
                       <dl class="dl-horizontal"> 
                           <dt>Author</dt>
-                            <dd>Publis Terentius Afer (Terence)</dd>
+                            <dd><?php echo $manuscript_obj->artist ; ?></dd>
                           <dt>Text</dt>
                             <dd><?php echo $manuscript_obj->text_type ; ?></dd>
                           <dt>Date</dt>
@@ -68,11 +76,11 @@
                           <dt>Bibliography</dt>
                             <dd><?php echo $manuscript_obj->biblio ; ?></dd>
                           <dt>Dimmensions</dt>
-                            <dd>3122 x 220 mm</dd>
+                            <dd><?php echo $json_decoded_data->width;?> x <?php echo $json_decoded_data->height; ?> mm</dd>
                           <dt>Justification</dt>
-                            <dd>210 x 182 mm</dd>
+                            <dd><?php echo $json_decoded_data->width_written;?> x <?php echo $json_decoded_data->height_written; ?> mm</dd>
                           <dt>Lines</dt>
-                            <dd>32 - 34</dd>
+                            <dd><?php $json_decoded_data->no_of_lines; ?></dd>
                           <dt>Decoration</dt>
                             <dd><?php echo $manuscript_obj->decoration ; ?></dd>
                           <dt>Script</dt>
@@ -80,7 +88,7 @@
                           <dt>Collation</dt>
                             <dd><?php echo $manuscript_obj->collation ; ?></dd>
                           <dt>Dimmensions of Staff</dt>
-                            <dd>&nbsp;</dd>
+                            <dd><?php $json_decoded_data->dim_staff; ?></dd>
                       </dl>
                   </div>
                           <a href="codex.php"><div class="arc-button rec-button puff">Codex</div></a>
@@ -91,29 +99,22 @@
               <div id="listings" class="col-md-6">                  
                   <h3>shelfmarks <small class="pull-right">avaliable folios: <?php echo $manuscript_obj->no_of_avail_fol ; ?></small></h3>
                   
-                  <?php foreach($folio_objs as $folio_obj){ ?>
+                  
+                  <?php $count=1; foreach($folio_objs as $folio_obj){ ?>
                   <div class="holding">
                       
-                      <h4><?php echo $folio_obj->folio_location->municipality . " " . $folio_obj->abbreviated_shelf . " fol. " . $folio_obj->folio_num . $folio_obj->folio_side ;?></h4>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse1" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
-                      <div id="collapse1" class="panel-collapse collapse">
-                          <div class="rThumb"><a href="panzoom.php"><img src="<?php $folio_obj->res_ident ?>" /><br /><?php echo " fol. " . $folio_obj->folio_num . $folio_obj->folio_side ; ?></a></div>
-                        <!--<div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>-->
+                      <h4><?php echo $folio_obj->folio_location->municipality . " " . $folio_obj->folio_location->state. " " . $folio_obj->abbreviated_shelf . " fol. " . $folio_obj->folio_num . $folio_obj->folio_side ;?></h4>
+                      <a href="codex.php?mscript_id=<?php echo $folio_obj->mscript_id; ?>"><div class="codexButton">Codex</div></a>
+                      <a href="#collapse<?php echo $count ?>" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
+                      <div id="collapse<?php echo $count ?>" class="panel-collapse collapse">
+                          <div class="rThumb"><a href="panzoom.php"><img style =" height:200px; width: 144px; "  src="<?php echo "./images/".$folio_obj->res_ident ;?>" /><br /><?php echo " fol. " . $folio_obj->folio_num . $folio_obj->folio_side ; ?></a></div>
+                        
                       </div>
                   </div>
-                  <?php } ?>
+                  <?php $count = $count +1 ; } ?>
                   
-                  <div class="holding">
-                      <h4>Athens, GA, UGeorge MS 122 (fol. 55)</h4>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse2" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
-                      <div id="collapse2" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>
+                 
+                  <!--
                   <div class="holding">
                       <h4>Columbia, SC, USCaro Early MS 122 (fol. 24)</h4>
                       <a href="codex.php"><div class="codexButton">Codex</div></a>
@@ -193,6 +194,7 @@
                       </div>
 
                   </div>     
+                  -->
 
             </div>
                                                  

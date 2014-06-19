@@ -93,17 +93,18 @@ function getManuscriptById($manuscriptId){
     global $mysqli;
     $query = "SELECT * "
             . "FROM manuscript LEFT JOIN origin ON manuscript.mscript_id = origin.mscript_id " 
-            . "WHERE manuscript.mscript_id = " . $manuscriptId ;
+            . "WHERE manuscript.mscript_id = ". $manuscriptId ;
     $result = $mysqli->query($query);
     $manuscript_obj = NULL;
     if($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $manuscript_obj = new Manuscript($row['mscript_id']);
         $manuscript_obj->mlinknum = $row['mlinknumber'];
+        $manuscript_obj->part = $row['part'];
         $manuscript_obj->artist = $row['artist'];   //row col from db
         $manuscript_obj->text_type = $row['text_type']; 
         $manuscript_obj->date_manu = $row['date_manuscript'];
-        
+        $manuscript_obj->script = $row['script'];
         $manuscript_obj->scribe = $row['scribe'];
         $manuscript_obj->biblio = $row['bibliography'];
         $manuscript_obj->decoration = $row['decoration'];
@@ -124,7 +125,7 @@ function getFoliosByManuscriptId($manuscript_id){
     $query = "SELECT *"
             . "FROM folios "   
             . " LEFT JOIN location ON folios.folio_id = location.folio_id " 
-            . "WHERE folios.mscript_id = " . $manuscript_id ;
+            . "WHERE folios.mscript_id = " . $manuscript_id . " ORDER BY folio_num ASC " ;
     
     $result = $mysqli->query($query);
     $folio_objs = array();

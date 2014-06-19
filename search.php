@@ -1,3 +1,14 @@
+<?php
+    include_once '/includes/dbconnect.php';
+    include_once '/includes/functions.php';
+    
+    session_start();
+
+    if(login_check() == false){
+        header("location: /index.php");
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,6 +27,12 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+     <script type="text/javascript">
+        function search_form_submit(form) {                
+            $(form).submit(); 
+        }
+    </script>
   </head>
   <body>
 
@@ -29,7 +46,7 @@
   		            <li><a href="browse.php">browse</a></li>
   		            <li><a href="resources.php">resources</a></li>
   		            <li><a href="#">citation shelfmarks</a></li>
-  		            <li><a href="login.php">login</a></li>
+  		            <li><a href="login.php"><?php echo $_SESSION['name'];?></a></li>
             		</ul>
           	</div>
       	</div>
@@ -40,12 +57,12 @@
 				<div class="col-md-12">
           <div id="register-box">
             <h3>Search</h3>
-            <form class="form-inline" action="searchresults.php">
+            <form class="form-inline" name= "search_form" action="searchresults.php" method="post">
             <div class="row">
               <div class="col-md-5">
                 <h4>Bibliographical</h4>
                 <div>
-                    <select class="form-control">
+                    <select class="form-control" >
                         <option>And</option>
                         <option>Or</option>
                         <option>Not</option>
@@ -93,78 +110,78 @@
               <div class="col-md-7">
                 <h4>Codicological</h4>
                 <div>
-                    <select class="form-control">
-                        <option>And</option>
-                        <option>Or</option>
-                        <option>Not</option>
+                    <select class="form-control" name="codicologicalLogic1">
+                        <option value = 'AND'>And</option>
+                        <option value = 'OR'>Or</option>
+                        <option value = 'NOT'>Not</option>
                     </select>
-                    <select class="form-control">
+                    <select class="form-control" name="codicologicalTerm1">
                        <option>----------</option>
-                        <option>Lines</option>
-                        <option>Columns</option>
-                        <option>Dates</option>
-                        <option>Miniatures</option>
-                        <option>Folios</option>
-                        <option>Height</option>
-                        <option>Width</option>
+                        <option value = 'no_of_lines'>Lines</option>
+                        <option value = 'no_of_col'>Columns</option>
+                        <option value = 'date_manuscript'>Dates</option>
+                        <option value = 'miniatures'>Miniatures</option>
+                        <option value = 'numof_avail_folios'>Folios</option>
+                        <option value = 'height'>Height</option>
+                        <option value = 'width'>Width</option>
                     </select>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label class="sr-only" for="codicologicalMin1">Codicological String One Min Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin1" placeholder="min">
+                        <input type="text" class="form-control" id="codicologicalMin1" name="codicologicalMin1" placeholder="min">
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax1">Codicological String One Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin1" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax1" name="codicologicalMax1" placeholder="max">
                     </div>
                 </div>
                 <div>
-                    <select class="form-control">
-                        <option>And</option>
-                        <option>Or</option>
-                        <option>Not</option>
+                    <select class="form-control" name="codicologicalLogic2">
+                        <option value = 'AND'>And</option>
+                        <option value = 'OR'>Or</option>
+                        <option value = 'NOT'>Not</option>
                     </select>
-                    <select class="form-control">
+                    <select class="form-control" name="codicologicalTerm2">
                        <option>----------</option>
-                        <option>Lines</option>
-                        <option>Columns</option>
-                        <option>Dates</option>
-                        <option>Miniatures</option>
-                        <option>Folios</option>
-                        <option>Height</option>
-                        <option>Width</option>
+                        <option value = 'no_of_lines'>Lines</option>
+                        <option value = 'no_of_col'>Columns</option>
+                        <option value = 'date_manuscript'>Dates</option>
+                        <option value = 'miniatures'>Miniatures</option>
+                        <option value = 'numof_avail_folios'>Folios</option>
+                        <option value = 'height'>Height</option>
+                        <option value = 'width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin2">Codicological String Two Min Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin2" placeholder="min">
+                        <input type="text" class="form-control" id="codicologicalMin2" name="codicologicalMin2" placeholder="min">
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax2">Codicological String Two Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin2" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMin2" name="codicologicalMax2" placeholder="max">
                     </div>
                 </div>
                 <div>
-                    <select class="form-control">
-                        <option>And</option>
-                        <option>Or</option>
-                        <option>Not</option>
+                    <select class="form-control" name="codicologicalLogic3">
+                        <option value = 'AND'>And</option>
+                        <option value = 'OR'>Or</option>
+                        <option value = 'NOT'>Not</option>
                     </select>
-                    <select class="form-control">
+                    <select class="form-control" name="codicologicalTerm3">
                        <option>----------</option>
-                        <option>Lines</option>
-                        <option>Columns</option>
-                        <option>Dates</option>
-                        <option>Miniatures</option>
-                        <option>Folios</option>
-                        <option>Height</option>
-                        <option>Width</option>
+                        <option value = 'no_of_lines'>Lines</option>
+                        <option value = 'no_of_col'>Columns</option>
+                        <option value = 'date_manuscript'>Dates</option>
+                        <option value = 'miniatures'>Miniatures</option>
+                        <option value = 'numof_avail_folios'>Folios</option>
+                        <option value = 'height'>Height</option>
+                        <option value = 'width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin3">Codicological String Three Min Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin3" placeholder="min">
+                        <input type="text" class="form-control" id="codicologicalMin3" name="codicologicalMin3" placeholder="min">
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax3">Codicological String Three Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin3" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMin3" name="codicologicalMax3" placeholder="max">
                     </div>
                 </div>
                 <div>
@@ -175,13 +192,13 @@
                     </select>
                     <select class="form-control">
                        <option>----------</option>
-                        <option>Lines</option>
-                        <option>Columns</option>
-                        <option>Dates</option>
-                        <option>Miniatures</option>
-                        <option>Folios</option>
-                        <option>Height</option>
-                        <option>Width</option>
+                        <option value = 'no_of_lines'>Lines</option>
+                        <option value = 'no_of_col'>Columns</option>
+                        <option value = 'date_manuscript'>Dates</option>
+                        <option value = 'miniatures'>Miniatures</option>
+                        <option value = 'numof_avail_folios'>Folios</option>
+                        <option value = 'height'>Height</option>
+                        <option value = 'width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin4">Codicological String Four Min Value</label>
@@ -194,19 +211,19 @@
                 </div>
                 <div>
                     <select class="form-control">
-                        <option>And</option>
-                        <option>Or</option>
-                        <option>Not</option>
+                        <option value = 'AND'>And</option>
+                        <option value = 'OR'>Or</option>
+                        <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control">
                         <option>----------</option>
-                        <option>Lines</option>
-                        <option>Columns</option>
-                        <option>Dates</option>
-                        <option>Miniatures</option>
-                        <option>Folios</option>
-                        <option>Height</option>
-                        <option>Width</option>
+                        <option value = 'no_of_lines'>Lines</option>
+                        <option value = 'no_of_col'>Columns</option>
+                        <option value = 'date_manuscript'>Dates</option>
+                        <option value = 'miniatures'>Miniatures</option>
+                        <option value = 'numof_avail_folios'>Folios</option>
+                        <option value = 'height'>Height</option>
+                        <option value = 'width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin5">Codicological String Five Min Value</label>
@@ -219,19 +236,19 @@
                 </div>
                 <div>
                     <select class="form-control">
-                        <option>And</option>
-                        <option>Or</option>
-                        <option>Not</option>
+                        <option value = 'AND'>And</option>
+                        <option value = 'OR'>Or</option>
+                        <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control">
                         <option>----------</option>
-                        <option>Lines</option>
-                        <option>Columns</option>
-                        <option>Dates</option>
-                        <option>Miniatures</option>
-                        <option>Folios</option>
-                        <option>Height</option>
-                        <option>Width</option>
+                        <option value = 'no_of_lines'>Lines</option>
+                        <option value = 'no_of_col'>Columns</option>
+                        <option value = 'date_manuscript'>Dates</option>
+                        <option value = 'miniatures'>Miniatures</option>
+                        <option value = 'numof_avail_folios'>Folios</option>
+                        <option value = 'height'>Height</option>
+                        <option value = 'width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin6">Codicological String Six Min Value</label>
@@ -244,27 +261,27 @@
                 </div>
                 <div>
                     <select class="form-control">
-                        <option>And</option>
-                        <option>Or</option>
-                        <option>Not</option>
+                        <option value = 'AND'>And</option>
+                        <option value = 'OR'>Or</option>
+                        <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control">
                         <option>----------</option>
-                        <option>Lines</option>
-                        <option>Columns</option>
-                        <option>Dates</option>
-                        <option>Miniatures</option>
-                        <option>Folios</option>
-                        <option>Height</option>
-                        <option>Width</option>
+                        <option value = 'no_of_lines'>Lines</option>
+                        <option value = 'no_of_col'>Columns</option>
+                        <option value = 'date_manuscript'>Dates</option>
+                        <option value = 'miniatures'>Miniatures</option>
+                        <option value = 'numof_avail_folios'>Folios</option>
+                        <option value = 'height'>Height</option>
+                        <option value = 'width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin7">Codicological String Seven Min Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin7" placeholder="min">
+                        <input type="text" class="form-control" id="codicologicalMin7" name="codicologicalMin7" placeholder="min">
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax7">Codicological String Seven Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin7" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax7" name="codicologicalMax8" placeholder="max">
                     </div>
                 </div>
                 <div>
@@ -275,30 +292,30 @@
                     </select>
                     <select class="form-control">
                         <option>----------</option>
-                        <option>Lines</option>
-                        <option>Columns</option>
-                        <option>Dates</option>
-                        <option>Miniatures</option>
-                        <option>Folios</option>
-                        <option>Height</option>
-                        <option>Width</option>
+                        <option value = 'no_of_lines'>Lines</option>
+                        <option value = 'no_of_col'>Columns</option>
+                        <option value = 'date_manuscript'>Dates</option>
+                        <option value = 'miniatures'>Miniatures</option>
+                        <option value = 'numof_avail_folios'>Folios</option>
+                        <option value = 'height'>Height</option>
+                        <option value = 'width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin8">Codicological String Eight Min Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin1" placeholder="min">
+                        <input type="text" class="form-control" id="codicologicalMin8" name="codicologicalMin8" placeholder="min">
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax8">Codicological String Eight Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin1" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax8" name="codicologicalMax8" placeholder="max">
                     </div>
                 </div>
                 <br />
-                <a href="searchresults.php"><button type="submit" class="btn btn-default pull-left">Search</button></a>
+<!--                <a href="#"><button type="submit" class="btn btn-default pull-left" onclick="search_form_submit(document.getElementsByName('login_form'))">Search</button></a>-->
               </div>
             </div>
 
             </form>
-
+            <a ><button type="submit" class="btn btn-default pull-left" onclick="search_form_submit(document.getElementsByName('search_form'))">Search</button></a>
 
 
           </div>
