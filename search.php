@@ -26,13 +26,9 @@
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <![endif]-->  
     
-     <script type="text/javascript">
-        function search_form_submit(form) {                
-            $(form).submit(); 
-        }
-    </script>
+    
   </head>
   <body>
 
@@ -62,7 +58,7 @@
               <div class="col-md-5">
                 <h4>Bibliographical</h4>
                 <div>
-                    <select class="form-control" >
+                    <select class="form-control" name="bibliographicalLog1">
                         <option>And</option>
                         <option>Or</option>
                         <option>Not</option>
@@ -73,18 +69,18 @@
                     </div>
                 </div>
                 <div>
-                    <select class="form-control">
+                    <select class="form-control" name="bibliographicalLog2">
                         <option>And</option>
                         <option>Or</option>
                         <option>Not</option>
                     </select>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label class="sr-only" for="bibliographical2">Bibliographial Search String Two</label>
                         <input type="text" class="form-control" id="bibliographical2" placeholder="search term">
                     </div>
                 </div>
                 <div>
-                    <select class="form-control">
+                    <select class="form-control" name="bibliographicalLog3">
                         <option>And</option>
                         <option>Or</option>
                         <option>Not</option>
@@ -95,7 +91,7 @@
                     </div>
                 </div>
                 <div>
-                    <select class="form-control">
+                    <select class="form-control" name="bibliographicalLog4">
                         <option>And</option>
                         <option>Or</option>
                         <option>Not</option>
@@ -156,7 +152,7 @@
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax2">Codicological String Two Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin2" name="codicologicalMax2" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax2" name="codicologicalMax2" placeholder="max">
                     </div>
                 </div>
                 <div>
@@ -166,7 +162,7 @@
                         <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control" name="codicologicalTerm3">
-                       <option>----------</option>
+                       <option>--</option>
                         <option value = 'no_of_lines'>Lines</option>
                         <option value = 'no_of_col'>Columns</option>
                         <option value = 'date_manuscript'>Dates</option>
@@ -181,7 +177,7 @@
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax3">Codicological String Three Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin3" name="codicologicalMax3" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax3" name="codicologicalMax3" placeholder="max">
                     </div>
                 </div>
                 <div>
@@ -190,8 +186,8 @@
                         <option>Or</option>
                         <option>Not</option>
                     </select>
-                    <select class="form-control">
-                       <option>----------</option>
+                    <select class="form-control" name="codicologicalTerm4">
+                       <option>--</option>
                         <option value = 'no_of_lines'>Lines</option>
                         <option value = 'no_of_col'>Columns</option>
                         <option value = 'date_manuscript'>Dates</option>
@@ -204,19 +200,19 @@
                         <label class="sr-only" for="codicologicalMin4">Codicological String Four Min Value</label>
                         <input type="text" class="form-control" id="codicologicalMin4" placeholder="min">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label class="sr-only" for="codicologicalMax4">Codicological String Four Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin4" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax4" placeholder="max">
                     </div>
                 </div>
                 <div>
-                    <select class="form-control">
+                    <select class="form-control" name="codicologicalTerm5">
                         <option value = 'AND'>And</option>
                         <option value = 'OR'>Or</option>
                         <option value = 'NOT'>Not</option>
                     </select>
-                    <select class="form-control">
-                        <option>----------</option>
+                    <select class="form-control" name="codicologicalTerm5">
+                        <option>--</option>
                         <option value = 'no_of_lines'>Lines</option>
                         <option value = 'no_of_col'>Columns</option>
                         <option value = 'date_manuscript'>Dates</option>
@@ -231,7 +227,7 @@
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax5">Codicological String Five Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin5" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax5" placeholder="max">
                     </div>
                 </div>
                 <div>
@@ -240,8 +236,8 @@
                         <option value = 'OR'>Or</option>
                         <option value = 'NOT'>Not</option>
                     </select>
-                    <select class="form-control">
-                        <option>----------</option>
+                    <select class="form-control" name="codicologicalTerm6">
+                        <option>--</option>
                         <option value = 'no_of_lines'>Lines</option>
                         <option value = 'no_of_col'>Columns</option>
                         <option value = 'date_manuscript'>Dates</option>
@@ -256,7 +252,7 @@
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax6">Codicological String Six Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin6" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax6" placeholder="max">
                     </div>
                 </div>
                 <div>
@@ -265,8 +261,8 @@
                         <option value = 'OR'>Or</option>
                         <option value = 'NOT'>Not</option>
                     </select>
-                    <select class="form-control">
-                        <option>----------</option>
+                    <select class="form-control" name="codicologicalTerm7">
+                        <option>--</option>
                         <option value = 'no_of_lines'>Lines</option>
                         <option value = 'no_of_col'>Columns</option>
                         <option value = 'date_manuscript'>Dates</option>
@@ -284,31 +280,7 @@
                         <input type="text" class="form-control" id="codicologicalMax7" name="codicologicalMax8" placeholder="max">
                     </div>
                 </div>
-                <div>
-                    <select class="form-control">
-                        <option>And</option>
-                        <option>Or</option>
-                        <option>Not</option>
-                    </select>
-                    <select class="form-control">
-                        <option>----------</option>
-                        <option value = 'no_of_lines'>Lines</option>
-                        <option value = 'no_of_col'>Columns</option>
-                        <option value = 'date_manuscript'>Dates</option>
-                        <option value = 'miniatures'>Miniatures</option>
-                        <option value = 'numof_avail_folios'>Folios</option>
-                        <option value = 'height'>Height</option>
-                        <option value = 'width'>Width</option>
-                    </select>
-                    <div class="form-group">
-                        <label class="sr-only" for="codicologicalMin8">Codicological String Eight Min Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin8" name="codicologicalMin8" placeholder="min">
-                    </div>
-                    <div class="form-group">
-                        <label class="sr-only" for="codicologicalMax8">Codicological String Eight Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMax8" name="codicologicalMax8" placeholder="max">
-                    </div>
-                </div>
+               
                 <br />
 <!--                <a href="#"><button type="submit" class="btn btn-default pull-left" onclick="search_form_submit(document.getElementsByName('login_form'))">Search</button></a>-->
               </div>
@@ -333,5 +305,37 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/models/BibliolographicalQuery.js"></script>
+    <script src="js/models/CodologicalQuery.js"></script>
+    <script src="js/models/SearchQuery.js"></script>
+    <script type="text/javascript">
+    function search_form_submit(form) {
+        var searchQueryParams = new SearchQuery();
+
+        for ( var i = 1; i < 5; i++ ) {
+            var biblioQuery = new BibliographicalQuery();
+            biblioQuery.logic = $("select[name=bibliographicalLog" + i + "]").val();
+            biblioQuery.term = $("input[id=bibliographical" + i + "]").val();
+            searchQueryParams.bibliological.push(biblioQuery);
+
+         }
+
+         for ( var i = 1; i < 8; i++ ) {
+            var codologQuery = new CodologicalQuery();
+            codologQuery.logic = $("select[name=codicologicalLogic" + i + "]").val(); 
+            codologQuery.min = $("input[name=codicologicalMin" + i + "]").val(); 
+            codologQuery.max = $("input[name=codicologicalMax" + i + "]").val(); 
+            codologQuery.term = $("select[name=codicologicalTerm" + i + "]").val();
+            searchQueryParams.codological.push(codologQuery);
+
+         }
+
+         console.log(searchQueryParams);
+
+//         $.post("searchresults.php", {data : searchQueryParams }); 
+            
+            $(form).submit(); 
+        }
+    </script>
   </body>
 </html>

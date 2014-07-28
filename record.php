@@ -1,6 +1,10 @@
 <?php 
     require_once './includes/functions.php';
-    session_start();
+   session_start();
+
+    if(login_check() == false){
+        header("location: /index.php");
+    }
 //    var_dump($_POST['data']);
     $manuscript_id = $_POST['id'];
     $json_decoded_data = json_decode($_POST['data']);
@@ -8,11 +12,30 @@
     $query = "SELECT * "
             . "FROM manuscript LEFT JOIN origin ON manuscript.mscript_id = origin.mscript_id " 
             . "WHERE manuscript.mscript_id = ". $manuscript_id ;
-//    echo $query;
+    //echo $query;
     $manuscript_obj = getManuscriptById($manuscript_id);
     //echo var_dump($manuscript_obj);
     $folio_objs = getFoliosByManuscriptId($manuscript_id);
+    $combined_folio_objs = array(); //to hold array of folios with same folio number(will add value from A in this array)
+    $prev_page = -1;
+    if(count($folio_objs)>0){
+        $prev_page = $folio_objs[0]->folio_num;
+    }
+    $fobs = array();    //each array represent folios belonging to same folio_number LABEL: A 
+    foreach($folio_objs as $fob){
+        
+        if($prev_page == $fob->folio_num ){
+            $fobs[] = $fob;            
+        }else{
+            $combined_folio_objs[] = $fobs;
+            $prev_page = $fob->folio_num;            
+            $fobs = array();
+            $fobs[] = $fob;
+        }        
+    }
+    $combined_folio_objs[] = $fobs;
     
+//    var_dump($combined_folio_objs);
     
     
     
@@ -49,7 +72,7 @@
   		            <li><a href="browse.php">browse</a></li>
   		            <li><a href="resources.php">resources</a></li>
   		            <li><a href="#">citation shelfmarks</a></li>
-  		            <li><a href="login.php">login</a></li>
+  		            <li><a href="login.php"><?php echo $_SESSION['name'];?></a></li>
             		</ul>
           	</div>
       	</div>
@@ -58,7 +81,7 @@
     	<div class="container">
           <div class="row">
               <div class="col-md-6">
-                  <h2 class="record">manuscriptlink #<?php echo $manuscript_obj->mlinknum ; ?></h2>
+                  <h2 class="record">manuscriptlink #<?php echo $manuscript_obj->mlinknum . "." . $manuscript_obj->part; ?></h2>
                   <div class="metadata">
                       <dl class="dl-horizontal"> 
                           <dt>Author</dt>
@@ -68,14 +91,14 @@
                           <dt>Date</dt>
                             <dd><?php echo $manuscript_obj->date_manu ; ?></dd>
                           <dt>Origin</dt>
-                            <dd><?php echo $manuscript_obj->origin->country . " (" . $manuscript_obj->origin->municipality . ")" ; ?></dd>
+                            <dd><?php echo $manuscript_obj->origin->country ;//. " (" . $manuscript_obj->origin->municipality . ")" ; ?></dd>
                           <dt>Scribe</dt>
                             <dd><?php echo $manuscript_obj->scribe ; ?></dd>
                           <dt>Artist</dt>
                             <dd><?php echo $manuscript_obj->artist ; ?></dd>
                           <dt>Bibliography</dt>
                             <dd><?php echo $manuscript_obj->biblio ; ?></dd>
-                          <dt>Dimmensions</dt>
+                          <dt>Dimensions</dt>
                             <dd><?php echo $json_decoded_data->width;?> x <?php echo $json_decoded_data->height; ?> mm</dd>
                           <dt>Justification</dt>
                             <dd><?php echo $json_decoded_data->width_written;?> x <?php echo $json_decoded_data->height_written; ?> mm</dd>
@@ -87,7 +110,7 @@
                             <dd><?php echo $manuscript_obj->script ; ?></dd>
                           <dt>Collation</dt>
                             <dd><?php echo $manuscript_obj->collation ; ?></dd>
-                          <dt>Dimmensions of Staff</dt>
+                          <dt>Dimensions of Staff</dt>
                             <dd><?php $json_decoded_data->dim_staff; ?></dd>
                       </dl>
                   </div>
@@ -100,102 +123,20 @@
                   <h3>shelfmarks <small class="pull-right">avaliable folios: <?php echo $manuscript_obj->no_of_avail_fol ; ?></small></h3>
                   
                   
-                  <?php $count=1; foreach($folio_objs as $folio_obj){ ?>
+                  <?php $count=1; foreach($combined_folio_objs as $folio_obj_array){ ?>
                   <div class="holding">
                       
-                      <h4><?php echo $folio_obj->folio_location->municipality . " " . $folio_obj->folio_location->state. " " . $folio_obj->abbreviated_shelf . " fol. " . $folio_obj->folio_num . $folio_obj->folio_side ;?></h4>
-                      <a href="codex.php?mscript_id=<?php echo $folio_obj->mscript_id; ?>"><div class="codexButton">Codex</div></a>
+                      <h4><?php echo $folio_obj_array[0]->abbreviated_shelf ;?></h4>
+                      <a href="codex.php?mscript_id=<?php echo $folio_obj_array[0]->mscript_id; ?>"><div class="codexButton">Codex</div></a>
                       <a href="#collapse<?php echo $count ?>" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
                       <div id="collapse<?php echo $count ?>" class="panel-collapse collapse">
-                          <div class="rThumb"><a href="panzoom.php"><img style =" height:200px; width: 144px; "  src="<?php echo "./images/".$folio_obj->res_ident ;?>" /><br /><?php echo " fol. " . $folio_obj->folio_num . $folio_obj->folio_side ; ?></a></div>
-                        
+                          <?php foreach($folio_obj_array as $folio_obj){?>
+                             <div class="rThumb"><a href="panzoom.php"><img style =" height:200px; width: 144px; "  src="<?php echo "./images/".$folio_obj->res_ident ;?>" /><br /><?php echo " fol. " . $folio_obj->folio_num . $folio_obj->folio_side ; ?></a></div>
+                          <?php } ?>  
                       </div>
                   </div>
                   <?php $count = $count +1 ; } ?>
                   
-                 
-                  <!--
-                  <div class="holding">
-                      <h4>Columbia, SC, USCaro Early MS 122 (fol. 24)</h4>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse3" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
-                      <div id="collapse3" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>
-                  <div class="holding">
-                      <h4>Columbus, OH, OSUniv MS XII. 13a (fol. 13)</h4>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse4" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
-                      <div id="collapse4" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>
-                  <div class="holding">
-                      <h4>Northampton, MA, SmithC MS 10 (fol. 3)</h4>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse5" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
-                      <div id="collapse5" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>                                                      
-                  <div class="holding">
-                      <h4>Amherst, MA, UMassA MS Schoyen 13 (fol. 43)</h4>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse6" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
-                      <div id="collapse6" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-                  </div>
-                  <div class="holding">
-                      <h4>Athens, GA, UGeorge MS 122 (fol. 55)</h4>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse7" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
-                      <div id="collapse7" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>
-                  <div class="holding">
-                      <h4>Columbia, SC, USCaro Early MS 122 (fol. 24)</h4>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse8" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
-                      <div id="collapse8" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>
-                  <div class="holding">
-                      <h4>Columbus, OH, OSUniv MS XII. 13a (fol. 13)</h4>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse9" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
-                      <div id="collapse9" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>
-                  <div class="holding">
-                      <h4>Northampton, MA, SmithC MS 10 (fol. 3)</h4>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse10" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
-                      <div id="collapse10" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>     
-                  -->
-
             </div>
                                                  
       		</div>

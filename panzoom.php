@@ -1,3 +1,14 @@
+<?php 
+
+    require_once './includes/functions.php';
+    session_start();
+//    $tableName = "folios";
+//    $sql_pages = "SELECT folio_num, folio_side, res_ident, folio_id FROM ".$tableName." WHERE mscript_id=".$_POST['mscript_id']." order by folio_num asc, folio_side asc";    
+//    $result = mysql_query($sql_pages) or die(mysql_error());
+    
+    $folio_objs = getFoliosByManuscriptId($_POST['mscript_id']);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,6 +28,24 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    
+        <link rel="stylesheet" type="text/css" href="css/cloudzoom.css">
+        <link rel='stylesheet' type="text/css" href='css/bootstrap-responsive.css'>        
+        <link rel="stylesheet" type="text/css" href="css/thumbelina.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.contextMenu.css">
+        <style>
+            #slider {
+                position:relative;
+                margin-top:40px;
+                width:93px;
+                height:256px;
+                border-left:1px solid #aaa;
+                border-right:1px solid #aaa;
+                margin-bottom:40px;
+            }
+        </style>
+        
   </head>
   <body data-spy="scroll" data-target="#master" data-offset="100">
 
@@ -37,6 +66,44 @@
 
     </div>
     <div class="back">
+        <div class="row-fluid">
+                <!-- Image gallery -->
+                <div class="span2" style="height: 800px;">                
+                    <div id="slider" style="height:95%">
+                        <div class="thumbelina-but vert top">&#708;</div>
+                        <ul id="gallery-slider">
+                             <?php foreach ($folio_objs as $fob_obj) {
+                                
+//                                page=0,side=1,path=2,id=3
+                                $imagePath = $fob_obj->res_ident;
+                            ?>
+                                <li>
+                                    <a  style="width:98% " href="#" class="cloudzoom-gallery"
+                                    data-imageId="<?php echo $folio_obj->folio_id; ?>"  
+                                    data-imageDesc="To Be Extracted"
+                                    data-cloudzoom =
+                                         "useZoom: '#zoom1', 
+                                         image: './images/<?php echo $imagePath;?>', 
+                                         zoomImage: '/images/<?php echo $imagePath;?>' ">
+                                    <img style="width: 98%;" src = <?php echo '"./images/'.$imagePath.'"';?> />
+                                    </a>
+                                </li>
+                            <?php } ?>                    
+                        </ul>
+                        <div class="thumbelina-but vert bottom">&#709;</div>
+                    </div>
+                </div>
+                <!--Zoomed Image-->
+                <div class="span4">
+                    <div id="zoom-win" style=" width: 400px; height: 400px;"></div>
+                    
+                </div>
+                <!--Large Image -->
+                <div class="span6">
+                        <img id = "zoom1" style='width: 95%; height: 95%' class = "cloudzoom"
+                            data-cloudzoom = "zoomImage: './images/<?php echo $_POST['imagepath'];?>', zoomPosition:'#zoom-win'" src = <?php echo '"./images/'.$_POST['imagepath'].'"';?> />
+                </div>
+            </div>
     </div>
 
     <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
@@ -96,9 +163,71 @@
         $(this).parents('.myBook').fadeOut();
       });
 
-    </script> 
-      });
+   
     </script>    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    
+    <script src="js/bootstrap.min.js"></script>    
+    <script src="js/cloudzoom.js"></script>
+    <script src="js/thumbelina.js"></script>
+    <script src='js/jquery.contextMenu.js'></script>
+    <script type="text/javascript">        
+            
+            CloudZoom.quickStart();
+                
+            $(document).ready(function(){    
+                
+               $.contextMenu({
+                    selector: '.cloudzoom', 
+                    callback: function(key, options) {                       
+                        var imgId = $(this).attr('data-imageId');
+                        var desc = $(this).attr('data-attr');
+                        
+                        //now insert this page id into database and link it with logged in user
+                        if(key==='archive'){
+                            alert("archive called");
+                            $.ajax({    
+                                url: 'save_archives.php', //current page
+                                type: 'GET',
+                                data: {page_id: imgId, is_juxta: 'false' },
+                                dataType: "json",
+                                contentType: "application/json",                    
+                                success: function (msg) {                                 
+                                    alert(msg.statusMsg);
+                                }
+                            });
+                        }else if(key==='juxtapose'){
+                            alert("juxta called");
+                            $.ajax({    
+                                url: 'save_archives.php', //current page
+                                type: 'GET',
+                                data: {page_id: imgId, is_juxta: 'true' }, //false says its for juxtaposing
+                                dataType: "json",
+                                contentType: "application/json",                    
+                                success: function (msg) {                                 
+                                    alert(msg.statusMsg);
+                                }
+                            });
+                        }
+                    },
+                    items: {
+                        "archive": {name: "Add to Archives"},
+                        "juxtapose": {name: "Add to Juxtapose"}                        
+                    }
+                });
+
+               
+                 $('#slider').Thumbelina({
+                        orientation:'vertical',         // Use vertical mode (default horizontal).
+                        $bwdBut:$('#slider .top'),     // Selector to top button.
+                        $fwdBut:$('#slider .bottom')   // Selector to bottom button.
+                });
+                
+              
+            });
+            
+        </script> 
+        
+                 
+        
   </body>
 </html>

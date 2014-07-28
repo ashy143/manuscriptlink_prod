@@ -1,3 +1,12 @@
+<?php 
+    require_once './includes/functions.php';
+   session_start();
+
+    if(login_check() == false){
+        header("location: /index.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,6 +20,7 @@
     <link href="css/mslink.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -23,45 +33,58 @@
 
     <div class="container">
       	<div class="row">
-            <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" /></div>
+            <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" alt=""/></div>
           	<div class="col-md-9" style=" height: 55px;">
             		<ul class="link-nav pull-right">
-              		<li><a href="search.php">search</a></li>
+                            <li><a href="search.php">search</a></li>
   		            <li><a href="about.php">about</a></li>
   		            <li><a href="browse.php">browse</a></li>
   		            <li class="active"><a href="resources.php">resources</a></li>
   		            <li><a href="#">citation shelfmarks</a></li>
-  		            <li><a href="login.php">login</a></li>
+  		            <li><a href="login.php"><?php echo $_SESSION['name'];?></a></li>
             		</ul>
           	</div>
       	</div>
     </div>
       
     <!--<div class="back">-->
-        <div class="container" style="width: 100%">
+        <div class="container" style="width: 100%; height:80vh;">
             <div class="row-fluid">
-                <div class="span6">
-                    <img id="lpage" style="max-width: 100%" src="images/1.jpg"/>
+                <div class="span1" style="height: 80vh; position: relative;  top: 40vh;">
+                    <img id="left" src="images/arrow-left-double.png" style="width: 30px; height: 30px;"/>
+                    <img id="prev" src="images/prev.png" style="width: 30px; height: 30px;"/>
                 </div>
-                <div  class="span6">
-                    <img id="rpage" style="max-width: 100%" src="images/2.jpg"/>
+                <div class="span5">
+                    <img id="lpage" class="page" title="test" style="max-width: 100%; max-height: 100%; float: right;" src=""/>
+                    
                 </div>
-            </div>
-            <div class='row-fluid'>
-                <div class='span6'>
-                    <p align="left">
-                        <input type="button" id="left" value="<--"/>        
-                    </p>
+                <div  class="span5" >                    
+                    <img id="rpage"  class="page" title="test" style="max-width: 100%; max-height: 100%; float:left; " src=""/>                    
                 </div>
-                <div class='span6'>                    
-                    <p align="right">
-                        <input type="button" id="right" value="-->"/>    
-                    </p>
+                <div class="span1" style="height: 80vh; position: relative;  top: 40vh; " >
+                    <img id="next" src="images/next.png" style="width: 30px; height: 30px;"/>
+                    <img id="right" src="images/arrow-right-double.png" style="width: 30px; height: 30px;"/>                    
                 </div>
             </div>
+           <div class='row-fluid'>
+                <div class="span1"></div>
+                <div class='span5'>
+                    <p align="center">
+                        <a><span id="leftShelf" /></span></a>
+                    </p>
+                </div>
+                <div class='span5'>                    
+                    <p align="center">
+                        <a><span id="rightShelf" /></span></a>   
+                    </p>
+                </div>
+                <div class="span1"></div>
+            </div>            
+            <BR>
+            <BR>
         </div>
-   <!-- </div>-->
-
+  
+     
 
     <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
 
@@ -85,20 +108,7 @@
                   <div class="codexButton">Codex</div>
                 </div>
               </div>
-              <div class="book" id="book3">
-                <div class="myBook">
-                  <h4>3. USC Early MS 17</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>  
-              </div>
-              <div class="book" id="book4">
-                <div class="myBook">
-                  <h4>4. USC Early MS 17</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>
-              </div>
+              
               <div class="bookBtn">select</div>
               <div class="bookBtn">Add to archive</div>
               <div class="bookBtn"><a href="juxtapose.php">juxtapose &amp; Compare</a></div>
@@ -114,7 +124,7 @@
         $('#bookBody').slideToggle('2000',"swing", function () {
           // Animation complete.
         });
-        $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
+        $(".fa").toggleClass("fa-caret-square-o-up fa-caret-square-o-down");
       });
       $(".delButton").click(function(event) {
         event.preventDefault();
@@ -124,28 +134,32 @@
     </script> 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script>
-            function Page(){
-                this.pageNum = -1;
-                this.pageSide = "x";
-                this.pageId = -1;
-                this.image = "blankpage.jpg";
-                this.getPageNum = function getPageNum(){
-                    return this.pageNum;
-                };
-                this.getPageId = function getPageId(){
-                    return this.pageId;
-                };
-                this.getPageSide = function getPageSide(){
-                    return this.pageSide;
-                };
-                this.getImage = function getImage(){
-                    return this.image;
-                };
-            }
+    <script type="text/javascript" src="js/jquery.tooltipster.min.js"></script>
+    <script type="text/javascript" src="js/models/Page.js"></script>
+    <script>         
             
-            $(document).ready(function(){               
-                alert('funtioncalled');
+            function getMetadataDiv(page_obj){
+                console.log(page_obj);
+                
+                return "<span> <strong>"+ page_obj.author + ', ' + page_obj.text + ', ' + page_obj.date+" <BR>"+
+                        page_obj.writing_sup + ', ' + page_obj.width + ' x ' + page_obj.height + ', ' + page_obj.no_of_col + ' col. ' + page_obj.no_of_lines + ' lines '+ "<BR>" +
+                            page_obj.contents +
+                        "</strong><span>";
+            };
+            
+            $(document).ready(function(){
+                $('#lpage').tooltipster({
+                    contentAsHTML: true,
+                    offsetX:100,
+                    interactiveTolerance:500
+                }); 
+                
+                $('#rpage').tooltipster({
+                    contentAsHTML: true,
+                    offsetX:100,
+                    interactiveTolerance:500
+                }); 
+                
                 var ptr = 0;
                 var pages = [];
                 var archivePages = [];
@@ -156,22 +170,46 @@
                     data: {mscript_id: <?php echo $_GET['mscript_id']?> },
                     dataType: "json",
                     contentType: "application/json",                    
-                    success: function (d) {
-                        alert('success return');
+                    success: function (d) {                      
                         $.each(d, function(index, element){
                             var page = new Page();
-                            page.pageNum = element.page;
+                            page.pageNum = element.num;
                             page.image = element.path;
-                            page.pageNum = element.side;
+                            page.pageSide = element.side;
                             page.pageId = element.id;
+                            page.abbrShelf = element.abbrshelf;
+                            page.author = element.author;
+                            page.height = element.height;
+                            page.width = element.width;
+                            page.no_of_col = element.no_of_cols;
+                            page.no_of_lines = element.no_of_lines;
+                            page.contents=element.contents;
+                            page.text = element.text;
+                            page.date = element.date;
+                            page.writing_sup = element.writing_sup;
+                            
                             pages.push(page) ;
                             
                         });
-                        $("#lpage").attr('src','/images/'+pages[ptr].getImage());
+                        $("#lpage").attr('src','./images/'+pages[ptr].getImage());
                         $("#lpage").data('obj',pages[ptr]);
+                        $("#leftShelf").text(pages[ptr].getAbbrShelf());                        
+                        if(pages[ptr].pageNum !== 'x'){
+                            $('#lpage').tooltipster('content', getMetadataDiv(pages[ptr]));                            
+                        }else{
+                            $('#lpage').tooltipster('hide');
+                        }
                         
-                        $("#rpage").attr('src','/images/'+pages[ptr+1].getImage());
+                        
+                        $("#rpage").attr('src','./images/'+pages[ptr+1].getImage());
                         $("#rpage").data('obj',pages[ptr+1]);
+                        $("#rightShelf").text(pages[ptr+1].getAbbrShelf());
+                        $('#rpage').tooltipster('content', getMetadataDiv(pages[ptr+1]));
+                        if(pages[ptr+1].pageNum !== 'x'){
+                            $('#rpage').tooltipster('content', getMetadataDiv(pages[ptr+1]));                            
+                        }else{
+                            $('#rpage').tooltipster('hide');
+                        }
                         
                         if(ptr===0){
                             document.getElementById("left").disabled=true;
@@ -184,44 +222,69 @@
                 
                 $("#left").click(function(){
                     ptr = ptr -2;
-                    $("#lpage").attr('src','/images/'+pages[ptr].getImage());
+                    $("#lpage").attr('src','./images/'+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
-                    $("#rpage").attr('src','/images/'+pages[ptr+1].getImage());
+                    $("#leftShelf").text(pages[ptr].getAbbrShelf());
+                    if(pages[ptr].pageNum !== 'x'){
+                        $('#lpage').tooltipster('content', getMetadataDiv(pages[ptr]));                            
+                    }else{
+                        $('#lpage').tooltipster('hide');
+                    }
+                    
+                    $("#rpage").attr('src','./images/'+pages[ptr+1].getImage());
                     $("#rpage").data('obj',pages[ptr+1]);
+                    $("#rightShelf").text(pages[ptr+1].getAbbrShelf());
+                    if(pages[ptr+1].pageNum !== 'x'){
+                        $('#rpage').tooltipster('content', getMetadataDiv(pages[ptr+1]));
+                    }else{
+                        $('#rpage').tooltipster('hide');
+                    }
                     if(ptr===0){
-                        document.getElementById("left").disabled=true;
+                        $("#left").prop('disabled', true);
                     }                    
-                    document.getElementById("right").disabled=false;
+                    $("#right").prop('disabled', false);
                     
                 });
+                
                 $("#right").click(function(){
                     ptr = ptr + 2;
-                    $("#lpage").attr('src','/images/'+pages[ptr].getImage());
+                    $("#lpage").attr('src','./images/'+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
-                    $("#rpage").attr('src','/images/'+pages[ptr+1].getImage());
-                    $("#rpage").data('obj',pages[ptr+1]);
+                    $("#leftShelf").text( pages[ptr].getAbbrShelf());                    
+                    if(pages[ptr].pageNum !== 'x'){
+                        $('#lpage').tooltipster('content', getMetadataDiv(pages[ptr]));                            
+                    }else{
+                        $('#lpage').tooltipster('hide');
+                    }
+                    
+                    $("#rpage").attr('src','./images/'+pages[ptr+1].getImage());
+                    $("#rpage").data('obj',pages[ptr+1]);                    
+                    $("#rightShelf").text( pages[ptr+1].getAbbrShelf());
+                    if(pages[ptr+1].pageNum !== 'x'){
+                        $('#rpage').tooltipster('content', getMetadataDiv(pages[ptr+1]));                            
+                    }else{
+                        $('#rpage').tooltipster('hide');
+                    }
+                    
                     if(ptr+2 >= pages.length ){
-                        document.getElementById("right").disabled=true;
+                        $("#right").prop('disabled', true);
                     }                    
-                    document.getElementById("left").disabled=false;
+                    $("#left").prop('disabled', false);
                     
                 });
-                /*
+                
                 $(".page").dblclick(function(){
                     //Navigate to pan zoom page
                     var page = $(this).data("obj");                   
                     var url = "panzoom.php";
                     var form = $('<form action="' + url + '" method="post">' +
-                    '<input type="hidden" name="bookid" value="' + <?php //echo $_POST['bookid']?> + '" />' +
-                    '<input type="hidden" name="imageid" value="' + page.pageId + '" />' +
+                    '<input type="hidden" name="mscript_id" value="' + <?php echo $_GET['mscript_id']; ?> + '" />' +
+                    '<input type="hidden" name="folio_id" value="' + page.pageId + '" />' +
                     '<input type="hidden" name="imagepath" value="' + page.image + '" />' +
                     '</form>');
                     $('body').append(form);
                     $(form).submit();
-                    
-                    
                 });
-                */
             });
             
             

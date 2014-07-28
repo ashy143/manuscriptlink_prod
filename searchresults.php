@@ -98,7 +98,7 @@
     
     <script type="text/javascript">
         function view_record(form) {
-            alert(form);
+//            alert(form);
             $(form).submit(); 
         }
     </script>
