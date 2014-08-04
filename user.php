@@ -1,11 +1,11 @@
 <?php
-    include_once '/includes/dbconnect.php';
-    include_once '/includes/functions.php';
+    include_once './includes/dbconnect.php';
+    include_once './includes/functions.php';
     
     session_start();
 
     if(login_check() == false){
-        header("location: /index.php");
+        header("location: ./index.php");
     }
 
 ?>

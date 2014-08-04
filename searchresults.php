@@ -1,7 +1,7 @@
 <?php
     
     include_once './includes/functions.php';
-    require './utils/process_search.php';
+    include_once './utils/process_search.php';
     
     session_start();
     
@@ -11,13 +11,24 @@
         $logged = 'out';
     }
     
+    
     $host = "localhost:3306";
-    $databaseName = "mydb";
+    $databaseName = "manuscriptlink";
     $tableName = "folios";
-    $username = "root";
-    $con = mysql_connect($host,$username) or die("Unable to connect to MySQL");
+    $username = "ashwin";
+    $pass = "manuscriptlink";
+    $con = mysql_connect($host,$username,$pass) or die("Unable to connect to MySQL");
 
     mysql_select_db($databaseName, $con) or die("Could not select" .mysql_error());
+    
+    //Local config
+//    $host = "localhost:3306";
+//    $databaseName = "mydb";
+//    $tableName = "folios";
+//    $username = "root";
+//    $con = mysql_connect($host,$username) or die("Unable to connect to MySQL");
+//
+//    mysql_select_db($databaseName, $con) or die("Could not select" .mysql_error());
 
     if (mysqli_connect_errno())
     {

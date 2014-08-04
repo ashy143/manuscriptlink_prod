@@ -3,7 +3,7 @@
    session_start();
 
     if(login_check() == false){
-        header("location: /index.php");
+        header("location: ./index.php");
     }
 //    var_dump($_POST['data']);
     $manuscript_id = $_POST['id'];
@@ -131,7 +131,7 @@
                       <a href="#collapse<?php echo $count ?>" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
                       <div id="collapse<?php echo $count ?>" class="panel-collapse collapse">
                           <?php foreach($folio_obj_array as $folio_obj){?>
-                             <div class="rThumb"><a href="panzoom.php"><img style =" height:200px; width: 144px; "  src="<?php echo "./images/".$folio_obj->res_ident ;?>" /><br /><?php echo " fol. " . $folio_obj->folio_num . $folio_obj->folio_side ; ?></a></div>
+                          <div class="rThumb"><a href="panzoom.php"><img style =" height:200px; width: 144px; "  src="data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($folio_obj->res_ident)) ;?>" /><br /><?php echo " fol. " . $folio_obj->folio_num . $folio_obj->folio_side ; ?></a></div>
                           <?php } ?>  
                       </div>
                   </div>

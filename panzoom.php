@@ -83,9 +83,9 @@
                                     data-imageDesc="To Be Extracted"
                                     data-cloudzoom =
                                          "useZoom: '#zoom1', 
-                                         image: './images/<?php echo $imagePath;?>', 
-                                         zoomImage: '/images/<?php echo $imagePath;?>' ">
-                                    <img style="width: 98%;" src = <?php echo '"./images/'.$imagePath.'"';?> />
+                                         image: 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($imagePath));?>', 
+                                         zoomImage: 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($imagePath));?>' ">
+                                    <img style="width: 98%;" src = 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($imagePath));?>' />
                                     </a>
                                 </li>
                             <?php } ?>                    
@@ -101,7 +101,7 @@
                 <!--Large Image -->
                 <div class="span6">
                         <img id = "zoom1" style='width: 95%; height: 95%' class = "cloudzoom"
-                            data-cloudzoom = "zoomImage: './images/<?php echo $_POST['imagepath'];?>', zoomPosition:'#zoom-win'" src = <?php echo '"./images/'.$_POST['imagepath'].'"';?> />
+                             data-cloudzoom = "zoomImage: 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($_POST['imagepath']));?>', zoomPosition:'#zoom-win'" src = 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($_POST['imagepath']));?>' />
                 </div>
             </div>
     </div>

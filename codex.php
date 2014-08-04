@@ -3,7 +3,7 @@
    session_start();
 
     if(login_check() == false){
-        header("location: /index.php");
+        header("location: ./index.php");
     }
 ?>
 
@@ -51,8 +51,8 @@
         <div class="container" style="width: 100%; height:80vh;">
             <div class="row-fluid">
                 <div class="span1" style="height: 80vh; position: relative;  top: 40vh;">
-                    <img id="left" src="images/arrow-left-double.png" style="width: 30px; height: 30px;"/>
-                    <img id="prev" src="images/prev.png" style="width: 30px; height: 30px;"/>
+                    <img id="left" src="./images/arrow-left-double.png" style="width: 30px; height: 30px;"/>
+                    <img id="prev" src="./images/prev.png" style="width: 30px; height: 30px;"/>
                 </div>
                 <div class="span5">
                     <img id="lpage" class="page" title="test" style="max-width: 100%; max-height: 100%; float: right;" src=""/>
@@ -62,8 +62,8 @@
                     <img id="rpage"  class="page" title="test" style="max-width: 100%; max-height: 100%; float:left; " src=""/>                    
                 </div>
                 <div class="span1" style="height: 80vh; position: relative;  top: 40vh; " >
-                    <img id="next" src="images/next.png" style="width: 30px; height: 30px;"/>
-                    <img id="right" src="images/arrow-right-double.png" style="width: 30px; height: 30px;"/>                    
+                    <img id="next" src="./images/next.png" style="width: 30px; height: 30px;"/>
+                    <img id="right" src="./images/arrow-right-double.png" style="width: 30px; height: 30px;"/>                    
                 </div>
             </div>
            <div class='row-fluid'>
@@ -191,7 +191,8 @@
                             pages.push(page) ;
                             
                         });
-                        $("#lpage").attr('src','./images/'+pages[ptr].getImage());
+                        
+                        $("#lpage").attr('src', 'image.php?img_path='+pages[ptr].image); 
                         $("#lpage").data('obj',pages[ptr]);
                         $("#leftShelf").text(pages[ptr].getAbbrShelf());                        
                         if(pages[ptr].pageNum !== 'x'){
@@ -201,7 +202,7 @@
                         }
                         
                         
-                        $("#rpage").attr('src','./images/'+pages[ptr+1].getImage());
+                        $("#rpage").attr('src', 'image.php?img_path='+pages[ptr+1].image);
                         $("#rpage").data('obj',pages[ptr+1]);
                         $("#rightShelf").text(pages[ptr+1].getAbbrShelf());
                         $('#rpage').tooltipster('content', getMetadataDiv(pages[ptr+1]));
@@ -222,7 +223,7 @@
                 
                 $("#left").click(function(){
                     ptr = ptr -2;
-                    $("#lpage").attr('src','./images/'+pages[ptr].getImage());
+                    $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
                     $("#leftShelf").text(pages[ptr].getAbbrShelf());
                     if(pages[ptr].pageNum !== 'x'){
@@ -231,7 +232,7 @@
                         $('#lpage').tooltipster('hide');
                     }
                     
-                    $("#rpage").attr('src','./images/'+pages[ptr+1].getImage());
+                    $("#rpage").attr('src','image.php?img_path='+pages[ptr+1].getImage());
                     $("#rpage").data('obj',pages[ptr+1]);
                     $("#rightShelf").text(pages[ptr+1].getAbbrShelf());
                     if(pages[ptr+1].pageNum !== 'x'){
@@ -248,7 +249,7 @@
                 
                 $("#right").click(function(){
                     ptr = ptr + 2;
-                    $("#lpage").attr('src','./images/'+pages[ptr].getImage());
+                    $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
                     $("#leftShelf").text( pages[ptr].getAbbrShelf());                    
                     if(pages[ptr].pageNum !== 'x'){
@@ -257,7 +258,7 @@
                         $('#lpage').tooltipster('hide');
                     }
                     
-                    $("#rpage").attr('src','./images/'+pages[ptr+1].getImage());
+                    $("#rpage").attr('src','image.php?img_path='+pages[ptr+1].getImage());
                     $("#rpage").data('obj',pages[ptr+1]);                    
                     $("#rightShelf").text( pages[ptr+1].getAbbrShelf());
                     if(pages[ptr+1].pageNum !== 'x'){
