@@ -5,14 +5,23 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+    $host = "localhost:3306";
+    $databaseName = "manuscriptlink";
+    $tableName = "folios";
+    $username = "ashwin";
+    $pass = "manuscriptlink";
+    $con = mysql_connect($host,$username,$pass) or die("Unable to connect to MySQL");
 
-$host = "localhost:3306";
-$databaseName = "mydb";
-$tableName = "folios";
-$username = "root";
-$con = mysql_connect($host,$username) or die("Unable to connect to MySQL");
+    mysql_select_db($databaseName, $con) or die("Could not select" .mysql_error());
 
-mysql_select_db($databaseName, $con) or die("Could not select" .mysql_error());
+//Local config
+//$host = "localhost:3306";
+//$databaseName = "mydb";
+//$tableName = "folios";
+//$username = "root";
+//$con = mysql_connect($host,$username) or die("Unable to connect to MySQL");
+//
+//mysql_select_db($databaseName, $con) or die("Could not select" .mysql_error());
 
 if (mysqli_connect_errno())
 {
