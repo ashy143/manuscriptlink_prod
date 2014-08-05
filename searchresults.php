@@ -1,36 +1,21 @@
 <?php
     
+    include_once './includes/config.php';
     include_once './includes/functions.php';
     include_once './utils/process_search.php';
     include_once './data_models/CodicologicalQuery.php';
     include_once './data_models/BibliographicalQuery.php';
     
-    session_start();
-    
+    session_start();    
     if (login_check() == true) {
         $logged = 'in';
     } else {
         $logged = 'out';
-    }
+    }   
     
-    
-    $host = "localhost:3306";
-    $databaseName = "manuscriptlink";
     $tableName = "folios";
-    $username = "ashwin";
-    $pass = "manuscriptlink";
-    $con = mysql_connect($host,$username,$pass) or die("Unable to connect to MySQL");
-
-    mysql_select_db($databaseName, $con) or die("Could not select" .mysql_error());
-    
-    //Local config
-//    $host = "localhost:3306";
-//    $databaseName = "mydb";
-//    $tableName = "folios";
-//    $username = "root";
-//    $con = mysql_connect($host,$username) or die("Unable to connect to MySQL");
-//
-//    mysql_select_db($databaseName, $con) or die("Could not select" .mysql_error());
+    $con = mysql_connect(HOST.':'.PORT, USER, PASSWORD) or die("Unable to connect to MySQL");
+    mysql_select_db(DATABASE, $con) or die("Could not select" .mysql_error());
 
     if (mysqli_connect_errno())
     {

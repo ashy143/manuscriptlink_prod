@@ -82,7 +82,7 @@
                           <dt>Author</dt>
                             <dd><?php echo $manuscript_obj->artist ; ?></dd>
                           <dt>Text</dt>
-                            <dd><?php echo $manuscript_obj->text_type ; ?></dd>
+                            <dd><?php echo $json_decoded_data->title ; ?></dd>
                           <dt>Date</dt>
                             <dd><?php echo $manuscript_obj->date_manu ; ?></dd>
                           <dt>Origin</dt>
