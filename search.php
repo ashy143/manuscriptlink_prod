@@ -65,7 +65,7 @@
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="bibliographical1">Bibliographial Search String One</label>
-                        <input type="text" class="form-control" id="bibliographical1" placeholder="search term">
+                        <input type="text" class="form-control" name='bibliographical1' id="bibliographical1" placeholder="search term">
                     </div>
                 </div>
                 <div>
@@ -76,7 +76,7 @@
                     </select>
                     <div class="form-group" >
                         <label class="sr-only" for="bibliographical2">Bibliographial Search String Two</label>
-                        <input type="text" class="form-control" id="bibliographical2" placeholder="search term">
+                        <input type="text" class="form-control" name='bibliographical2' id="bibliographical2" placeholder="search term">
                     </div>
                 </div>
                 <div>
@@ -87,7 +87,7 @@
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="bibliographical3">Bibliographial Search String Three</label>
-                        <input type="text" class="form-control" id="bibliographical3" placeholder="search term">
+                        <input type="text" class="form-control" name='bibliographical3' id="bibliographical3" placeholder="search term">
                     </div>
                 </div>
                 <div>
@@ -98,7 +98,7 @@
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="bibliographical4">Bibliographial Search String Four</label>
-                        <input type="text" class="form-control" id="bibliographical4" placeholder="search term">
+                        <input type="text" class="form-control" name='bibliographical4' id="bibliographical4" placeholder="search term">
                     </div>
                 </div>
 
@@ -112,14 +112,14 @@
                         <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control" name="codicologicalTerm1">
-                       <option>----------</option>
-                        <option value = 'no_of_lines'>Lines</option>
-                        <option value = 'no_of_col'>Columns</option>
-                        <option value = 'date_manuscript'>Dates</option>
-                        <option value = 'miniatures'>Miniatures</option>
-                        <option value = 'numof_avail_folios'>Folios</option>
-                        <option value = 'height'>Height</option>
-                        <option value = 'width'>Width</option>
+                        <option value = 'NA' >--</option>
+                        <option value = 'fol.no_of_lines'>Lines</option>
+                        <option value = 'fol.no_of_col'>Columns</option>
+                        <option value = 'ms.date_manuscript'>Dates</option>
+                        <option value = 'ms.miniatures'>Miniatures</option>
+                        <option value = 'ms.numof_avail_folios'>Folios</option>
+                        <option value = 'fol.height'>Height</option>
+                        <option value = 'fol.width'>Width</option>
                     </select>
                     <div class="form-group" >
                         <label class="sr-only" for="codicologicalMin1">Codicological String One Min Value</label>
@@ -137,14 +137,14 @@
                         <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control" name="codicologicalTerm2">
-                       <option>----------</option>
-                        <option value = 'no_of_lines'>Lines</option>
-                        <option value = 'no_of_col'>Columns</option>
-                        <option value = 'date_manuscript'>Dates</option>
-                        <option value = 'miniatures'>Miniatures</option>
-                        <option value = 'numof_avail_folios'>Folios</option>
-                        <option value = 'height'>Height</option>
-                        <option value = 'width'>Width</option>
+                        <option value = 'NA' >--</option>
+                        <option value = 'fol.no_of_lines'>Lines</option>
+                        <option value = 'fol.no_of_col'>Columns</option>
+                        <option value = 'ms.date_manuscript'>Dates</option>
+                        <option value = 'ms.miniatures'>Miniatures</option>
+                        <option value = 'ms.numof_avail_folios'>Folios</option>
+                        <option value = 'fol.height'>Height</option>
+                        <option value = 'fol.width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin2">Codicological String Two Min Value</label>
@@ -162,14 +162,14 @@
                         <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control" name="codicologicalTerm3">
-                       <option>--</option>
-                        <option value = 'no_of_lines'>Lines</option>
-                        <option value = 'no_of_col'>Columns</option>
-                        <option value = 'date_manuscript'>Dates</option>
-                        <option value = 'miniatures'>Miniatures</option>
-                        <option value = 'numof_avail_folios'>Folios</option>
-                        <option value = 'height'>Height</option>
-                        <option value = 'width'>Width</option>
+                        <option value = 'NA' >--</option>
+                        <option value = 'fol.no_of_lines'>Lines</option>
+                        <option value = 'fol.no_of_col'>Columns</option>
+                        <option value = 'ms.date_manuscript'>Dates</option>
+                        <option value = 'ms.miniatures'>Miniatures</option>
+                        <option value = 'ms.numof_avail_folios'>Folios</option>
+                        <option value = 'fol.height'>Height</option>
+                        <option value = 'fol.width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin3">Codicological String Three Min Value</label>
@@ -181,95 +181,95 @@
                     </div>
                 </div>
                 <div>
-                    <select class="form-control">
+                    <select class="form-control"  name="codicologicalLogic4">
                         <option>And</option>
                         <option>Or</option>
                         <option>Not</option>
                     </select>
                     <select class="form-control" name="codicologicalTerm4">
-                       <option>--</option>
-                        <option value = 'no_of_lines'>Lines</option>
-                        <option value = 'no_of_col'>Columns</option>
-                        <option value = 'date_manuscript'>Dates</option>
-                        <option value = 'miniatures'>Miniatures</option>
-                        <option value = 'numof_avail_folios'>Folios</option>
-                        <option value = 'height'>Height</option>
-                        <option value = 'width'>Width</option>
+                        <option value = 'NA' >--</option>
+                        <option value = 'fol.no_of_lines'>Lines</option>
+                        <option value = 'fol.no_of_col'>Columns</option>
+                        <option value = 'ms.date_manuscript'>Dates</option>
+                        <option value = 'ms.miniatures'>Miniatures</option>
+                        <option value = 'ms.numof_avail_folios'>Folios</option>
+                        <option value = 'fol.height'>Height</option>
+                        <option value = 'fol.width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin4">Codicological String Four Min Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin4" placeholder="min">
+                        <input type="text" class="form-control" id="codicologicalMin4" name="codicologicalMin4" placeholder="min">
                     </div>
                     <div class="form-group" >
                         <label class="sr-only" for="codicologicalMax4">Codicological String Four Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMax4" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax4" name="codicologicalMax4" placeholder="max">
                     </div>
                 </div>
                 <div>
-                    <select class="form-control" name="codicologicalTerm5">
+                    <select class="form-control" name="codicologicalLogic5">
                         <option value = 'AND'>And</option>
                         <option value = 'OR'>Or</option>
                         <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control" name="codicologicalTerm5">
-                        <option>--</option>
-                        <option value = 'no_of_lines'>Lines</option>
-                        <option value = 'no_of_col'>Columns</option>
-                        <option value = 'date_manuscript'>Dates</option>
-                        <option value = 'miniatures'>Miniatures</option>
-                        <option value = 'numof_avail_folios'>Folios</option>
-                        <option value = 'height'>Height</option>
-                        <option value = 'width'>Width</option>
+                        <option value = 'NA' >--</option>
+                        <option value = 'fol.no_of_lines'>Lines</option>
+                        <option value = 'fol.no_of_col'>Columns</option>
+                        <option value = 'ms.date_manuscript'>Dates</option>
+                        <option value = 'ms.miniatures'>Miniatures</option>
+                        <option value = 'ms.numof_avail_folios'>Folios</option>
+                        <option value = 'fol.height'>Height</option>
+                        <option value = 'fol.width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin5">Codicological String Five Min Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin5" placeholder="min">
+                        <input type="text" class="form-control" id="codicologicalMin5" name="codicologicalMin5" placeholder="min">
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax5">Codicological String Five Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMax5" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax5" name="codicologicalMax5" placeholder="max">
                     </div>
                 </div>
                 <div>
-                    <select class="form-control">
+                    <select class="form-control" name="codicologicalLogic6">
                         <option value = 'AND'>And</option>
                         <option value = 'OR'>Or</option>
                         <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control" name="codicologicalTerm6">
-                        <option>--</option>
-                        <option value = 'no_of_lines'>Lines</option>
-                        <option value = 'no_of_col'>Columns</option>
-                        <option value = 'date_manuscript'>Dates</option>
-                        <option value = 'miniatures'>Miniatures</option>
-                        <option value = 'numof_avail_folios'>Folios</option>
-                        <option value = 'height'>Height</option>
-                        <option value = 'width'>Width</option>
+                        <option value = 'NA' >--</option>
+                        <option value = 'fol.no_of_lines'>Lines</option>
+                        <option value = 'fol.no_of_col'>Columns</option>
+                        <option value = 'ms.date_manuscript'>Dates</option>
+                        <option value = 'ms.miniatures'>Miniatures</option>
+                        <option value = 'ms.numof_avail_folios'>Folios</option>
+                        <option value = 'fol.height'>Height</option>
+                        <option value = 'fol.width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin6">Codicological String Six Min Value</label>
-                        <input type="text" class="form-control" id="codicologicalMin6" placeholder="min">
+                        <input type="text" class="form-control" id="codicologicalMin6" id="codicologicalMax6" placeholder="min">
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax6">Codicological String Six Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMax6" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax6" name="codicologicalMax6" placeholder="max">
                     </div>
                 </div>
                 <div>
-                    <select class="form-control">
+                    <select class="form-control" name="codicologicalLogic7">
                         <option value = 'AND'>And</option>
                         <option value = 'OR'>Or</option>
                         <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control" name="codicologicalTerm7">
-                        <option>--</option>
-                        <option value = 'no_of_lines'>Lines</option>
-                        <option value = 'no_of_col'>Columns</option>
-                        <option value = 'date_manuscript'>Dates</option>
-                        <option value = 'miniatures'>Miniatures</option>
-                        <option value = 'numof_avail_folios'>Folios</option>
-                        <option value = 'height'>Height</option>
-                        <option value = 'width'>Width</option>
+                        <option value = 'NA' >--</option>
+                        <option value = 'fol.no_of_lines'>Lines</option>
+                        <option value = 'fol.no_of_col'>Columns</option>
+                        <option value = 'ms.date_manuscript'>Dates</option>
+                        <option value = 'ms.miniatures'>Miniatures</option>
+                        <option value = 'ms.numof_avail_folios'>Folios</option>
+                        <option value = 'fol.height'>Height</option>
+                        <option value = 'fol.width'>Width</option>
                     </select>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMin7">Codicological String Seven Min Value</label>
@@ -277,7 +277,7 @@
                     </div>
                     <div class="form-group">
                         <label class="sr-only" for="codicologicalMax7">Codicological String Seven Max Value</label>
-                        <input type="text" class="form-control" id="codicologicalMax7" name="codicologicalMax8" placeholder="max">
+                        <input type="text" class="form-control" id="codicologicalMax7" name="codicologicalMax7" placeholder="max">
                     </div>
                 </div>
                

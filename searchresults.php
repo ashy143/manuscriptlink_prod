@@ -2,6 +2,8 @@
     
     include_once './includes/functions.php';
     include_once './utils/process_search.php';
+    include_once './data_models/CodicologicalQuery.php';
+    include_once './data_models/BibliographicalQuery.php';
     
     session_start();
     
@@ -35,23 +37,55 @@
       echo "Failed to connect to MySQL: " . mysqli_connect_error();
     }else{
     
-        $log1 = $_POST['codicologicalLogic1'];
-        $term1 = $_POST['codicologicalTerm1'];
-        $min1 = $_POST['codicologicalMin1'];        
-        $max1 = $_POST['codicologicalMax1'];
+        $biblioQueries = array();
+        for ( $i = 1; $i < 5; $i++ ) {
+           $biblioQuery = new BibliographicalQuery();
+           if($_POST["bibliographical".$i]==''){
+               continue;
+           }
+            if(  count($biblioQueries) > 0){
+               $biblioQuery->logic = $_POST["bibliographicalLog".$i ]; 
+           }        
 
-        $log2 = $_POST['codicologicalLogic2'];
-        $term2 = $_POST['codicologicalTerm2'];
-        $min2 = $_POST['codicologicalMin2'];        
-        $max2 = $_POST['codicologicalMax2'];
+           $biblioQuery->term = $_POST["bibliographical".$i];
+           $biblioQueries[] = $biblioQuery;
+        }
+        
+        
+        $codologQueries = array();
+        for ( $i = 1; $i < 8; $i++ ) {
+            $codologQuery = new CodicologicalQuery();
+            if($_POST["codicologicalTerm".$i]=='NA'){
+                continue;
+            }
+            if( count($biblioQueries) > 0 || count($codologQueries) > 0   ){               
+                $codologQuery->logic = $_POST["codicologicalLogic".$i ]; 
+            }
+            $codologQuery->min = $_POST["codicologicalMin".$i]; 
+            $codologQuery->max = $_POST["codicologicalMax".$i ]; 
+            $codologQuery->term = $_POST["codicologicalTerm".$i];
+            $codologQueries[] = $codologQuery;
 
-        $query_place_holder = "SELECT distinct mscript_id, title, height, width, height_written, width_written, no_of_lines, dim_staff FROM folios WHERE %s BETWEEN %d AND %d ".
-                "%s " .
-                "%s BETWEEN %d AND %d ".
-                "%s " .
-                "%s LIKE '%s' ";
-        $query = sprintf("$query_place_holder ",$term1,$min1,$max1, $log2, $term2, $min2 , $max2, 'AND', 'title', 'Breviary' );
-//        echo $query;
+        }
+         //build where class
+        $bibQueryStr = '';
+        foreach($biblioQueries as $bib){
+            $bibQueryStr.= " " . $bib->logic . " title " .  " LIKE '%" . $bib->term .  "%' " ;
+        }         
+         
+        $codQueryStr = '';
+        foreach($codologQueries as $cod){
+            $codQueryStr.= " " . $cod->logic . " " . $cod->term . " BETWEEN " . $cod->min .  " AND "  .$cod->max ;
+        }
+        
+        $query_place_holder = "SELECT ms.mscript_id, fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff FROM manuscript AS ms INNER JOIN folios AS fol ON ms.mscript_id = fol.mscript_id ";
+        if(count($biblioQueries) > 0 || count($codologQueries) > 0){
+            $query_place_holder .= " WHERE %s %s" ;
+        }
+        
+        $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
+        $query .= " GROUP BY ms.mscript_id ";
+        error_log($query);
         $result = mysql_query($query) or die(mysql_error());
         class MSEXT_OBJ{
             public $title  = "--";
@@ -69,6 +103,7 @@
             $manuscript_obj = getManuscriptById($row[0]);
             $mext_obj = new MSEXT_OBJ();
             $mext_obj->mscript_obj = $manuscript_obj;
+            $mext_obj->mscript_id = $row[0];
             $mext_obj->title = $row[1];
             $mext_obj->height = $row[2];
             $mext_obj->width = $row[3];

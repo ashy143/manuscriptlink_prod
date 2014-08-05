@@ -12,9 +12,8 @@
     $query = "SELECT * "
             . "FROM manuscript LEFT JOIN origin ON manuscript.mscript_id = origin.mscript_id " 
             . "WHERE manuscript.mscript_id = ". $manuscript_id ;
-    //echo $query;
+    
     $manuscript_obj = getManuscriptById($manuscript_id);
-    //echo var_dump($manuscript_obj);
     $folio_objs = getFoliosByManuscriptId($manuscript_id);
     $combined_folio_objs = array(); //to hold array of folios with same folio number(will add value from A in this array)
     $prev_page = -1;
@@ -34,10 +33,6 @@
         }        
     }
     $combined_folio_objs[] = $fobs;
-    
-//    var_dump($combined_folio_objs);
-    
-    
     
 ?>
 <!DOCTYPE html>
@@ -141,11 +136,6 @@
                                                  
       		</div>
     	</div>
-
-
-
-
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
