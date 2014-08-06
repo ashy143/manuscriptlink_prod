@@ -94,7 +94,21 @@ function getManuscriptById($manuscriptId){
     $query = "SELECT * "
             . "FROM manuscript LEFT JOIN origin ON manuscript.mscript_id = origin.mscript_id " 
             . "WHERE manuscript.mscript_id = ". $manuscriptId ;
-    $result = $mysqli->query($query);
+    
+    $sql_minlines = "SELECT MIN(no_of_lines) as min from folios WHERE folios.mscript_id=".$manuscriptId;
+    $sql_maxlines = "SELECT MAX(no_of_lines) as max from folios WHERE folios.mscript_id=".$manuscriptId;
+    
+    $result_min = $mysqli->query($sql_minlines) or die(mysql_error());
+    $result_max = $mysqli->query($sql_maxlines) or die(mysql_error());
+
+    $row_min = $result_min->fetch_assoc();
+    $row_max =$result_max->fetch_assoc();
+    
+    $min = $row_min['min'];
+    $max = $row_max['max'];
+    
+    
+    $result = $mysqli->query($query) or die(mysql_error());
     $manuscript_obj = NULL;
     if($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -112,6 +126,9 @@ function getManuscriptById($manuscriptId){
         $manuscript_obj->collation = $row['collation'];
         $manuscript_obj->no_of_avail_fol = $row['numof_avail_folios'];
         
+        $manuscript_obj->min_lines = $min;
+        $manuscript_obj->max_lines = $max;
+        
         $manuscript_obj->origin->country = $row['country'];
         $manuscript_obj->origin->municipality = $row['municipality'];
     }
@@ -126,10 +143,11 @@ function getFoliosByManuscriptId($manuscript_id){
             . "FROM folios "   
             . " LEFT JOIN location ON folios.folio_id = location.folio_id " 
             . "WHERE folios.mscript_id = " . $manuscript_id . " ORDER BY folio_num ASC " ;
-    
+    error_log("executed0");
     $result = $mysqli->query($query);
     $folio_objs = array();
     if($result->num_rows > 0) {
+        error_log("executed");
         while($row =$result->fetch_assoc()){
             $folio = new Folio();
             $folio->folio_id = $row['folio_id'];

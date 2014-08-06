@@ -1,18 +1,14 @@
 <?php 
-    require_once './includes/functions.php';
+    include_once './includes/functions.php';
    session_start();
 
     if(login_check() == false){
         header("location: ./index.php");
     }
-//    var_dump($_POST['data']);
+    
     $manuscript_id = $_POST['id'];
     $json_decoded_data = json_decode($_POST['data']);
-    
-    $query = "SELECT * "
-            . "FROM manuscript LEFT JOIN origin ON manuscript.mscript_id = origin.mscript_id " 
-            . "WHERE manuscript.mscript_id = ". $manuscript_id ;
-    
+       
     $manuscript_obj = getManuscriptById($manuscript_id);
     $folio_objs = getFoliosByManuscriptId($manuscript_id);
     $combined_folio_objs = array(); //to hold array of folios with same folio number(will add value from A in this array)
@@ -98,7 +94,7 @@
                           <dt>Justification</dt>
                             <dd><?php echo $json_decoded_data->width_written;?> x <?php echo $json_decoded_data->height_written; ?> mm</dd>
                           <dt>Lines</dt>
-                            <dd><?php $json_decoded_data->no_of_lines; ?></dd>
+                            <dd><?php echo $manuscript_obj->min_lines . ' to ' . $manuscript_obj->max_lines; ?></dd>
                           <dt>Decoration</dt>
                             <dd><?php echo $manuscript_obj->decoration ; ?></dd>
                           <dt>Script</dt>

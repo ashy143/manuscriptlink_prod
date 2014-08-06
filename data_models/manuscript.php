@@ -42,6 +42,9 @@ class Manuscript{
     public $biblio = "--";
     public $pub_digital = "--";
     
+    public $min_lines = '--';
+    public $max_lines = '--';
+    
     public $origin = '--';
     
     public $folio_objs = array();
