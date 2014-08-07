@@ -17,11 +17,9 @@
     $con = mysql_connect(HOST.':'.PORT, USER, PASSWORD) or die("Unable to connect to MySQL");
     mysql_select_db(DATABASE, $con) or die("Could not select" .mysql_error());
 
-    if (mysqli_connect_errno())
-    {
+    if (mysqli_connect_errno()){
       echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    }else{
-    
+    }else{    
         $biblioQueries = array();
         for ( $i = 1; $i < 5; $i++ ) {
            $biblioQuery = new BibliographicalQuery();
@@ -54,16 +52,25 @@
         }
          //build where class
         $bibQueryStr = '';
+        
+        //test for database search
         foreach($biblioQueries as $bib){
-            $bibQueryStr.= " " . $bib->logic . " title " .  " LIKE '%" . $bib->term .  "%' " ;
-        }         
-         
+//            $bibQueryStr.= $bib->logic . " MATCH (fol.title, fol.author, fol.folio_contents) AGAINST ('" . $bib->term . "') " ;
+            $bibQueryStr.= $bib->logic . " CONCAT (fol.title, fol.author, fol.folio_contents, fol.coll_admin, fol.col_staff, fol.faculty_liason, fol.meta_catag, fol.scan_tech, "
+                    ." ms.artist, ms.bibliography, ms.century, ms.collation, ms.date_manuscript, ms.decoration, ms.edition_cited, ms.language, ms.liturgicaluse, ms.miniatures,"
+                    . " ms.publisher_digital, ms.writing_support, ms.ruling_medium, ms.ruling_pattern, ms.schoenberg_num, ms.text_contents, ms.text_type, ms.writing_support, " 
+                    ." ori.country, ori.institution, ori.commagent, ori.municipality, ori.region, ori.state )"
+                    ." LIKE '%" . $bib->term . "%' " ;
+        } 
+        
+        
+        
         $codQueryStr = '';
         foreach($codologQueries as $cod){
             $codQueryStr.= " " . $cod->logic . " " . $cod->term . " BETWEEN " . $cod->min .  " AND "  .$cod->max ;
         }
         
-        $query_place_holder = "SELECT ms.mscript_id, fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff FROM manuscript AS ms INNER JOIN folios AS fol ON ms.mscript_id = fol.mscript_id ";
+        $query_place_holder = "SELECT ms.mscript_id, fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff FROM (manuscript AS ms INNER JOIN origin AS ori ON ms.mscript_id = ori.mscript_id) INNER JOIN folios AS fol ON ms.mscript_id = fol.mscript_id ";
         if(count($biblioQueries) > 0 || count($codologQueries) > 0){
             $query_place_holder .= " WHERE %s %s" ;
         }
@@ -129,7 +136,6 @@
     
     <script type="text/javascript">
         function view_record(form) {
-//            alert(form);
             $(form).submit(); 
         }
     </script>
@@ -177,16 +183,7 @@
                         </div>
                             
                     <?php $count = $count+1; } ?>
-                        
-                    <!--
-                    <div class="search-result">
-                        <h4><a href="record.php">USC Early MS 12 fol. 32r</a></h4>
-                        <p>Breviary. Vellu. Italy (Naples), ca. 1460<br />
-                           132 x 96 mm. Double column, 27-8 lines.<br />
-                           Artist: Giorgio d' Alemagna (d. 1467-68)</p>
-
-                    </div>    
-                    -->
+                   
                 </div>
                 
 
