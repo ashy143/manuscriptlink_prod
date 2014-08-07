@@ -55,12 +55,11 @@
             <h3>Search</h3>
             <form class="form-inline" name= "search_form" action="searchresults.php" method="post">
             <div class="row">
-              <div class="col-md-5">
+              <div class="col-md-4">
                 <h4>Bibliographical</h4>
                 <div>
                     <select class="form-control" name="bibliographicalLog1">
-                        <option>And</option>
-                        <option>Or</option>
+                        <option></option>
                         <option>Not</option>
                     </select>
                     <div class="form-group">
@@ -103,12 +102,14 @@
                 </div>
 
               </div>
+                <div class="col-md-1">
+                    <h4>And</h4>
+                </div>
               <div class="col-md-7">
                 <h4>Codicological</h4>
                 <div>
                     <select class="form-control" name="codicologicalLogic1">
-                        <option value = 'AND'>And</option>
-                        <option value = 'OR'>Or</option>
+                        <option ></option>
                         <option value = 'NOT'>Not</option>
                     </select>
                     <select class="form-control" name="codicologicalTerm1">

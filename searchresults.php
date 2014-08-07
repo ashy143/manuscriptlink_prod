@@ -26,10 +26,9 @@
            if($_POST["bibliographical".$i]==''){
                continue;
            }
-            if(  count($biblioQueries) > 0){
+           if(  count($biblioQueries) > 0 || (strcasecmp($_POST["bibliographicalLog".$i ], 'NOT') == 0)){
                $biblioQuery->logic = $_POST["bibliographicalLog".$i ]; 
-           }        
-
+           }
            $biblioQuery->term = $_POST["bibliographical".$i];
            $biblioQueries[] = $biblioQuery;
         }
@@ -41,7 +40,7 @@
             if($_POST["codicologicalTerm".$i]=='NA'){
                 continue;
             }
-            if( count($codologQueries) > 0  ||  (strcasecmp($_POST["codicologicalLogic".$i ], 'NOT') == 0) ){               
+            if( count($codologQueries) > 0  ||  (strcasecmp($_POST["codicologicalLogic".$i ], 'NOT') == 0) ){
                 $codologQuery->logic = $_POST["codicologicalLogic".$i ]; 
             }
             $codologQuery->min = $_POST["codicologicalMin".$i]; 
@@ -52,19 +51,26 @@
         }
          //build where class
         $bibQueryStr = '';        
-        
+        $count = 0; //for first term if user selected  not then we have to search for NOT LIKE
         foreach($biblioQueries as $bib){
             $like = 'LIKE';
             if(strcasecmp($bib->logic , 'NOT') == 0){
-                $bib->logic = 'AND';
+                if($count == 0){
+                    $bib->logic = '';
+                }else{
+                    $bib->logic = 'AND';
+                }                
                 $like = 'NOT LIKE';
             }
             
             $bibQueryStr.= $bib->logic . " CONCAT (fol.title, fol.author, fol.folio_contents, fol.coll_admin, fol.col_staff, fol.faculty_liason, fol.meta_catag, fol.scan_tech, "
                     ." ms.artist, ms.bibliography, ms.century, ms.collation, ms.date_manuscript, ms.decoration, ms.edition_cited, ms.language, ms.liturgicaluse, ms.miniatures,"
                     . " ms.publisher_digital, ms.writing_support, ms.ruling_medium, ms.ruling_pattern, ms.schoenberg_num, ms.text_contents, ms.text_type, ms.writing_support, " 
-                    ." ori.country, ori.institution, ori.commagent, ori.municipality, ori.region, ori.state )"
+                    ." ori.country, ori.institution, ori.commagent, ori.municipality, ori.region, ori.state,"
+                    ." loc.callno, loc.collection, loc.country, loc.division, loc.institution, loc.municipality, loc.series, loc.state  )"
                     . $like ."  '%" . $bib->term . "%' " ;
+        
+        $count++;    
         }        
         
         
@@ -86,7 +92,13 @@
             $count++;
         }
         
-        $query_place_holder = "SELECT ms.mscript_id, fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff FROM (manuscript AS ms INNER JOIN origin AS ori ON ms.mscript_id = ori.mscript_id) INNER JOIN folios AS fol ON ms.mscript_id = fol.mscript_id ";
+        $query_place_holder = "SELECT ms.mscript_id, fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff "
+                    ." FROM "
+                ." (manuscript AS ms INNER JOIN origin AS ori ON ms.mscript_id = ori.mscript_id) "
+                    ." INNER JOIN "
+                ." (folios AS fol INNER JOIN location AS loc ON fol.folio_id = loc.folio_id )"
+                    . " ON ms.mscript_id = fol.mscript_id ";
+        
         if(count($biblioQueries) < 1 || count($codologQueries) < 1){        
             $query_place_holder .= " WHERE %s  %s " ;
             $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
