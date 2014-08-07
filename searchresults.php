@@ -41,7 +41,7 @@
             if($_POST["codicologicalTerm".$i]=='NA'){
                 continue;
             }
-            if( count($biblioQueries) > 0 || count($codologQueries) > 0   ){               
+            if( count($codologQueries) > 0  ||  (strcasecmp($_POST["codicologicalLogic".$i ], 'NOT') == 0) ){               
                 $codologQuery->logic = $_POST["codicologicalLogic".$i ]; 
             }
             $codologQuery->min = $_POST["codicologicalMin".$i]; 
@@ -51,28 +51,54 @@
 
         }
          //build where class
-        $bibQueryStr = '';
+        $bibQueryStr = '';        
         
-        //test for database search
         foreach($biblioQueries as $bib){
-//            $bibQueryStr.= $bib->logic . " MATCH (fol.title, fol.author, fol.folio_contents) AGAINST ('" . $bib->term . "') " ;
+            $like = 'LIKE';
+            if(strcasecmp($bib->logic , 'NOT') == 0){
+                $bib->logic = 'AND';
+                $like = 'NOT LIKE';
+            }
+            
             $bibQueryStr.= $bib->logic . " CONCAT (fol.title, fol.author, fol.folio_contents, fol.coll_admin, fol.col_staff, fol.faculty_liason, fol.meta_catag, fol.scan_tech, "
                     ." ms.artist, ms.bibliography, ms.century, ms.collation, ms.date_manuscript, ms.decoration, ms.edition_cited, ms.language, ms.liturgicaluse, ms.miniatures,"
                     . " ms.publisher_digital, ms.writing_support, ms.ruling_medium, ms.ruling_pattern, ms.schoenberg_num, ms.text_contents, ms.text_type, ms.writing_support, " 
                     ." ori.country, ori.institution, ori.commagent, ori.municipality, ori.region, ori.state )"
-                    ." LIKE '%" . $bib->term . "%' " ;
-        } 
-        
+                    . $like ."  '%" . $bib->term . "%' " ;
+        }        
         
         
         $codQueryStr = '';
-        foreach($codologQueries as $cod){
-            $codQueryStr.= " " . $cod->logic . " " . $cod->term . " BETWEEN " . $cod->min .  " AND "  .$cod->max ;
+        $count = 0;
+        foreach($codologQueries as $cod){            
+            $between = 'BETWEEN';
+            if(strcasecmp($cod->logic , 'NOT') == 0){
+                error_log("came for not between ");
+                //if the not is selected for first term then we should not append AND in where clause because querry will be " WHERE AND "
+                if($count == 0){
+                    $cod->logic = '';
+                }else{
+                    $cod->logic = 'AND';
+                }
+                $between = 'NOT BETWEEN';                
+            }
+            $codQueryStr.= " " . $cod->logic . " " . $cod->term . "  " . $between . " " .$cod->min .  " AND "  .$cod->max ;
+            $count++;
         }
         
         $query_place_holder = "SELECT ms.mscript_id, fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff FROM (manuscript AS ms INNER JOIN origin AS ori ON ms.mscript_id = ori.mscript_id) INNER JOIN folios AS fol ON ms.mscript_id = fol.mscript_id ";
-        if(count($biblioQueries) > 0 || count($codologQueries) > 0){
-            $query_place_holder .= " WHERE %s %s" ;
+        if(count($biblioQueries) < 1 || count($codologQueries) < 1){        
+            $query_place_holder .= " WHERE %s  %s " ;
+            $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
+        }else if(count($biblioQueries) > 0 || count($codologQueries) > 0){
+            $query_place_holder .= " WHERE %s  AND ( %s )" ;
+            $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
+        }else if(count($biblioQueries) < 1){
+            $query_place_holder .= " WHERE %s  " ;
+            $query = sprintf("$query_place_holder ", $codQueryStr );
+        }else if(count($codologQueries) < 1){
+            $query_place_holder .= " WHERE %s  " ;
+            $query = sprintf("$query_place_holder ", $bibQueryStr );
         }
         
         $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
