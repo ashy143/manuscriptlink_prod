@@ -51,7 +51,7 @@
   		            <li><a href="browse.php">browse</a></li>
   		            <li class="active"><a href="resources.php">resources</a></li>
   		            <li><a href="#">citation shelfmarks</a></li>
-  		            <li><a href="login.php"><?php echo $_SESSION['name'];?></a></li>
+  		            <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
             		</ul>
           	</div>
       	</div>

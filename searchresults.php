@@ -183,7 +183,7 @@
 
     <div class="container">
       	<div class="row">
-            <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" /></div>
+            <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" alt="" /></a></div>
           	<div class="col-md-9" style=" height: 55px;">
             		<ul class="link-nav pull-right">
               		<li class="active"><a href="#">search</a></li>
@@ -191,7 +191,7 @@
   		            <li><a href="browse.php">browse</a></li>
   		            <li><a href="resources.php">resources</a></li>
   		            <li><a href="#">citation shelfmarks</a></li>
-  		            <li><a href="login.php">login</a></li>
+  		            <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
             		</ul>
           	</div>
       	</div>
