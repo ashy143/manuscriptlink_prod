@@ -100,10 +100,10 @@
                 ." (folios AS fol INNER JOIN location AS loc ON fol.folio_id = loc.folio_id )"
                     . " ON ms.mscript_id = fol.mscript_id ";
         
-        if(count($biblioQueries) < 1 || count($codologQueries) < 1){        
+        if(count($biblioQueries) < 1 && count($codologQueries) < 1){        
             $query_place_holder .= " " ;
             $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
-        }else if(count($biblioQueries) > 0 || count($codologQueries) > 0){
+        }else if(count($biblioQueries) > 0 && count($codologQueries) > 0){
             $query_place_holder .= " WHERE %s  AND ( %s )" ;
             $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
         }else if(count($biblioQueries) < 1){
@@ -200,7 +200,7 @@
     	<div class="container">
             <div class="row">
                 <div class="col-md-3 sideButtons">
-                    <h4 class="arc-button puff"><a href="user.php">Add to My Archive</a></h4>
+                    <h4 class="arc-button puff" id="addToArchives" ><a href="user.php">Add to My Archive</a></h4>
                     <h4 class="arc-search puff"><a href="search.php"><i class="fa fa-wrench"></i> Refine Results</a></h4>
                 </div>
                 <div id="results" class="col-md-9">
@@ -244,11 +244,20 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script launguage="JavaScript">
-        $('.search-result').click(function() { 
+    <script type="text/javascript">
+        $('.search-result').click(function() {            
           $(this).toggleClass('clicked', 1000, "easeOutSine");
-        });   
-   
+        });
+        
+        $('#addToArchives').click(function(){
+            //Iterate through each search result and check if it is selected
+            $('.search-result').each(function(){
+               if($(this).hasClass('clicked')){
+                   
+               } 
+            });
+            
+        });
     
     </script>
 
