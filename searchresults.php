@@ -209,7 +209,6 @@
                     
                         <!--Here we will display the search results-->
                     <?php $count=1; foreach($manuscript_ext_objs as $mobj){ ?>
-                        <?php //echo json_encode($mobj);?>
                         <form name='<?php echo $count; ?>' method="post" action='record.php'>
                             <input type="hidden" name='id' value ='<?php echo $mobj->mscript_obj->mscript_id; ?>'/>
                             <input type="hidden" name='data' value ='<?php echo json_encode($mobj);?>'/>

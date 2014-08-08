@@ -50,6 +50,12 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <script type="text/javascript">
+        function view_record(form) {
+            $(form).submit(); 
+        }
+    </script>
   </head>
   <body>
 
@@ -115,10 +121,14 @@
                   
                   
                   <?php $count=1; foreach($combined_folio_objs as $folio_obj_array){ ?>
-                  <div class="holding">
-                      
+                  <form name='<?php echo $count; ?>' method="post" action='codex.php'>
+                        <input type="hidden" name='id' value ='<?php echo $folio_obj_array[0]->mscript_id; ?>'/>
+                        <input type="hidden" name='data' value ='<?php echo $_POST['data']; ?>'/>
+                  </form>
+                  
+                  <div class="holding">                      
                       <h4><?php echo $folio_obj_array[0]->abbreviated_shelf ;?></h4>
-                      <a href="codex.php?mscript_id=<?php echo $folio_obj_array[0]->mscript_id; ?>"><div class="codexButton">Codex</div></a>
+                      <a onclick="view_record(document.getElementsByName('<?php echo $count;?>'));"><div class="codexButton">Codex</div></a>
                       <a href="#collapse<?php echo $count ?>" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
                       <div id="collapse<?php echo $count ?>" class="panel-collapse collapse">
                           <?php foreach($folio_obj_array as $folio_obj){?>

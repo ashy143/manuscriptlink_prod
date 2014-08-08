@@ -26,6 +26,11 @@
             display: none;
         }
     </style>
+    <script type="text/javascript">
+        function view_record(form) {
+            $(form).submit(); 
+        }
+    </script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -74,15 +79,20 @@
                 </div>
             </div>
            <div class='row-fluid'>
+               <form name='recordForm' method="post" action='record.php'>
+                    <input type="hidden" name='id' value ='<?php echo $_POST['id']; ?>'/>
+                    <input type="hidden" name='data' value ='<?php echo $_POST['data']; ?>'/>
+               </form>
+               
                 <div class="span1"></div>
                 <div class='span5'>
                     <p align="center">
-                        <a href="codex.php?mscript_id="><span id="leftShelf" /></span></a>
+                        <a onclick="view_record(document.getElementsByName('recordForm'));"><span id="leftShelf" ></span></a>
                     </p>
                 </div>
                 <div class='span5'>              
                     <p align="center">
-                        <a href="codex.php?mscript_id="><span id="rightShelf" /></span></a>   
+                        <a onclick="view_record(document.getElementsByName('recordForm'));"><span id="rightShelf" ></span></a>   
                     </p>
                 </div>
                 <div class="span1"></div>
@@ -183,7 +193,7 @@
                     
                     url: 'getpages.php', //current page
                     type: 'GET',
-                    data: {mscript_id: <?php echo $_GET['mscript_id']?> },
+                    data: {mscript_id: <?php echo $_POST['id']?> },
                     dataType: "json",
                     contentType: "application/json",                    
                     success: function (d) {                      
@@ -295,7 +305,7 @@
                     var page = $(this).data("obj");                   
                     var url = "panzoom.php";
                     var form = $('<form action="' + url + '" method="post">' +
-                    '<input type="hidden" name="mscript_id" value="' + <?php echo $_GET['mscript_id']; ?> + '" />' +
+                    '<input type="hidden" name="mscript_id" value="' + <?php echo $_POST['id']; ?> + '" />' +
                     '<input type="hidden" name="folio_id" value="' + page.pageId + '" />' +
                     '<input type="hidden" name="imagepath" value="' + page.image + '" />' +
                     '</form>');
