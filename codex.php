@@ -20,7 +20,12 @@
     <link href="css/mslink.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/tooltipster.css" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.qtip.css" />
+    <style>
+        .tooltiptext{
+            display: none;
+        }
+    </style>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,7 +38,7 @@
 
     <div class="container">
       	<div class="row">
-            <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" alt=""/></div>
+            <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" alt=""/></a></div>
           	<div class="col-md-9" style=" height: 55px;">
             		<ul class="link-nav pull-right">
                             <li><a href="search.php">search</a></li>
@@ -46,13 +51,15 @@
           	</div>
       	</div>
     </div>
+      <div class="tooltiptext" id='lefttooltip' ></div>
+      <div class="tooltiptext" id='righttooltip' ></div>
       
     <!--<div class="back">-->
         <div class="container" style="width: 100%; height:80vh;">
             <div class="row-fluid">
                 <div class="span1" style="height: 80vh; position: relative;  top: 40vh;">
-                    <img id="left" src="./images/arrow-left-double.png" style="width: 30px; height: 30px;"/>
-                    <img id="prev" src="./images/prev.png" style="width: 30px; height: 30px;"/>
+                    <img id="left" src="./images/arrow-left-double.png" style="width: 30px; height: 30px;" alt=""/>
+                    <img id="prev" src="./images/prev.png" style="width: 30px; height: 30px;" alt="" />
                 </div>
                 <div class="span5">
                     <img id="lpage" class="page" title="test" style="max-width: 100%; max-height: 100%; float: right;" src=""/>
@@ -62,20 +69,20 @@
                     <img id="rpage"  class="page" title="test" style="max-width: 100%; max-height: 100%; float:left; " src=""/>                    
                 </div>
                 <div class="span1" style="height: 80vh; position: relative;  top: 40vh; " >
-                    <img id="next" src="./images/next.png" style="width: 30px; height: 30px;"/>
-                    <img id="right" src="./images/arrow-right-double.png" style="width: 30px; height: 30px;"/>                    
+                    <img id="next" src="./images/next.png" style="width: 30px; height: 30px;" alt=''/>
+                    <img id="right" src="./images/arrow-right-double.png" style="width: 30px; height: 30px;" alt=''/>                    
                 </div>
             </div>
            <div class='row-fluid'>
                 <div class="span1"></div>
                 <div class='span5'>
                     <p align="center">
-                        <a><span id="leftShelf" /></span></a>
+                        <a href="codex.php?mscript_id="><span id="leftShelf" /></span></a>
                     </p>
                 </div>
-                <div class='span5'>                    
+                <div class='span5'>              
                     <p align="center">
-                        <a><span id="rightShelf" /></span></a>   
+                        <a href="codex.php?mscript_id="><span id="rightShelf" /></span></a>   
                     </p>
                 </div>
                 <div class="span1"></div>
@@ -133,9 +140,9 @@
 
     </script> 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery.tooltipster.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>    
     <script type="text/javascript" src="js/models/Page.js"></script>
+    <script type="text/javascript" src="js/jquery.qtip.js"></script>
     <script>         
             
             function getMetadataDiv(page_obj){
@@ -148,16 +155,25 @@
             };
             
             $(document).ready(function(){
-                $('#lpage').tooltipster({
-                    contentAsHTML: true,
-                    offsetX:100,
-                    interactiveTolerance:500
+                $('#lpage').qtip({
+                    content: {
+                        text: $('#lefttooltip')
+                    },
+                    position: {
+                        target: 'mouse', // Track the mouse as the positioning target
+                        adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+                    }
+                    
                 }); 
                 
-                $('#rpage').tooltipster({
-                    contentAsHTML: true,
-                    offsetX:100,
-                    interactiveTolerance:500
+                $('#rpage').qtip({
+                    content: {
+                        text: $('#righttooltip')
+                    },
+                    position: {
+                        target: 'mouse', // Track the mouse as the positioning target
+                        adjust: { x: 5, y: 5 } // Offset it slightly from under the mouse
+                    }
                 }); 
                 
                 var ptr = 0;
@@ -196,20 +212,20 @@
                         $("#lpage").data('obj',pages[ptr]);
                         $("#leftShelf").text(pages[ptr].getAbbrShelf());                        
                         if(pages[ptr].pageNum !== 'x'){
-                            $('#lpage').tooltipster('content', getMetadataDiv(pages[ptr]));                            
+                            $('#lefttooltip').html(getMetadataDiv(pages[ptr]));                            
                         }else{
-                            $('#lpage').tooltipster('hide');
+                           $('#lefttooltip').html('Void Page');
                         }
                         
                         
                         $("#rpage").attr('src', 'image.php?img_path='+pages[ptr+1].image);
                         $("#rpage").data('obj',pages[ptr+1]);
                         $("#rightShelf").text(pages[ptr+1].getAbbrShelf());
-                        $('#rpage').tooltipster('content', getMetadataDiv(pages[ptr+1]));
+                        $('#rpage').qtip('content', getMetadataDiv(pages[ptr+1]));
                         if(pages[ptr+1].pageNum !== 'x'){
-                            $('#rpage').tooltipster('content', getMetadataDiv(pages[ptr+1]));                            
+                            $('#righttooltip').html(getMetadataDiv(pages[ptr+1]));                         
                         }else{
-                            $('#rpage').tooltipster('hide');
+                            $('#righttooltip').html('Void Page');
                         }
                         
                         if(ptr===0){
@@ -227,18 +243,18 @@
                     $("#lpage").data('obj',pages[ptr]);
                     $("#leftShelf").text(pages[ptr].getAbbrShelf());
                     if(pages[ptr].pageNum !== 'x'){
-                        $('#lpage').tooltipster('content', getMetadataDiv(pages[ptr]));                            
+                            $('#lefttooltip').html(getMetadataDiv(pages[ptr]));                            
                     }else{
-                        $('#lpage').tooltipster('hide');
+                       $('#lefttooltip').html('Void Page');
                     }
                     
                     $("#rpage").attr('src','image.php?img_path='+pages[ptr+1].getImage());
                     $("#rpage").data('obj',pages[ptr+1]);
                     $("#rightShelf").text(pages[ptr+1].getAbbrShelf());
                     if(pages[ptr+1].pageNum !== 'x'){
-                        $('#rpage').tooltipster('content', getMetadataDiv(pages[ptr+1]));
+                        $('#righttooltip').html(getMetadataDiv(pages[ptr+1]));                         
                     }else{
-                        $('#rpage').tooltipster('hide');
+                        $('#righttooltip').html('Void Page');
                     }
                     if(ptr===0){
                         $("#left").prop('disabled', true);
@@ -253,18 +269,18 @@
                     $("#lpage").data('obj',pages[ptr]);
                     $("#leftShelf").text( pages[ptr].getAbbrShelf());                    
                     if(pages[ptr].pageNum !== 'x'){
-                        $('#lpage').tooltipster('content', getMetadataDiv(pages[ptr]));                            
+                        $('#lefttooltip').html(getMetadataDiv(pages[ptr]));                            
                     }else{
-                        $('#lpage').tooltipster('hide');
+                       $('#lefttooltip').html('Void Page');
                     }
                     
                     $("#rpage").attr('src','image.php?img_path='+pages[ptr+1].getImage());
                     $("#rpage").data('obj',pages[ptr+1]);                    
                     $("#rightShelf").text( pages[ptr+1].getAbbrShelf());
                     if(pages[ptr+1].pageNum !== 'x'){
-                        $('#rpage').tooltipster('content', getMetadataDiv(pages[ptr+1]));                            
+                        $('#righttooltip').html(getMetadataDiv(pages[ptr+1]));                         
                     }else{
-                        $('#rpage').tooltipster('hide');
+                        $('#righttooltip').html('Void Page');
                     }
                     
                     if(ptr+2 >= pages.length ){

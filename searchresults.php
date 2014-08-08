@@ -70,8 +70,8 @@
                     ." loc.callno, loc.collection, loc.country, loc.division, loc.institution, loc.municipality, loc.series, loc.state  )"
                     . $like ."  '%" . $bib->term . "%' " ;
         
-        $count++;    
-        }        
+            $count++;    
+        }
         
         
         $codQueryStr = '';
@@ -100,7 +100,7 @@
                     . " ON ms.mscript_id = fol.mscript_id ";
         
         if(count($biblioQueries) < 1 || count($codologQueries) < 1){        
-            $query_place_holder .= " WHERE %s  %s " ;
+            $query_place_holder .= " " ;
             $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
         }else if(count($biblioQueries) > 0 || count($codologQueries) > 0){
             $query_place_holder .= " WHERE %s  AND ( %s )" ;
