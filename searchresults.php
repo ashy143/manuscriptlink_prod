@@ -24,13 +24,13 @@
         $biblioQueries = array();
         for ( $i = 1; $i < 5; $i++ ) {
            $biblioQuery = new BibliographicalQuery();
-           if($_POST["bibliographical".$i]==''){
+           if($_GET["bibliographical".$i]==''){
                continue;
            }
-           if(  count($biblioQueries) > 0 || (strcasecmp($_POST["bibliographicalLog".$i ], 'NOT') == 0)){
-               $biblioQuery->logic = $_POST["bibliographicalLog".$i ]; 
+           if(  count($biblioQueries) > 0 || (strcasecmp($_GET["bibliographicalLog".$i ], 'NOT') == 0)){
+               $biblioQuery->logic = $_GET["bibliographicalLog".$i ]; 
            }
-           $biblioQuery->term = $_POST["bibliographical".$i];
+           $biblioQuery->term = $_GET["bibliographical".$i];
            $biblioQueries[] = $biblioQuery;
         }
         
@@ -38,15 +38,15 @@
         $codologQueries = array();
         for ( $i = 1; $i < 8; $i++ ) {
             $codologQuery = new CodicologicalQuery();
-            if($_POST["codicologicalTerm".$i]=='NA'){
+            if($_GET["codicologicalTerm".$i]=='NA'){
                 continue;
             }
-            if( count($codologQueries) > 0  ||  (strcasecmp($_POST["codicologicalLogic".$i ], 'NOT') == 0) ){
-                $codologQuery->logic = $_POST["codicologicalLogic".$i ]; 
+            if( count($codologQueries) > 0  ||  (strcasecmp($_GET["codicologicalLogic".$i ], 'NOT') == 0) ){
+                $codologQuery->logic = $_GET["codicologicalLogic".$i ]; 
             }
-            $codologQuery->min = $_POST["codicologicalMin".$i]; 
-            $codologQuery->max = $_POST["codicologicalMax".$i ]; 
-            $codologQuery->term = $_POST["codicologicalTerm".$i];
+            $codologQuery->min = $_GET["codicologicalMin".$i]; 
+            $codologQuery->max = $_GET["codicologicalMax".$i ]; 
+            $codologQuery->term = $_GET["codicologicalTerm".$i];
             $codologQueries[] = $codologQuery;
 
         }
@@ -225,7 +225,7 @@
                     
                         <!--Here we will display the search results-->
                     <?php $count=1; foreach($manuscript_ext_objs as $mobj){ ?>
-                        <form name='<?php echo $count; ?>' method="post" action='record.php'>
+                        <form name='<?php echo $count; ?>' method="GET" action='record.php'>
                             <input type="hidden" name='id' value ='<?php echo $mobj->mscript_obj->mscript_id; ?>'/>
                             <input type="hidden" name='data' value ='<?php echo json_encode($mobj);?>'/>
                         </form>

@@ -3,10 +3,10 @@
     require_once './includes/functions.php';
     session_start();
 //    $tableName = "folios";
-//    $sql_pages = "SELECT folio_num, folio_side, res_ident, folio_id FROM ".$tableName." WHERE mscript_id=".$_POST['mscript_id']." order by folio_num asc, folio_side asc";    
+//    $sql_pages = "SELECT folio_num, folio_side, res_ident, folio_id FROM ".$tableName." WHERE mscript_id=".$_GET['mscript_id']." order by folio_num asc, folio_side asc";    
 //    $result = mysql_query($sql_pages) or die(mysql_error());
     
-    $folio_objs = getFoliosByManuscriptId($_POST['mscript_id']);
+    $folio_objs = getFoliosByManuscriptId($_GET['id']);
 
 ?>
 <!DOCTYPE html>
@@ -101,7 +101,7 @@
                 <!--Large Image -->
                 <div class="span6">
                         <img id = "zoom1" style='width: 95%; height: 95%' class = "cloudzoom"
-                             data-cloudzoom = "zoomImage: 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($_POST['imagepath']));?>', zoomPosition:'#zoom-win'" src = 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($_POST['imagepath']));?>' />
+                             data-cloudzoom = "zoomImage: 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($_GET['imagepath']));?>', zoomPosition:'#zoom-win'" src = 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($_GET['imagepath']));?>' />
                 </div>
             </div>
     </div>

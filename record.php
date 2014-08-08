@@ -6,8 +6,8 @@
         header("location: ./index.php");
     }
     
-    $manuscript_id = $_POST['id'];
-    $json_decoded_data = json_decode($_POST['data']);
+    $manuscript_id = $_GET['id'];
+    $json_decoded_data = json_decode($_GET['data']);
        
     $manuscript_obj = getManuscriptById($manuscript_id);
     $folio_objs = getFoliosByManuscriptId($manuscript_id);
@@ -121,9 +121,9 @@
                   
                   
                   <?php $count=1; foreach($combined_folio_objs as $folio_obj_array){ ?>
-                  <form name='<?php echo $count; ?>' method="post" action='codex.php'>
+                  <form name='<?php echo $count; ?>' method="GET" action='codex.php'>
                         <input type="hidden" name='id' value ='<?php echo $folio_obj_array[0]->mscript_id; ?>'/>
-                        <input type="hidden" name='data' value ='<?php echo $_POST['data']; ?>'/>
+                        <input type="hidden" name='data' value ='<?php echo $_GET['data']; ?>'/>
                   </form>
                   
                   <div class="holding">                      

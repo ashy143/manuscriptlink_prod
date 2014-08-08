@@ -79,9 +79,9 @@
                 </div>
             </div>
            <div class='row-fluid'>
-               <form name='recordForm' method="post" action='record.php'>
-                    <input type="hidden" name='id' value ='<?php echo $_POST['id']; ?>'/>
-                    <input type="hidden" name='data' value ='<?php echo $_POST['data']; ?>'/>
+               <form name='recordForm' method="GET" action='record.php'>
+                    <input type="hidden" name='id' value ='<?php echo $_GET['id']; ?>'/>
+                    <input type="hidden" name='data' value ='<?php echo $_GET['data']; ?>'/>
                </form>
                
                 <div class="span1"></div>
@@ -193,7 +193,7 @@
                     
                     url: 'getpages.php', //current page
                     type: 'GET',
-                    data: {mscript_id: <?php echo $_POST['id']?> },
+                    data: {mscript_id: <?php echo $_GET['id']?> },
                     dataType: "json",
                     contentType: "application/json",                    
                     success: function (d) {                      
@@ -304,8 +304,8 @@
                     //Navigate to pan zoom page
                     var page = $(this).data("obj");                   
                     var url = "panzoom.php";
-                    var form = $('<form action="' + url + '" method="post">' +
-                    '<input type="hidden" name="mscript_id" value="' + <?php echo $_POST['id']; ?> + '" />' +
+                    var form = $('<form action="' + url + '" method="GET">' +
+                    '<input type="hidden" name="mscript_id" value="' + <?php echo $_GET['id']; ?> + '" />' +
                     '<input type="hidden" name="folio_id" value="' + page.pageId + '" />' +
                     '<input type="hidden" name="imagepath" value="' + page.image + '" />' +
                     '</form>');
