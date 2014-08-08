@@ -5,6 +5,7 @@
     include_once './utils/process_search.php';
     include_once './data_models/CodicologicalQuery.php';
     include_once './data_models/BibliographicalQuery.php';
+    include_once './utils/SearchTermsMap.php';
     
     session_start();    
     if (login_check() == true) {
@@ -204,7 +205,22 @@
                 </div>
                 <div id="results" class="col-md-9">
                     <!-- THis is the line where you will output the search terms, all of which wrapped in a span tag with class search-terms -->
-                    <h4>Showing results for: <small><span class="search-terms">Old Documents</span>, <span class="search-terms">1420 — 1611</span>.</small></h4>
+                    <h4>Showing results for: 
+                        <small>
+                            <?php foreach($biblioQueries as $bib){?>
+                                <span class="search-terms"><?php echo $bib->logic . " ". $bib->term ; ?></span>
+                            <?php } ?>
+                                
+                                <?php if(count($codologQueries) > 0){ ?>
+                                    <span> &nbsp; AND &nbsp; </span>
+                                <?php }?>
+                                    
+                            <?php foreach($codologQueries as $cod){?>
+                                <span class="search-terms"><?php echo $cod->logic . " ". $columnNamesMap[$cod->term] . " between ". $cod->min . " to " . $cod->max ;   ?></span>
+                            <?php } ?>
+                                
+                        </small>
+                    </h4>
                 
                     
                         <!--Here we will display the search results-->
@@ -221,24 +237,17 @@
                             
                     <?php $count = $count+1; } ?>
                    
-                </div>
-                
+                </div>               
 
-    		</div>
+            </div>
     	</div>
-
-
-
-
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script launguage="JavaScript">
         $('.search-result').click(function() { 
           $(this).toggleClass('clicked', 1000, "easeOutSine");
-        });
-        
+        });   
    
     
     </script>
