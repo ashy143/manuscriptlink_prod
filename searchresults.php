@@ -61,7 +61,8 @@
                 }else{
                     $bib->logic = 'AND';
                 }                
-                $like = 'NOT LIKE';
+                $like = 'NOT LIKE';                
+                $bib->actualLogic = 'not';
             }
             
             $bibQueryStr.= $bib->logic . " CONCAT (fol.title, fol.author, fol.folio_contents, fol.coll_admin, fol.col_staff, fol.faculty_liason, fol.meta_catag, fol.scan_tech, "
@@ -87,7 +88,9 @@
                 }else{
                     $cod->logic = 'AND';
                 }
-                $between = 'NOT BETWEEN';                
+                $between = 'NOT BETWEEN';
+                
+                $cod->actualLogic = 'not';
             }
             $codQueryStr.= " " . $cod->logic . " " . $cod->term . "  " . $between . " " .$cod->min .  " AND "  .$cod->max ;
             $count++;
@@ -208,7 +211,7 @@
                     <h4>Showing results for: 
                         <small>
                             <?php foreach($biblioQueries as $bib){?>
-                                <span class="search-terms"><?php echo $bib->logic . " ". $bib->term ; ?></span>
+                                <span class="search-terms"><?php echo $bib->logic . " ". $bib->actualLogic. " " .$bib->term ; ?></span>
                             <?php } ?>
                                 
                                 <?php if(count($codologQueries) > 0){ ?>
@@ -216,7 +219,7 @@
                                 <?php }?>
                                     
                             <?php foreach($codologQueries as $cod){?>
-                                <span class="search-terms"><?php echo $cod->logic . " ". $columnNamesMap[$cod->term] . " between ". $cod->min . " to " . $cod->max ;   ?></span>
+                                <span class="search-terms"><?php echo $cod->logic . " ". $columnNamesMap[$cod->term] . " " . $cod->actualLogic . " between ". $cod->min . " to " . $cod->max ;   ?></span>
                             <?php } ?>
                                 
                         </small>

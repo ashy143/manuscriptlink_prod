@@ -7,5 +7,8 @@ function BibliographicalQuery(){
     
     this.logic;
     this.term;
+    
+    //This is used to handle not logic
+    this.actualLogic;
 }
 

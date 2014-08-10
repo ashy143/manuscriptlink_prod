@@ -10,4 +10,7 @@ function CodologicalQuery(){
     this.term;
     this.min;
     this.max;
+    
+    //This is used to handle not logic
+    this.actualLogic;
 }
