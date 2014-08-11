@@ -1,6 +1,6 @@
 <?php 
-    require_once './includes/functions.php';
-       
+    include_once './includes/functions.php';
+    session_start();   
     $folio_objs = getFoliosByManuscriptId($_GET['id']);
 
 ?>
@@ -25,20 +25,20 @@
     <![endif]-->
     
     
-        <link rel="stylesheet" type="text/css" href="css/cloudzoom.css">
         <link rel='stylesheet' type="text/css" href='css/bootstrap-responsive.css'>        
         <link rel="stylesheet" type="text/css" href="css/thumbelina.css">
         <link rel="stylesheet" type="text/css" href="css/jquery.contextMenu.css">
-        <style>
+        <link rel="stylesheet" type="text/css" href="css/panzoom.css">
+        <style> 
             #slider {
                 position:relative;
                 margin-top:40px;
-                width:93px;
-                height:256px;
+                width:98%;
+                height: 50%;
                 border-left:1px solid #aaa;
                 border-right:1px solid #aaa;
-                margin-bottom:40px;
-            }
+                margin-bottom:10px;
+            }            
         </style>
         
   </head>
@@ -46,102 +46,60 @@
 
     <div class="container">
       	<div class="row">
-            <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" /></div>
+            <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" alt=''/></a></div>
           	<div class="col-md-9" style=" height: 55px;">
-            		<ul class="link-nav pull-right">
+                    <ul class="link-nav pull-right">
               		<li><a href="search.php">search</a></li>
-  		            <li><a href="about.php">about</a></li>
-  		            <li><a href="browse.php">browse</a></li>
-  		            <li class="active"><a href="resources.php">resources</a></li>
-  		            <li><a href="#">citation shelfmarks</a></li>
-  		            <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
-            		</ul>
+                        <li><a href="about.php">about</a></li>
+                        <li><a href="browse.php">browse</a></li>
+                        <li class="active"><a href="resources.php">resources</a></li>
+                        <li><a href="#">citation shelfmarks</a></li>
+                        <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
+                    </ul>
           	</div>
       	</div>
-
     </div>
-    <div class="back">
-        <div class="row-fluid">
-                <!-- Image gallery -->
-                <div class="span2" style="height: 800px;">                
-                    <div id="slider" style="height:95%">
-                        <div class="thumbelina-but vert top">&#708;</div>
-                        <ul id="gallery-slider">
-                             <?php foreach ($folio_objs as $fob_obj) {                                
+    
+      <div class="container">
+          <div class="row-fluid">
+              <div class="span2" >                
+                <div id="slider" style="height:50%">
+                    <div class="thumbelina-but vert top">&#708;</div>
+                    <ul id="gallery-slider">
+                         <?php foreach ($folio_objs as $fob_obj) {                                
 //                                page=0,side=1,path=2,id=3
-                                $imagePath = $fob_obj->res_ident;
-                            ?>
-                                <li>
-                                    <a  style="width:98% " href="#" class="cloudzoom-gallery"
-                                    data-imageId="<?php echo $folio_obj->folio_id; ?>"  
-                                    data-imageDesc="To Be Extracted"
-                                    data-cloudzoom =
-                                         "useZoom: '#zoom1', 
-                                         image: 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($imagePath));?>', 
-                                         zoomImage: 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($imagePath));?>' ">
-                                    <img style="width: 98%;" src = 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($imagePath));?>' />
-                                    </a>
-                                </li>
-                            <?php } ?>
-                        </ul>
-                        <div class="thumbelina-but vert bottom">&#709;</div>
-                    </div>
-                </div>
-                <!--Zoomed Image-->
-                <div class="span4">
-                    <div id="zoom-win" style=" width: 400px; height: 400px;"></div>
-                    
-                </div>
-                <!--Large Image -->
-                <div class="span6">
-                        <img id = "zoom1" style='width: 95%; height: 95%' class = "cloudzoom"
-                             data-cloudzoom = "zoomImage: 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($_GET['imagepath']));?>', zoomPosition:'#zoom-win'" src = 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($_GET['imagepath']));?>' />
+                            $imagePath = $fob_obj->res_ident;
+                        ?>
+                            <li><img id='galleryItem' src = 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($imagePath));?>' alt=''/></li>
+                        <?php } ?>
+                    </ul>
+                    <div class="thumbelina-but vert bottom">&#709;</div>
                 </div>
             </div>
+            <div class="span9" >                
+                <div id="content">
+                  <div id="pageContent">				
+                      <div id="imgContainer">
+                              <img id="imageFullScreen" src='./content/manuscriptlink/2007-2011/Jpegs final pfp/Bob Jones MS 2/images/bm2_recto.jpg' alt=''/>
+                      </div>
+                      <div>
+                        <span>
+                            <button id='zoomInButton'> + </button>
+                            <button id='zoomOutButton'> - </button>
+                            <button id='topPositionMap'> U </button>
+                            <button id='leftPositionMap'> L </button>
+                            <button id='rightPositionMap'> R </button>
+                            <button id='bottomPositionMap'> D </button>
+                        </span>
+                      </div>
+                  </div>
+                </div>            
+            </div>
+          </div>
     </div>
-
-    <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
-
-    <div id="bookshelf">
-        <div id="bookHead">
-            <h4>Bookshelf</h4>
-            <i class="fa fa-caret-square-o-down"></i>
-        </div>
-        <div id="bookBody">
-              <div class="book" id="book1">
-                <div class="myBook">
-                  <h4>1. USC Early MS 17</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>
-              </div>
-              <div class="book" id="book2">
-                <div class="myBook">
-                  <h4>2. USC Early MS 22a</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>
-              </div>
-              <div class="book" id="book3">
-                <div class="myBook">
-                  <h4>3. USC Early MS 17</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>  
-              </div>
-              <div class="book" id="book4">
-                <div class="myBook">
-                  <h4>4. USC Early MS 17</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>
-              </div>
-              <div class="bookBtn">select</div>
-              <div class="bookBtn">Add to archive</div>
-              <div class="bookBtn"><a href="juxtapose.php">juxtapose &amp; Compare</a></div>
-              <div class="bookBtn"><a href="myarchive.php">view archive</a></div>
-       </div>
-    </div>
+        
+                
+    
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -160,63 +118,50 @@
    
     </script>    <!-- Include all compiled plugins (below), or include individual files as needed -->
     
-    <script src="js/bootstrap.min.js"></script>    
-    <script src="js/cloudzoom.js"></script>
+    <script src="js/bootstrap.min.js"></script>        
     <script src="js/thumbelina.js"></script>
     <script src='js/jquery.contextMenu.js'></script>
+    <script src='js/e-smart-zoom-jquery.min.js'></script>
     <script type="text/javascript">        
             
-            CloudZoom.quickStart();
-                
             $(document).ready(function(){    
                 
-               $.contextMenu({
-                    selector: '.cloudzoom', 
-                    callback: function(key, options) {                       
-                        var imgId = $(this).attr('data-imageId');
-                        var desc = $(this).attr('data-attr');
-                        
-                        //now insert this page id into database and link it with logged in user
-                        if(key==='archive'){
-                            alert("archive called");
-                            $.ajax({    
-                                url: 'save_archives.php', //current page
-                                type: 'GET',
-                                data: {page_id: imgId, is_juxta: 'false' },
-                                dataType: "json",
-                                contentType: "application/json",                    
-                                success: function (msg) {                                 
-                                    alert(msg.statusMsg);
-                                }
-                            });
-                        }else if(key==='juxtapose'){
-                            alert("juxta called");
-                            $.ajax({    
-                                url: 'save_archives.php', //current page
-                                type: 'GET',
-                                data: {page_id: imgId, is_juxta: 'true' }, //false says its for juxtaposing
-                                dataType: "json",
-                                contentType: "application/json",                    
-                                success: function (msg) {                                 
-                                    alert(msg.statusMsg);
-                                }
-                            });
-                        }
-                    },
-                    items: {
-                        "archive": {name: "Add to Archives"},
-                        "juxtapose": {name: "Add to Juxtapose"}                        
-                    }
-                });
+                $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
+                $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
+                $('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
 
-               
-                 $('#slider').Thumbelina({
-                        orientation:'vertical',         // Use vertical mode (default horizontal).
-                        $bwdBut:$('#slider .top'),     // Selector to top button.
-                        $fwdBut:$('#slider .bottom')   // Selector to bottom button.
+                function zoomButtonClickHandler(e){
+                var scaleToAdd = 0.8;
+                    if(e.target.id === 'zoomOutButton')
+                            scaleToAdd = -scaleToAdd;
+                    $('#imageFullScreen').smartZoom('zoom', scaleToAdd);
+                }
+
+                function moveButtonClickHandler(e){
+                    var pixelsToMoveOnX = 0;
+                    var pixelsToMoveOnY = 0;
+
+                    switch(e.target.id){
+                            case "leftPositionMap":
+                                    pixelsToMoveOnX = 50;	
+                            break;
+                            case "rightPositionMap":
+                                    pixelsToMoveOnX = -50;
+                            break;
+                            case "topPositionMap":
+                                    pixelsToMoveOnY = 50;	
+                            break;
+                            case "bottomPositionMap":
+                                    pixelsToMoveOnY = -50;	
+                            break;
+                    }
+                    $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
+                };
+                
+                $('#galleryItem').click(function() {
+                    $("#imageFullScreen").attr('src', $(this).attr('src'));
                 });
                 
-              
             });
             
         </script> 
