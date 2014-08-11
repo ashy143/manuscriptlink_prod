@@ -1,11 +1,6 @@
 <?php 
-
     require_once './includes/functions.php';
-    session_start();
-//    $tableName = "folios";
-//    $sql_pages = "SELECT folio_num, folio_side, res_ident, folio_id FROM ".$tableName." WHERE mscript_id=".$_GET['mscript_id']." order by folio_num asc, folio_side asc";    
-//    $result = mysql_query($sql_pages) or die(mysql_error());
-    
+       
     $folio_objs = getFoliosByManuscriptId($_GET['id']);
 
 ?>
@@ -72,8 +67,7 @@
                     <div id="slider" style="height:95%">
                         <div class="thumbelina-but vert top">&#708;</div>
                         <ul id="gallery-slider">
-                             <?php foreach ($folio_objs as $fob_obj) {
-                                
+                             <?php foreach ($folio_objs as $fob_obj) {                                
 //                                page=0,side=1,path=2,id=3
                                 $imagePath = $fob_obj->res_ident;
                             ?>
@@ -88,7 +82,7 @@
                                     <img style="width: 98%;" src = 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($imagePath));?>' />
                                     </a>
                                 </li>
-                            <?php } ?>                    
+                            <?php } ?>
                         </ul>
                         <div class="thumbelina-but vert bottom">&#709;</div>
                     </div>
