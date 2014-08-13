@@ -47,16 +47,16 @@
     <div class="container">
       	<div class="row">
             <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" alt=''/></a></div>
-          	<div class="col-md-9" style=" height: 55px;">
-                    <ul class="link-nav pull-right">
-              		<li><a href="search.php">search</a></li>
-                        <li><a href="about.php">about</a></li>
-                        <li><a href="browse.php">browse</a></li>
-                        <li class="active"><a href="resources.php">resources</a></li>
-                        <li><a href="#">citation shelfmarks</a></li>
-                        <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
-                    </ul>
-          	</div>
+            <div class="col-md-9" style=" height: 55px;">
+                <ul class="link-nav pull-right">
+                    <li><a href="search.php">search</a></li>
+                    <li><a href="about.php">about</a></li>
+                    <li><a href="browse.php">browse</a></li>
+                    <li class="active"><a href="resources.php">resources</a></li>
+                    <li><a href="#">citation shelfmarks</a></li>
+                    <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
+                </ul>
+            </div>
       	</div>
     </div>
     
@@ -70,7 +70,7 @@
 //                                page=0,side=1,path=2,id=3
                             $imagePath = $fob_obj->res_ident;
                         ?>
-                            <li><img id='galleryItem' src = 'data:/image/jpg;base64,<?php echo base64_encode(file_get_contents($imagePath));?>' alt=''/></li>
+                        <li><img id='galleryItem' class='galleryItem' data-path='<?php echo $imagePath ; ?>' src = '<?php echo "image.php?img_path=".$imagePath ;?>' alt=''/></li>
                         <?php } ?>
                     </ul>
                     <div class="thumbelina-but vert bottom">&#709;</div>
@@ -80,7 +80,7 @@
                 <div id="content">
                   <div id="pageContent">				
                       <div id="imgContainer">
-                              <img id="imageFullScreen" src='./content/manuscriptlink/2007-2011/Jpegs final pfp/Bob Jones MS 2/images/bm2_recto.jpg' alt=''/>
+                              <img id="imageFullScreen" src = '<?php echo "image.php?img_path=".$_GET['imagepath'] ;?>' alt=''/>
                       </div>
                       <div>
                         <span>
@@ -158,8 +158,8 @@
                     $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
                 };
                 
-                $('#galleryItem').click(function() {
-                    $("#imageFullScreen").attr('src', $(this).attr('src'));
+                $('.galleryItem').click(function() {
+                    $("#imageFullScreen").attr('src', 'image.php?img_path=' + $(this).data('path'));
                 });
                 
             });
