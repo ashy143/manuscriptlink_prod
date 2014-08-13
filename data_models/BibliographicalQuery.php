@@ -10,4 +10,7 @@ class BibliographicalQuery{
     
     public $logic;
     public $term;
+    
+    //This is used to handle not logic
+    public $actualLogic;
 }

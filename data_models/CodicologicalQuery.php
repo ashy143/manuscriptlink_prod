@@ -12,4 +12,7 @@ class CodicologicalQuery{
     public $term;
     public $min;
     public $max;
+    
+    //This is used to handle not logic
+    public $actualLogic;
 }
