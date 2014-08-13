@@ -84,12 +84,13 @@
                       </div>
                       <div>
                         <span>
-                            <button id='zoomInButton'> + </button>
-                            <button id='zoomOutButton'> - </button>
-                            <button id='topPositionMap'> U </button>
-                            <button id='leftPositionMap'> L </button>
-                            <button id='rightPositionMap'> R </button>
-                            <button id='bottomPositionMap'> D </button>
+                            <img id='zoomInButton' src='img/zoom-in-outline.png' alt='' />
+                            <img id='zoomOutButton' src='img/zoom-out-outline.png' alt='' />
+                            <img id='leftPositionMap' src='img/arrow-left-thick.png' alt='' />
+                            <img id='topPositionMap' src='img/arrow-up-thick.png' alt='' />
+                            <img id='bottomPositionMap' src='img/arrow-down-thick.png' alt='' />
+                            <img id='rightPositionMap' src='img/arrow-right-thick.png' alt='' />
+                            
                         </span>
                       </div>
                   </div>
