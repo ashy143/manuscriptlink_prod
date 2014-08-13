@@ -48,7 +48,7 @@
       	<div class="row">
             <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" alt=''/></a></div>
             <div class="col-md-9" style=" height: 55px;">
-                <ul class="link-nav pull-right">
+                <ul class="link-nav pull-right" >
                     <li><a href="search.php">search</a></li>
                     <li><a href="about.php">about</a></li>
                     <li><a href="browse.php">browse</a></li>
@@ -65,7 +65,7 @@
               <div class="span2" >                
                 <div id="slider" style="height:50%">
                     <div class="thumbelina-but vert top">&#708;</div>
-                    <ul id="gallery-slider">
+                    <ul id="gallery-slider" >
                          <?php foreach ($folio_objs as $fob_obj) {                                
 //                                page=0,side=1,path=2,id=3
                             $imagePath = $fob_obj->res_ident;
@@ -82,7 +82,7 @@
                       <div id="imgContainer">
                               <img id="imageFullScreen" src = '<?php echo "image.php?img_path=".$_GET['imagepath'] ;?>' alt=''/>
                       </div>
-                      <div>
+                      <div align='middle'>
                         <span>
                             <img id='zoomInButton' src='img/zoom-in-outline.png' alt='' />
                             <img id='zoomOutButton' src='img/zoom-out-outline.png' alt='' />

@@ -48,17 +48,12 @@ and open the template in the editor.
 
 
 .zoomableContainer{
-        background: transparent;
+    background: transparent;
     //background-image: url(../images/transparent.png);
-        height: 80vh;
-        max-width: 100%;
-        
-
+    height: 80vh;
+    max-width: 100%;
 }
 
 #galleryItem{
-    max-width: 98%;    
+    max-width: 98%;
 }
-
-
-
