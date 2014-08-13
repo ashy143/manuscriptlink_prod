@@ -160,7 +160,11 @@
                 
                 $('.galleryItem').click(function() {
                     $("#imageFullScreen").attr('src', 'image.php?img_path=' + $(this).data('path'));
-                });
+                    $('#imageFullScreen').smartZoom('destroy');
+                    $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
+                    $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
+                        $('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
+                    });
                 
             });
             
