@@ -54,6 +54,20 @@ and open the template in the editor.
     max-width: 100%;
 }
 
-#galleryItem{
+.galleryItem{
     max-width: 98%;
+}
+
+.imageSelectBorder{
+    border: 3px solid blue;
+}
+
+#gallery-slider {
+    position:relative;
+    margin-top:40px;
+    width:98%;
+    height:60vh;
+    border-left:1px solid #aaa;
+    border-right:1px solid #aaa;
+    margin-bottom:40px;
 }

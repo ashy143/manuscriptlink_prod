@@ -1,7 +1,7 @@
 <?php 
     include_once './includes/functions.php';
     session_start();   
-    $folio_objs = getFoliosByManuscriptId($_GET['id']);
+    $folio_objs = getFoliosByManuscriptId($_GET['mscript_id']);
 
 ?>
 <!DOCTYPE html>
@@ -29,18 +29,7 @@
         <link rel="stylesheet" type="text/css" href="css/thumbelina.css">
         <link rel="stylesheet" type="text/css" href="css/jquery.contextMenu.css">
         <link rel="stylesheet" type="text/css" href="css/panzoom.css">
-        <style> 
-            #slider {
-                position:relative;
-                margin-top:40px;
-                width:98%;
-                height: 50%;
-                border-left:1px solid #aaa;
-                border-right:1px solid #aaa;
-                margin-bottom:10px;
-            }            
-        </style>
-        
+              
   </head>
   <body data-spy="scroll" data-target="#master" data-offset="100">
 
@@ -63,14 +52,14 @@
       <div class="container">
           <div class="row-fluid">
               <div class="span2" >                
-                <div id="slider" style="height:50%">
+                <div id="gallery-slider">
                     <div class="thumbelina-but vert top">&#708;</div>
-                    <ul id="gallery-slider" >
+                    <ul>
                          <?php foreach ($folio_objs as $fob_obj) {                                
 //                                page=0,side=1,path=2,id=3
                             $imagePath = $fob_obj->res_ident;
-                        ?>
-                        <li><img id='galleryItem' class='galleryItem' data-path='<?php echo $imagePath ; ?>' src = '<?php echo "image.php?img_path=".$imagePath ;?>' alt=''/></li>
+                         ?>
+                        <li><img class='galleryItem <?php echo ($_GET['folio_id'] == $fob_obj->folio_id)?' imageSelectBorder':'' ; ?>' data-path='<?php echo $imagePath ; ?>' src = '<?php echo "image.php?img_path=".$imagePath ;?>' alt=''/></li>
                         <?php } ?>
                     </ul>
                     <div class="thumbelina-but vert bottom">&#709;</div>
@@ -125,7 +114,13 @@
     <script src='js/e-smart-zoom-jquery.min.js'></script>
     <script type="text/javascript">        
             
-            $(document).ready(function(){    
+            $(document).ready(function(){
+                
+                $('#gallery-slider').Thumbelina({
+                    orientation:'vertical',         // Use vertical mode (default horizontal).
+                    $bwdBut:$('#slider3 .top'),     // Selector to top button.
+                    $fwdBut:$('#slider3 .bottom')   // Selector to bottom button.
+                });
                 
                 $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
                 $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
@@ -160,6 +155,7 @@
                 };
                 
                 $('.galleryItem').click(function() {
+                    $(this).toggleClass('imageSelectBorder');
                     $("#imageFullScreen").attr('src', 'image.php?img_path=' + $(this).data('path'));
                     $('#imageFullScreen').smartZoom('destroy');
                     $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
