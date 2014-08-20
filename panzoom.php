@@ -101,23 +101,38 @@
         <div id="bookBody">
             <div class="book" id="book1">
                 <div class="myBook">
-                    <h4>1. <?php echo $juxt_folio_objs[1]->abbreviated_shelf;  ?></h4>
+                    <?php if($count >= 1) { ?>
+                    <h4>1. <?php echo $juxt_folio_objs[0]->abbreviated_shelf;  ?></h4>
                     <div class="delButton">Delete</div>
                     <div class="codexButton">Codex</div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="book" id="book2">
                 <div class="myBook">
-
+                    <?php if($count >= 2) { ?>
+                        <h4>1. <?php echo $juxt_folio_objs[1]->abbreviated_shelf;  ?></h4>
+                        <div class="delButton">Delete</div>
+                        <div class="codexButton">Codex</div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="book" id="book3">
                 <div class="myBook">
-
+                    <?php if($count >= 3) { ?>
+                        <h4>1. <?php echo $juxt_folio_objs[2]->abbreviated_shelf;  ?></h4>
+                        <div class="delButton">Delete</div>
+                        <div class="codexButton">Codex</div>
+                    <?php } ?>
                 </div>
             </div>
             <div class="book" id="book4">
                 <div class="myBook">
+                    <?php if($count >= 4) { ?>
+                        <h4>1. <?php echo $juxt_folio_objs[3]->abbreviated_shelf;  ?></h4>
+                        <div class="delButton">Delete</div>
+                        <div class="codexButton">Codex</div>
+                    <?php } ?>
 
                 </div>
             </div>             
