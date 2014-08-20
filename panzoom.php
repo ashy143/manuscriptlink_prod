@@ -118,8 +118,8 @@
                 
                 $('#gallery-slider').Thumbelina({
                     orientation:'vertical',         // Use vertical mode (default horizontal).
-                    $bwdBut:$('#slider3 .top'),     // Selector to top button.
-                    $fwdBut:$('#slider3 .bottom')   // Selector to bottom button.
+                    $bwdBut:$('#gallery-slider .top'),     // Selector to top button.
+                    $fwdBut:$('#gallery-slider .bottom')   // Selector to bottom button.
                 });
                 
                 $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
@@ -154,14 +154,14 @@
                     $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
                 };
                 
-                $('.galleryItem').click(function() {
-                    $(this).toggleClass('imageSelectBorder');
-                    $("#imageFullScreen").attr('src', 'image.php?img_path=' + $(this).data('path'));
-                    $('#imageFullScreen').smartZoom('destroy');
-                    $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
-                    $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
-                        $('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
-                    });
+//                $('.galleryItem').click(function() {
+//                    $(this).toggleClass('imageSelectBorder');
+//                    $("#imageFullScreen").attr('src', 'image.php?img_path=' + $(this).data('path'));
+//                    $('#imageFullScreen').smartZoom('destroy');
+//                    $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
+//                    $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
+//                        $('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
+//                });
                 
             });
             
