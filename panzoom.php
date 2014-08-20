@@ -2,6 +2,8 @@
     include_once './includes/functions.php';
     session_start();   
     $folio_objs = getFoliosByManuscriptId($_GET['mscript_id']);
+    
+    $juxt_folio_objs = getJuxtaImagesForLoggedInUser();
 
 ?>
 <!DOCTYPE html>
@@ -59,7 +61,7 @@
 //                                page=0,side=1,path=2,id=3
                             $imagePath = $fob_obj->res_ident;
                          ?>
-                        <li><img class='galleryItem <?php echo ($_GET['folio_id'] == $fob_obj->folio_id)?' imageSelectBorder':'' ; ?>' data-path='<?php echo $imagePath ; ?>' src = '<?php echo "image.php?img_path=".$imagePath ;?>' alt=''/></li>
+                        <li><img class='galleryItem <?php echo ($_GET['folio_id'] == $fob_obj->folio_id)?' imageSelectBorder':'' ; ?>' data-path='<?php echo $imagePath ; ?>' data-folioid='<?php echo $fob_obj->folio_id; ?>' src = '<?php echo "image.php?img_path=".$imagePath ;?>' alt=''/></li>
                         <?php } ?>
                     </ul>
                     <div class="thumbelina-but vert bottom">&#709;</div>
@@ -69,7 +71,7 @@
                 <div id="content">
                   <div id="pageContent">				
                       <div id="imgContainer">
-                              <img id="imageFullScreen" src = '<?php echo "image.php?img_path=".$_GET['imagepath'] ;?>' alt=''/>
+                          <img id="imageFullScreen" data-folioid='<?php echo $_GET['folio_id'];?>' src = '<?php echo "image.php?img_path=".$_GET['imagepath'] ;?>' alt=''/>
                       </div>
                       <div align='middle'>
                         <span>
@@ -89,17 +91,54 @@
     </div>
         
                 
-    
+    <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
+    <?php $count = count($juxt_folio_objs); ?>
+    <div id="bookshelf">
+        <div id="bookHead">
+            <h4>Bookshelf</h4>
+            <i class="fa fa-caret-square-o-down"></i>
+        </div>
+        <div id="bookBody">
+            <div class="book" id="book1">
+                <div class="myBook">
+                    <h4>1. <?php echo $juxt_folio_objs[1]->abbreviated_shelf;  ?></h4>
+                    <div class="delButton">Delete</div>
+                    <div class="codexButton">Codex</div>
+                </div>
+            </div>
+            <div class="book" id="book2">
+                <div class="myBook">
 
+                </div>
+            </div>
+            <div class="book" id="book3">
+                <div class="myBook">
+
+                </div>
+            </div>
+            <div class="book" id="book4">
+                <div class="myBook">
+
+                </div>
+            </div>             
+
+            <div id="juxtaBtn" class="bookBtn">Add to Juxtapose</div>
+            <div id="archiveBtn" class="bookBtn">Add to archive</div>
+            <div id="jxtAndCmpBtn" class="bookBtn"><a href="juxtapose.php">juxtapose &amp; Compare</a></div>
+            <div id="viewArchBtn" class="bookBtn"><a href="myarchive.php">view archive</a></div>
+       </div>
+    </div>    
+    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script language="javascript">
       $('.fa-caret-square-o-down').click(function () {
-        $('#bookBody').slideToggle('2000',"swing", function () {
-          // Animation complete.
-        });
-        $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
+          $('#bookBody').slideToggle('2000',"swing", function () {
+            //Animation complete
+          });
+          $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
       });
+      
       $(".delButton").click(function(event) {
         event.preventDefault();
         $(this).parents('.myBook').fadeOut();
@@ -157,12 +196,40 @@
                 $('.galleryItem').click(function() {
                     $(this).toggleClass('imageSelectBorder');
                     $("#imageFullScreen").attr('src', 'image.php?img_path=' + $(this).data('path'));
+                    $("#imageFullScreen").attr('data-folioid', $(this).data('folioid'));
                     $('#imageFullScreen').smartZoom('destroy');
                     $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
                     $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
                         $('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
                 });
                 
+                $('#juxtaBtn').click(function(){
+                    var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
+                    $.ajax({    
+                        url: 'saveArchives.php', //current page
+                        type: 'GET',
+                        data: {folio_id: folioIdToBeAdded, is_juxta: 'true' },
+                        dataType: "json",
+                        contentType: "application/json",                    
+                        success: function (msg) {                                 
+                            alert(msg.statusMsg);
+                        }
+                    });
+                });
+                
+                $('#archiveBtn').click(function(){
+                    var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
+                    $.ajax({    
+                        url: 'saveArchives.php', //current page
+                        type: 'GET',
+                        data: {folio_id: folioIdToBeAdded, is_juxta: 'false' }, //false says its for juxtaposing
+                        dataType: "json",
+                        contentType: "application/json",                    
+                        success: function (msg) {                                 
+                            alert(msg.statusMsg);
+                        }
+                    });
+                });
             });
             
         </script> 
