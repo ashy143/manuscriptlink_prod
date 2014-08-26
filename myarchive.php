@@ -1,3 +1,10 @@
+<?php
+    include_once './includes/functions.php';
+    session_start();  
+    $archived_folios = getArchivedImagesForLoggedInUser();
+  
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -75,122 +82,26 @@
                 <div class="arc-clear"><a href="#" data-toggle="modal" data-target="#clearArchive">Clear Archive</a></div>
             </div>
             <div id="archive" class="col-md-8">
-                  <div class="holding">
-                      <h4>Amherst, MA, UMassA MS Schoyen 13 (fol. 43)</h4>
-                      <div class="delButton">Delete</div>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse1" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse1" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-                  </div>
-                  <div class="holding">
-                      <h4>Athens, GA, UGeorge MS 122 (fol. 55)</h4>
-                      <div class="delButton">Delete</div>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse2" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse2" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
 
-                  </div>
-                  <div class="holding">
-                      <h4>Columbia, SC, USCaro Early MS 122 (fol. 24)</h4>
+                  <?php $count = 1; foreach($archived_folios as $fol_obj){ ?>
+                    <div class="holding">
+                      <h4>
+                        <?php
+                          echo $fol_obj->folio_location->municipality.','.$fol_obj->folio_location->state.','.$fol_obj->abbreviated_shelf.'('.$fol_obj->folio_num . $fol_obj->folio_side.')';
+                        ?>
+                      </h4>
                       <div class="delButton">Delete</div>
                       <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse3" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse3" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
+                      <a href="#collapse<?php echo $count; ?>" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
+                      <div id="collapse<?php echo $count; ?>" class="panel-collapse collapse">
+                        <div class="rThumb"><a href="panzoom.php?imagepath=<?php echo $fol_obj->res_ident; ?>&mscript_id=<?php echo $fol_obj->mscript_id ;?>"><img style =" height:200px; width: 144px; " src = '<?php echo "image.php?img_path=".$fol_obj->res_ident ;?>' alt = '' /><br /><?php echo $fol_obj->folio_num . $fol_obj->folio_side ; ?></a></div>
                       </div>
-
-                  </div>
-                  <div class="holding">
-                      <h4>Columbus, OH, OSUniv MS XII. 13a (fol. 13)</h4>
-                      <div class="delButton">Delete</div>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse4" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse4" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>
-                  <div class="holding">
-                      <h4>Northampton, MA, SmithC MS 10 (fol. 3)</h4>
-                      <div class="delButton">Delete</div>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse5" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse5" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>                                                      
-                  <div class="holding">
-                      <h4>Amherst, MA, UMassA MS Schoyen 13 (fol. 43)</h4>
-                      <div class="delButton">Delete</div>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse6" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse6" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-                  </div>
-                  <div class="holding">
-                      <h4>Athens, GA, UGeorge MS 122 (fol. 55)</h4>
-                      <div class="delButton">Delete</div>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse7" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse7" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>
-                  <div class="holding">
-                      <h4>Columbia, SC, USCaro Early MS 122 (fol. 24)</h4>
-                      <div class="delButton">Delete</div>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse8" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse8" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>
-                  <div class="holding">
-                      <h4>Columbus, OH, OSUniv MS XII. 13a (fol. 13)</h4>
-                      <div class="delButton">Delete</div>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse9" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse9" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>
-                  <div class="holding">
-                      <h4>Northampton, MA, SmithC MS 10 (fol. 3)</h4>
-                      <div class="delButton">Delete</div>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse10" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse10" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_r.png" /><br />fol. 43r</a></div>
-                        <div class="rThumb"><a href="panzoom.php"><img src="img/thumb_v.png" /><br />fol. 43r</a></div>
-                      </div>
-
-                  </div>     
-
+                    </div>
+                  <?php $count++; } ?>
+                 
             </div>
         </div>
     </div>
-
-
-
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
