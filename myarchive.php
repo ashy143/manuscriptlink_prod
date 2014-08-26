@@ -87,7 +87,7 @@
                     <div class="holding">
                       <h4>
                         <?php
-                          echo $fol_obj->folio_location->municipality.','.$fol_obj->folio_location->state.','.$fol_obj->abbreviated_shelf.'('.$fol_obj->folio_num . $fol_obj->folio_side.')';
+                          echo $fol_obj->folio_location->municipality.', '.$fol_obj->folio_location->state.', '.$fol_obj->abbreviated_shelf.'('.$fol_obj->folio_num . $fol_obj->folio_side.')';
                         ?>
                       </h4>
                       <div class="delButton">Delete</div>
