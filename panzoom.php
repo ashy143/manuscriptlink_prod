@@ -92,72 +92,41 @@
         
                 
     <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
-    <?php $count = count($juxt_folio_objs); ?>
     <div id="bookshelf">
-        <div id="bookHead">
-            <h4>Bookshelf</h4>
-            <i class="fa fa-caret-square-o-down"></i>
-        </div>
-        <div id="bookBody">
-            <div class="book" id="book1">
-                <div class="myBook">
-                    <?php if($count >= 1) { ?>
-                    <h4>1. <?php echo $juxt_folio_objs[0]->abbreviated_shelf;  ?></h4>
-                    <div class="delButton">Delete</div>
-                    <div class="codexButton">Codex</div>
-                    <?php } ?>
-                </div>
-            </div>
-            <div class="book" id="book2">
-                <div class="myBook">
-                    <?php if($count >= 2) { ?>
-                        <h4>1. <?php echo $juxt_folio_objs[1]->abbreviated_shelf;  ?></h4>
-                        <div class="delButton">Delete</div>
-                        <div class="codexButton">Codex</div>
-                    <?php } ?>
-                </div>
-            </div>
-            <div class="book" id="book3">
-                <div class="myBook">
-                    <?php if($count >= 3) { ?>
-                        <h4>1. <?php echo $juxt_folio_objs[2]->abbreviated_shelf;  ?></h4>
-                        <div class="delButton">Delete</div>
-                        <div class="codexButton">Codex</div>
-                    <?php } ?>
-                </div>
-            </div>
-            <div class="book" id="book4">
-                <div class="myBook">
-                    <?php if($count >= 4) { ?>
-                        <h4>1. <?php echo $juxt_folio_objs[3]->abbreviated_shelf;  ?></h4>
-                        <div class="delButton">Delete</div>
-                        <div class="codexButton">Codex</div>
-                    <?php } ?>
-
-                </div>
-            </div>             
-
-            <div id="juxtaBtn" class="bookBtn">Add to Juxtapose</div>
-            <div id="archiveBtn" class="bookBtn">Add to archive</div>
-            <div id="jxtAndCmpBtn" class="bookBtn"><a href="juxtapose.php">juxtapose &amp; Compare</a></div>
-            <div id="viewArchBtn" class="bookBtn"><a href="myarchive.php">view archive</a></div>
-       </div>
+        
     </div>    
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script language="javascript">
-      $('.fa-caret-square-o-down').click(function () {
-          $('#bookBody').slideToggle('2000',"swing", function () {
+        $('#bookshelf').delegate('.fa', 'click', function () {
+            $('#bookBody').slideToggle('2000',"swing", function () {
             //Animation complete
-          });
-          $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
-      });
+            });
+            $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
+        });
       
-      $(".delButton").click(function(event) {
-        event.preventDefault();
-        $(this).parents('.myBook').fadeOut();
-      });
+        $('#bookshelf').bind('click', '.delButton', function(event) {
+            event.stopPropagation();
+            var delBtn = $(event.target);
+            var folioToBeDeleted = delBtn.parent().attr('data-folioid');
+            $.ajax({
+                url: 'deleteBookshelfFolio.php',
+                type: 'GET',
+                data: {'folio_id' :folioToBeDeleted },
+                dataType: 'json',
+                contentType: 'application/json',    
+                success: function(msg){
+                    //$('#bookshelf').html(data);
+                    if(msg.statusNum == 201){
+                        alert(msg.statusMsg);
+                    }else{
+                        delBtn.parents('.myBook').fadeOut();
+                    }
+                }
+            });
+            
+        });
 
    
     </script>    <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -218,7 +187,7 @@
                         $('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
                 });
                 
-                $('#juxtaBtn').click(function(){
+                $('#bookshelf').delegate('#juxtaBtn', 'click', function(){
                     var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
                     $.ajax({    
                         url: 'saveArchives.php', //current page
@@ -226,13 +195,17 @@
                         data: {folio_id: folioIdToBeAdded, is_juxta: 'true' },
                         dataType: "json",
                         contentType: "application/json",                    
-                        success: function (msg) {                                 
+                        success: function (msg) {
+                            //Add this folio to bookshelf                                 
                             alert(msg.statusMsg);
+                            $.get('bookshelf.php', function(data){
+                                $('#bookshelf').html(data);
+                            });
                         }
                     });
                 });
                 
-                $('#archiveBtn').click(function(){
+                $('#bookshelf').delegate('#archiveBtn', 'click', function(){
                     var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
                     $.ajax({    
                         url: 'saveArchives.php', //current page
@@ -240,10 +213,20 @@
                         data: {folio_id: folioIdToBeAdded, is_juxta: 'false' }, //false says its for juxtaposing
                         dataType: "json",
                         contentType: "application/json",                    
-                        success: function (msg) {                                 
+                        success: function (msg) {
                             alert(msg.statusMsg);
                         }
                     });
+                });
+
+                $.ajax({
+                    url: 'bookshelf.php',
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(data){
+                        $('#bookshelf').html(data);
+                    }
+
                 });
             });
             

@@ -174,18 +174,19 @@ function getManuscriptByFolioId(){
 function getJuxtaImagesForLoggedInUser(){
     global $mysqli;
     $user_id = $_SESSION['user_id'];    
-    $query = 'SELECT arc.folio_id, fol.abreviated_shelf, fol.mscript_id FROM archives As arc INNER JOIN folios As fol ON arc.folio_id = fol.folio_id '
+    $query = 'SELECT arc.folio_id, fol.abreviated_shelf, fol.mscript_id, fol.folio_num, fol.folio_side FROM archives As arc INNER JOIN folios As fol ON arc.folio_id = fol.folio_id '
             .' where arc.user_id = ' .$user_id .' and arc.archive_juxta = "JUXTA" ' ;
     $result = $mysqli->query($query) or die(mysql_errno());
     $folio_objs = array();
     if($result->num_rows > 0) {
-        error_log("executed");
         while($row = $result->fetch_assoc()){
              
             $folio = new Folio();
             $folio->folio_id = $row['folio_id'];
             $folio->mscript_id = $row['mscript_id'];
             $folio->abbreviated_shelf = $row['abreviated_shelf'];
+            $folio->folio_num = $row['folio_num'];
+            $folio->folio_side = $row['folio_side'];
             
             $folio_objs[] = $folio;
         }
@@ -222,6 +223,11 @@ function getArchivedImagesForLoggedInUser(){
     }    
     return $folio_objs;
 }
+
+function delete(){
+    
+}    
+
 
 
 
