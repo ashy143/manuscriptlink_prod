@@ -1,5 +1,6 @@
 <?php 
 	
+	include_once './includes/functions.php';
 	include_once './includes/dbconnect.php';
 
 	session_start();
