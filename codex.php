@@ -124,31 +124,7 @@
     <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
 
     <div id="bookshelf">
-        <div id="bookHead">
-            <h4>Bookshelf</h4>
-            <i class="fa fa-caret-square-o-down"></i>
-        </div>
-        <div id="bookBody">
-              <div class="book" id="book1">
-                <div class="myBook">
-                  <h4>1. USC Early MS 17</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>
-              </div>
-              <div class="book" id="book2">
-                <div class="myBook">
-                  <h4>2. USC Early MS 22a</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>
-              </div>
-              
-              <div class="bookBtn">select</div>
-              <div class="bookBtn">Add to archive</div>
-              <div class="bookBtn"><a href="juxtapose.php">juxtapose &amp; Compare</a></div>
-              <div class="bookBtn"><a href="myarchive.php">view archive</a></div>
-       </div>
+        
     </div>
     
         
@@ -183,6 +159,16 @@
             };
             
             $(document).ready(function(){
+
+                $.ajax({
+                    url: 'bookshelf.php',
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(data){
+                        $('#bookshelf').html(data);
+                    }
+                });
+
                 $('#lpage').qtip({
                     content: {
                         text: $('#lefttooltip')

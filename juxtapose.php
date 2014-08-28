@@ -1,7 +1,11 @@
 <?php 
     include_once './includes/functions.php';
-    session_start();   
-    
+    session_start();
+    $juxt_folio_objs = getJuxtaImagesForLoggedInUser();
+    $colSizeClass = 'span12';
+    if($juxt_folio_objs > 0){
+      $colSizeClass = 'span' . 12/count($juxt_folio_objs);
+    }
 
 ?>
 <!DOCTYPE html>
@@ -12,11 +16,13 @@
     <title>manuscriptlink</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-responsive.css">
     <link href="css/mslink.css" rel="stylesheet">
+    <link href="css/panzoom.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -60,68 +66,92 @@
 
     </div>
     <div class="back">
+      <div class="container" style="width: 100%; height:100vh;">
+        <div id='imgContainer' class='row-fluid'>
+            <?php $count=1; foreach($juxt_folio_objs as $fol_obj){ ?>
+              <div id="droppable<?php echo $count; ?>" class=" juxta <?php echo $colSizeClass; ?>" >
+                  <img  src="image.php?img_path=<?php echo $fol_obj->res_ident ; ?>" alt="" style="max-width: 100%; max-height: 100%; "/>
+              </div>
+            <?php $count++; } ?>
+        </div>
+      </div>
+
     </div>
 
     
     <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
 
-    <div id="bookshelf">
-        <div id="bookHead">
-            <h4>Bookshelf</h4>
-            <i class="fa fa-caret-square-o-down"></i>
-        </div>
-        <div id="bookBody">
-              <div class="book" id="book1">
-                <div class="myBook">
-                  <h4>1. USC Early MS 17</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>
-              </div>
-              <div class="book" id="book2">
-                <div class="myBook">
-                  <h4>2. USC Early MS 22a</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>
-              </div>
-              <div class="book" id="book3">
-                <div class="myBook">
-                  <h4>3. USC Early MS 17</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>  
-              </div>
-              <div class="book" id="book4">
-                <div class="myBook">
-                  <h4>4. USC Early MS 17</h4>
-                  <div class="delButton">Delete</div>
-                  <div class="codexButton">Codex</div>
-                </div>
-              </div>
-              <div class="bookBtn">select</div>
-              <div class="bookBtn">Add to archive</div>
-              <div class="bookBtn"><a href="juxtapose.php">juxtapose &amp; Compare</a></div>
-              <div class="bookBtn"><a href="myarchive.php">view archive</a></div>
-       </div>
-    </div>
+    <!-- <div id="bookshelf">
+        Not required I feel so
+    </div> -->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script language="javascript">
-      $('.fa-caret-square-o-down').click(function () {
-        $('#bookBody').slideToggle('2000',"swing", function () {
-          // Animation complete.
-        });
-        $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
-      });
-      $(".delButton").click(function(event) {
-        event.preventDefault();
-        $(this).parents('.myBook').fadeOut();
-      });
-
-    </script> 
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script language="javascript">
+
+        $(document).ready(function(){
+
+          // $.ajax({
+          //     url: 'bookshelf.php',
+          //     type: 'GET',
+          //     dataType: 'html',
+          //     success: function(data){
+          //         $('#bookshelf').html(data);
+          //     }
+          // });
+
+          $('.juxta').draggable({
+              stack:'.juxta'
+               
+          });
+           
+          $(".juxta").bind('dblclick',function(){
+            $(this).remove();
+               var children = $('#imgContainer').children().length;
+               var colSizeClass = 'span' + 12/children;
+               
+               $('#imgContainer').children().removeAttr('class').addClass(colSizeClass).addClass('juxta');
+           });
+
+           // $('.zoomImg1').smartZoom({'containerClass':'zoomImg1'});
+
+           //  function zoomButtonClickHandler(e){
+           //  var scaleToAdd = 0.8;
+           //      if(e.target.id === 'zoomOutButton')
+           //              scaleToAdd = -scaleToAdd;
+           //      $('#imageFullScreen').smartZoom('zoom', scaleToAdd);
+           //  }
+
+          $('#bookshelf').delegate('.fa', 'click', function () {
+            $('#bookBody').slideToggle('2000',"swing", function () {
+            //Animation complete
+            });
+            $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
+          });
+        
+          $('#bookshelf').bind('click', '.delButton', function(event) {
+            event.stopPropagation();
+            var delBtn = $(event.target);
+            var folioToBeDeleted = delBtn.parent().attr('data-folioid');
+            $.ajax({
+                url: 'deleteBookshelfFolio.php',
+                type: 'GET',
+                data: {'folio_id' :folioToBeDeleted },
+                dataType: 'json',
+                contentType: 'application/json',    
+                success: function(msg){
+                    //$('#bookshelf').html(data);
+                    if(msg.statusNum == 201){
+                        alert(msg.statusMsg);
+                    }else{
+                        delBtn.parents('.myBook').fadeOut();
+                    }
+                }
+            });
+          });
+        });
+    </script>
   </body>
 </html>

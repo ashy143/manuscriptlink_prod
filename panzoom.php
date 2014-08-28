@@ -2,8 +2,6 @@
     include_once './includes/functions.php';
     session_start();   
     $folio_objs = getFoliosByManuscriptId($_GET['mscript_id']);
-    
-    $juxt_folio_objs = getJuxtaImagesForLoggedInUser();
 
 ?>
 <!DOCTYPE html>
@@ -29,7 +27,7 @@
     
         <link rel='stylesheet' type="text/css" href='css/bootstrap-responsive.css'>        
         <link rel="stylesheet" type="text/css" href="css/thumbelina.css">
-        <link rel="stylesheet" type="text/css" href="css/jquery.contextMenu.css">
+        <!-- <link rel="stylesheet" type="text/css" href="css/jquery.contextMenu.css"> -->
         <link rel="stylesheet" type="text/css" href="css/panzoom.css">
               
   </head>
@@ -66,7 +64,7 @@
             </div>
         </div>
         <?php } ?>
-        
+
     </div>
     
       <div class="container">
@@ -117,34 +115,7 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script language="javascript">
-        $('#bookshelf').delegate('.fa', 'click', function () {
-            $('#bookBody').slideToggle('2000',"swing", function () {
-            //Animation complete
-            });
-            $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
-        });
-      
-        $('#bookshelf').bind('click', '.delButton', function(event) {
-            event.stopPropagation();
-            var delBtn = $(event.target);
-            var folioToBeDeleted = delBtn.parent().attr('data-folioid');
-            $.ajax({
-                url: 'deleteBookshelfFolio.php',
-                type: 'GET',
-                data: {'folio_id' :folioToBeDeleted },
-                dataType: 'json',
-                contentType: 'application/json',    
-                success: function(msg){
-                    //$('#bookshelf').html(data);
-                    if(msg.statusNum == 201){
-                        alert(msg.statusMsg);
-                    }else{
-                        delBtn.parents('.myBook').fadeOut();
-                    }
-                }
-            });
-            
-        });
+        
 
    
     </script>    <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -156,6 +127,35 @@
     <script type="text/javascript">        
             
             $(document).ready(function(){
+
+                $('#bookshelf').delegate('.fa', 'click', function () {
+                    $('#bookBody').slideToggle('2000',"swing", function () {
+                    //Animation complete
+                    });
+                    $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
+                });
+              
+                $('#bookshelf').bind('click', '.delButton', function(event) {
+                    event.stopPropagation();
+                    var delBtn = $(event.target);
+                    var folioToBeDeleted = delBtn.parent().attr('data-folioid');
+                    $.ajax({
+                        url: 'deleteBookshelfFolio.php',
+                        type: 'GET',
+                        data: {folio_id : folioToBeDeleted },
+                        dataType: 'json',
+                        contentType: 'application/json',    
+                        success: function(msg){
+                            //$('#bookshelf').html(data);
+                            if(msg.statusNum == 201){
+                                alert(msg.statusMsg);
+                            }else{
+                                delBtn.parents('.myBook').fadeOut();
+                            }
+                        }
+                    });
+                    
+                });
                 
                 $('#gallery-slider').Thumbelina({
                     orientation:'vertical',         // Use vertical mode (default horizontal).
@@ -248,9 +248,7 @@
                 });
             });
             
-        </script> 
-        
-                 
+        </script>
         
   </body>
 </html>
