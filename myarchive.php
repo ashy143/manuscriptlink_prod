@@ -64,7 +64,7 @@
             <div class="col-md-12">
                 <ol class="breadcrumb pull-right">
                     <li class="active"><a href="myarchive.php">my archive</a></li>
-                    <li><a href="index.php">logout</a></li>
+                    <li><a href="utils/process_logout.php">logout</a></li>
                 </ol>
             </div>
         </div>
@@ -81,25 +81,34 @@
                 <a href="searchresults.php"><div class="arc-search">Back to Search</div></a>
                 <div class="arc-clear"><a href="#" data-toggle="modal" data-target="#clearArchive">Clear Archive</a></div>
             </div>
-            <div id="archive" class="col-md-8">
 
-                  <?php $count = 1; foreach($archived_folios as $fol_obj){ ?>
-                    <div class="holding">
-                      <h4>
-                        <?php
-                          echo $fol_obj->folio_location->municipality.', '.$fol_obj->folio_location->state.', '.$fol_obj->abbreviated_shelf.'('.$fol_obj->folio_num . $fol_obj->folio_side.')';
-                        ?>
-                      </h4>
-                      <div class="delButton">Delete</div>
-                      <a href="codex.php"><div class="codexButton">Codex</div></a>
-                      <a href="#collapse<?php echo $count; ?>" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
-                      <div id="collapse<?php echo $count; ?>" class="panel-collapse collapse">
-                        <div class="rThumb"><a href="panzoom.php?imagepath=<?php echo $fol_obj->res_ident; ?>&mscript_id=<?php echo $fol_obj->mscript_id ;?>"><img style =" height:200px; width: 144px; " src = '<?php echo "image.php?img_path=".$fol_obj->res_ident ;?>' alt = '' /><br /><?php echo $fol_obj->folio_num . $fol_obj->folio_side ; ?></a></div>
+            <?php if(count($archived_folios) > 0) { ?>
+              <div id="archive" class="col-md-8">
+
+                    <?php $count = 1; foreach($archived_folios as $fol_obj){ ?>
+                      <div class="holding">
+                        <h4>
+                          <?php
+                            echo $fol_obj->folio_location->municipality.', '.$fol_obj->folio_location->state.', '.$fol_obj->abbreviated_shelf.'('.$fol_obj->folio_num . $fol_obj->folio_side.')';
+                          ?>
+                        </h4>
+                        <div class="delButton">Delete</div>
+                        <a href="codex.php"><div class="codexButton">Codex</div></a>
+                        <a href="#collapse<?php echo $count; ?>" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
+                        <div id="collapse<?php echo $count; ?>" class="panel-collapse collapse">
+                          <div class="rThumb"><a href="panzoom.php?imagepath=<?php echo $fol_obj->res_ident; ?>&mscript_id=<?php echo $fol_obj->mscript_id ;?>"><img style =" height:200px; width: 144px; " src = '<?php echo "image.php?img_path=".$fol_obj->res_ident ;?>' alt = '' /><br /><?php echo $fol_obj->folio_num . $fol_obj->folio_side ; ?></a></div>
+                        </div>
                       </div>
-                    </div>
-                  <?php $count++; } ?>
-                 
-            </div>
+                    <?php $count++; } ?>
+                   
+              </div>
+            <?php }else { ?>
+              <div class="col-md-8 pull-right">
+                <div class="no-entries">
+                    <p>You don't currently have any items selected for your archive. <a href="search.php">Click Here</a> to search through our database and begin building your collection</p>
+                </div>
+              </div>
+            <?php } ?>
         </div>
     </div>
 

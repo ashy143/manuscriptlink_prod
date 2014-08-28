@@ -16,7 +16,7 @@ if(isset($_POST['email'],$_POST['pass'])){
     
     if(login($email, $password)){
         //Login success
-        header("location: ../user.php");
+        header("location: ../myarchive.php");
     }else{
         //Login failed
         header("location: ../index.php?log_err=1");

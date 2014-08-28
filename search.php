@@ -42,10 +42,32 @@
   		            <li><a href="browse.php">browse</a></li>
   		            <li><a href="resources.php">resources</a></li>
   		            <li><a href="#">citation shelfmarks</a></li>
+                    <?php if(login_check()) { ?>
   		            <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
+                    <?php }else{ ?>
+                    <li><a href="login.php">login</a></li>
+                    <?php } ?>
             		</ul>
           	</div>
       	</div>
+
+        <?php if(login_check()) {?>
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb pull-right">
+                    <li class="active"><a href="#">search</a></li>
+                    <li><a href="#">results</a></li>
+                    <li><a href="#">record</a></li>
+                    <li><a href="#">codex</a></li>
+                    <li><a href="#">pan&zoom</a></li>
+                    <li><a href="#">juxtapose&compare</a></li>
+                    <li ><a href="myarchive.php">my archive</a></li>
+                    <li><a href="utils/process_logout.php">logout</a></li>
+                </ol>
+            </div>
+        </div>
+        <?php } ?>
+
     </div>
 
     	<div class="container">
