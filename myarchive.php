@@ -1,3 +1,4 @@
+
 <?php
     include_once './includes/functions.php';
     session_start();  
@@ -56,7 +57,7 @@
   		            <li><a href="browse.php">browse</a></li>
   		            <li><a href="resources.php">resources</a></li>
   		            <li><a href="#">citation shelfmarks</a></li>
-  		            <li class="active"><a href="user.php">user</a></li>
+  		            <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
             		</ul>
           	</div>
       	</div>

@@ -27,7 +27,6 @@
     
         <link rel='stylesheet' type="text/css" href='css/bootstrap-responsive.css'>        
         <link rel="stylesheet" type="text/css" href="css/thumbelina.css">
-        <!-- <link rel="stylesheet" type="text/css" href="css/jquery.contextMenu.css"> -->
         <link rel="stylesheet" type="text/css" href="css/panzoom.css">
               
   </head>
@@ -71,7 +70,7 @@
           <div class="row-fluid">
               <div class="span2" >                
                 <div id="gallery-slider">
-                    <div class="thumbelina-but vert top">&#708;</div>
+                    <div class="thumbelina-but vert top">Backward</div>
                     <ul>
                          <?php foreach ($folio_objs as $fob_obj) {                                
 //                                page=0,side=1,path=2,id=3
@@ -80,7 +79,7 @@
                         <li><img class='galleryItem <?php echo ($_GET['folio_id'] == $fob_obj->folio_id)?' imageSelectBorder':'' ; ?>' data-path='<?php echo $imagePath ; ?>' data-folioid='<?php echo $fob_obj->folio_id; ?>' src = '<?php echo "image.php?img_path=".$imagePath ;?>' alt=''/></li>
                         <?php } ?>
                     </ul>
-                    <div class="thumbelina-but vert bottom">&#709;</div>
+                    <div class="thumbelina-but vert bottom">Forward</div>
                 </div>
             </div>
             <div class="span9" >                
@@ -114,141 +113,11 @@
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script language="javascript">
-        
-
-   
-    </script>    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    
     <script src="js/bootstrap.min.js"></script>        
     <script src="js/thumbelina.js"></script>
     <script src='js/jquery.contextMenu.js'></script>
     <script src='js/e-smart-zoom-jquery.min.js'></script>
-    <script type="text/javascript">        
-            
-            $(document).ready(function(){
-
-                $('#bookshelf').delegate('.fa', 'click', function () {
-                    $('#bookBody').slideToggle('2000',"swing", function () {
-                    //Animation complete
-                    });
-                    $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
-                });
-              
-                $('#bookshelf').bind('click', '.delButton', function(event) {
-                    event.stopPropagation();
-                    var delBtn = $(event.target);
-                    var folioToBeDeleted = delBtn.parent().attr('data-folioid');
-                    $.ajax({
-                        url: 'deleteBookshelfFolio.php',
-                        type: 'GET',
-                        data: {folio_id : folioToBeDeleted },
-                        dataType: 'json',
-                        contentType: 'application/json',    
-                        success: function(msg){
-                            //$('#bookshelf').html(data);
-                            if(msg.statusNum == 201){
-                                alert(msg.statusMsg);
-                            }else{
-                                delBtn.parents('.myBook').fadeOut();
-                            }
-                        }
-                    });
-                    
-                });
-                
-                $('#gallery-slider').Thumbelina({
-                    orientation:'vertical',         // Use vertical mode (default horizontal).
-                    $bwdBut:$('#gallery-slider .top'),     // Selector to top button.
-                    $fwdBut:$('#gallery-slider .bottom')   // Selector to bottom button.
-                });
-                
-                $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
-                $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
-                $('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
-
-                function zoomButtonClickHandler(e){
-                var scaleToAdd = 0.8;
-                    if(e.target.id === 'zoomOutButton')
-                            scaleToAdd = -scaleToAdd;
-                    $('#imageFullScreen').smartZoom('zoom', scaleToAdd);
-                }
-
-                function moveButtonClickHandler(e){
-                    var pixelsToMoveOnX = 0;
-                    var pixelsToMoveOnY = 0;
-
-                    switch(e.target.id){
-                            case "leftPositionMap":
-                                    pixelsToMoveOnX = 50;	
-                            break;
-                            case "rightPositionMap":
-                                    pixelsToMoveOnX = -50;
-                            break;
-                            case "topPositionMap":
-                                    pixelsToMoveOnY = 50;	
-                            break;
-                            case "bottomPositionMap":
-                                    pixelsToMoveOnY = -50;	
-                            break;
-                    }
-                    $('#imageFullScreen').smartZoom('pan', pixelsToMoveOnX, pixelsToMoveOnY);
-                };
-                
-                $('.galleryItem').click(function() {
-                    $(this).toggleClass('imageSelectBorder');
-                    $("#imageFullScreen").attr('src', 'image.php?img_path=' + $(this).data('path'));
-                    $("#imageFullScreen").attr('data-folioid', $(this).data('folioid'));
-                    $('#imageFullScreen').smartZoom('destroy');
-                    $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
-                    $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
-                        $('#zoomInButton,#zoomOutButton').bind("click", zoomButtonClickHandler);
-                });
-                
-                $('#bookshelf').delegate('#juxtaBtn', 'click', function(){
-                    var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
-                    $.ajax({    
-                        url: 'saveArchives.php', //current page
-                        type: 'GET',
-                        data: {folio_id: folioIdToBeAdded, is_juxta: 'true' },
-                        dataType: "json",
-                        contentType: "application/json",                    
-                        success: function (msg) {
-                            //Add this folio to bookshelf                                 
-                            alert(msg.statusMsg);
-                            $.get('bookshelf.php', function(data){
-                                $('#bookshelf').html(data);
-                            });
-                        }
-                    });
-                });
-                
-                $('#bookshelf').delegate('#archiveBtn', 'click', function(){
-                    var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
-                    $.ajax({    
-                        url: 'saveArchives.php', //current page
-                        type: 'GET',
-                        data: {folio_id: folioIdToBeAdded, is_juxta: 'false' }, //false says its for juxtaposing
-                        dataType: "json",
-                        contentType: "application/json",                    
-                        success: function (msg) {
-                            alert(msg.statusMsg);
-                        }
-                    });
-                });
-
-                $.ajax({
-                    url: 'bookshelf.php',
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function(data){
-                        $('#bookshelf').html(data);
-                    }
-
-                });
-            });
-            
-        </script>
+    <script src='js/panzoom.js'></script>
         
   </body>
 </html>
