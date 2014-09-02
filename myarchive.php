@@ -39,7 +39,7 @@
       <div class="modal-footer">
           <div class="pull-right">
               <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-              <a href="user.php"><button type="button" class="btn btn-danger">Clear Archive</button></a>
+              <a href="#"><button id='delArchConfirm' type="button" class="btn btn-danger">Clear Archive</button></a>
           </div>
       </div>
     </div>
@@ -128,6 +128,23 @@
         event.preventDefault();
         $(this).parents('.holding').fadeOut();
       });
+
+      $('#delArchConfirm').click(function(){
+        $.ajax({
+            url: 'clearArchive.php',
+            type: 'POST',
+            success: function(msg){
+              var msgArray = JSON.parse(msg);
+              if(msgArray.statusNum == 200){
+                window.location.href = 'myarchive.php';
+              }else{
+                alert(msgArray.statusMsg);
+              }
+            }
+        });
+          
+      });
+
     </script>   
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
