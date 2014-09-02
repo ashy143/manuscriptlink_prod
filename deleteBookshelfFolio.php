@@ -8,8 +8,6 @@
 	    header("location: ./index.php");
 	}
 
-	
-	$PAGE_EXISTS_JUXTAPOSE_MSG = "Error removing folio from bookshelf";
 	class Msg{
 	    //set statusNum to 201 for existing page in archives
 	    public $statusNum = 200;
