@@ -21,10 +21,11 @@
 	$user_id = $_SESSION['user_id'];
 	$folio_id = $_GET['folio_id'];
 
-	$deleteFolio = $mysqli->query("DELETE from  archives WHERE folio_id = $folio_id AND user_id = $user_id AND archive_juxta = 'JUXTA' ");
-	// if ($mysqli->mysql_affected_rows() < 1 ){
-	// 	$msg->statusNum = 201;    
- //        $msg->statusMsg = "Error removing folio from bookshelf. Please try again";
-	// }
+	try{
+		$mysqli->query("DELETE from  archives WHERE folio_id = $folio_id AND user_id = $user_id AND archive_juxta = 'JUXTA' ");
+	}catch(Exception $e){
+		$msg->statusNum = 201;
+		$msg->statusMsg = $e->getMessage();
+	}
 	echo json_encode($msg); 
 ?>

@@ -20,7 +20,6 @@
 
 	try{
 		$mysqli->query("DELETE from  archives WHERE user_id = $user_id AND archive_juxta = 'ARCHIVE' ") ;
-		error_log('Archives cleared successfully');
 		$msg->statusMsg = 'Archives cleared successfully';
 	}catch(Exception $e){
 		$msg->statusNum = 201;
