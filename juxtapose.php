@@ -29,6 +29,14 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+      .dragPoint {
+        background:transparent;
+        color: #ffffff;
+        text-align: center;
+        padding: 1em;
+      }
+    </style>
   </head>
   <body data-spy="scroll" data-target="#master" data-offset="100">
 
@@ -68,17 +76,22 @@
     <div class="back">
       <div class="container" style="width: 100%; height:100vh;">
         <div id='imgContainer' class='row-fluid'>
+          
             <?php $count=1; foreach($juxt_folio_objs as $fol_obj){ ?>
-              <div id="droppable<?php echo $count; ?>" class=" juxta <?php echo $colSizeClass; ?>" >
-                  <img  src="image.php?img_path=<?php echo $fol_obj->res_ident ; ?>" alt="" style="max-width: 100%; max-height: 100%; "/>
+            
+            <div class = '<?php echo $colSizeClass; ?> zoomableParentDiv<?php echo $count; ?>' >
+              <div class="dragPoint" style="max-width: 100%; max-height:4%; ">Click and hold here to drag</div>
+              <div class='zoomContainerClass<?php echo $count; ?>' style=" max-width: 100%; max-height:92%; " >
+                    <img  id='zoomImg<?php echo $count;?>' class='zoomImgClass' src="image.php?img_path=<?php echo $fol_obj->res_ident ; ?>" alt="" style="max-width: 100%; max-height: 100%; "/>
               </div>
+              <div class="dragPoint" style="max-width: 100%; max-height:4%; ">Click and hold here to drag</div>
+            </div>
+
             <?php $count++; } ?>
         </div>
       </div>
 
     </div>
-
-    
     <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
 
     <!-- <div id="bookshelf">
@@ -89,6 +102,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-ui.js"></script>
+    <script src='js/smart-zoom-tweak.js'></script>
     <script language="javascript">
 
         $(document).ready(function(){
@@ -102,27 +116,32 @@
           //     }
           // });
 
-          $('.juxta').draggable({
-              stack:'.juxta'
-               
+        <?php $count=1; foreach($juxt_folio_objs as $fol_obj){ ?>
+          $('#zoomImg<?php echo $count; ?>').smartZoom({'containerClass':'zoomContainerClass<?php echo $count; ?>'});
+            
+            // $('.zoomableParentDiv<?php echo $count; ?>').draggable({
+          $('.zoomableParentDiv<?php echo $count; ?>').draggable({
+              stack: '.<?php echo $colSizeClass; ?>',
+              cancel: ".zoomContainerClass<?php echo $count; ?>"
           });
+
+        <?php $count++; } ?>
+
+          
+
+
+          
            
-          $(".juxta").bind('dblclick',function(){
-            $(this).remove();
-               var children = $('#imgContainer').children().length;
-               var colSizeClass = 'span' + 12/children;
+          // $(".juxta").bind('dblclick',function(){
+          //   $(this).remove();
+          //   var children = $('#imgContainer').children().length;
+          //   var colSizeClass = 'span' + 12/children;
                
-               $('#imgContainer').children().removeAttr('class').addClass(colSizeClass).addClass('juxta');
-           });
+          //      $('#imgContainer').children().removeAttr('class').addClass(colSizeClass).addClass('juxta');
+          //  });
 
-           // $('.zoomImg1').smartZoom({'containerClass':'zoomImg1'});
+          
 
-           //  function zoomButtonClickHandler(e){
-           //  var scaleToAdd = 0.8;
-           //      if(e.target.id === 'zoomOutButton')
-           //              scaleToAdd = -scaleToAdd;
-           //      $('#imageFullScreen').smartZoom('zoom', scaleToAdd);
-           //  }
 
           $('#bookshelf').delegate('.fa', 'click', function () {
             $('#bookBody').slideToggle('2000',"swing", function () {
