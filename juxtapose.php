@@ -36,7 +36,25 @@
         text-align: center;
         padding: 1em;
       }
+
+      .closeText {
+        background:transparent;
+        color: #ffffff;
+      }
     </style>
+    <style>
+      .zoomer_wrapper {  height:80%; overflow: hidden; width: 100%; }
+
+      /*.zoomer.dark_zoomer { background: #333 url(http://formstone.it/files/demo/zoomer-bg-dark.png) repeat center; }*/
+      .zoomer.dark_zoomer img { box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); }
+
+      .drag{
+        position: relative;
+        height: 90%;
+      }
+    </style>
+
+    
   </head>
   <body data-spy="scroll" data-target="#master" data-offset="100">
 
@@ -59,6 +77,7 @@
         <div class="row">
             <div class="col-md-12">
                 <ol class="breadcrumb pull-right">
+                    <li class="active"><a href="juxtapose.php" >reset folios</a></li>
                     <li><a href="#">search</a></li>
                     <li><a href="#">results</a></li>
                     <li><a href="#">record</a></li>
@@ -75,17 +94,18 @@
     </div>
     <div class="back">
       <div class="container" style="width: 100%; height:100vh;">
-        <div id='imgContainer' class='row-fluid'>
+        <div id='imgContainer' class='row-fluid' style='height:100%;'>
           
             <?php $count=1; foreach($juxt_folio_objs as $fol_obj){ ?>
             
-            <div class = '<?php echo $colSizeClass; ?> zoomableParentDiv<?php echo $count; ?>' >
-              <div class="dragPoint" style="max-width: 100%; max-height:4%; ">Click and hold here to drag</div>
-              <div class='zoomContainerClass<?php echo $count; ?>' style=" max-width: 100%; max-height:92%; " >
-                    <img  id='zoomImg<?php echo $count;?>' class='zoomImgClass' src="image.php?img_path=<?php echo $fol_obj->res_ident ; ?>" alt="" style="max-width: 100%; max-height: 100%; "/>
+            <div  class='drag <?php echo $colSizeClass; ?>' > 
+              <div class="dragPoint" style="max-width: 100%; max-height:4%; ">Click and hold here to drag&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' class='closeText' >x</a></div> 
+              <div class="zoomer_wrapper zoomer_basic" style='align:center; max-width:100%; max-height:90%;' >
+                <img  src="image.php?img_path=<?php echo $fol_obj->res_ident ; ?>" alt="" style="max-width: 100%; max-height: 100%; "/>
               </div>
-              <div class="dragPoint" style="max-width: 100%; max-height:4%; ">Click and hold here to drag</div>
-            </div>
+              <div class="dragPoint" style="max-width: 100%; max-height:4%; ">Click and hold here to drag&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' class='closeText' >x</a></div>
+            </div>  
+           
 
             <?php $count++; } ?>
         </div>
@@ -102,45 +122,32 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-ui.js"></script>
-    <script src='js/smart-zoom-tweak.js'></script>
+<!--script src='js/smart-zoom-tweak.js'></script>-->
+    <link href="css/jquery.fs.zoomer.css" rel="stylesheet" type="text/css" media="all">
+    <script src="js/jquery.fs.zoomer.js"></script>
     <script language="javascript">
 
-        $(document).ready(function(){
+      $(document).ready(function(){
+        $(".zoomer_basic").zoomer();
 
-          // $.ajax({
-          //     url: 'bookshelf.php',
-          //     type: 'GET',
-          //     dataType: 'html',
-          //     success: function(data){
-          //         $('#bookshelf').html(data);
-          //     }
-          // });
+        $('.drag').draggable({
+          stack: '.drag'
+        });
 
-        <?php $count=1; foreach($juxt_folio_objs as $fol_obj){ ?>
-          $('#zoomImg<?php echo $count; ?>').smartZoom({'containerClass':'zoomContainerClass<?php echo $count; ?>'});
-            
-            // $('.zoomableParentDiv<?php echo $count; ?>').draggable({
-          $('.zoomableParentDiv<?php echo $count; ?>').draggable({
-              stack: '.<?php echo $colSizeClass; ?>',
-              cancel: ".zoomContainerClass<?php echo $count; ?>"
-          });
-
-        <?php $count++; } ?>
-
-          
-
-
-          
+        $(window).on("resize", function(e) {
+          $(".zoomer_wrapper").zoomer("resize");
+        });
            
-          // $(".juxta").bind('dblclick',function(){
-          //   $(this).remove();
-          //   var children = $('#imgContainer').children().length;
-          //   var colSizeClass = 'span' + 12/children;
-               
-          //      $('#imgContainer').children().removeAttr('class').addClass(colSizeClass).addClass('juxta');
-          //  });
-
-          
+        $(".closeText").bind('click',function(){
+          $('.zoomer_basic').zoomer('destroy');
+          $(this).parent().parent().remove();
+          var children = $('#imgContainer').children().length;
+          var colSizeClass = 'span' + 12/children;
+          $('#imgContainer').children().each(function(){
+              $(this).removeAttr('class').addClass(colSizeClass).addClass('drag '+colSizeClass);
+          });
+           $(".zoomer_basic").zoomer();
+         });
 
 
           $('#bookshelf').delegate('.fa', 'click', function () {
@@ -170,7 +177,7 @@
                 }
             });
           });
-        });
+      });
     </script>
   </body>
 </html>
