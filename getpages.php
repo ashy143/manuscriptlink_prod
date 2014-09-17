@@ -45,7 +45,8 @@ if (mysqli_connect_errno())
         
     }
     $blank_page = new Page();
-    $blank_page->path = "blankpage.jpg";
+    //Will load blank page from project folder rather than manuscript_images folder
+    $blank_page->path = "./img/missing_leaf.jpg";
     $pages = array();
     $max = $row_max[0];
     $min = $row_min[0];
