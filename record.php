@@ -1,5 +1,6 @@
 <?php 
     include_once './includes/functions.php';
+    include_once './includes/config.php';
     session_start();
 
     if(login_check() == false){
@@ -7,23 +8,82 @@
     }
     
     $manuscript_id = $_GET['id'];
-    $json_decoded_data = json_decode($_GET['data']);
+    // $json_decoded_data = json_decode($_GET['data']);
+    $mlinknumber = $_GET['mlinknum'];
+
+    //check if parts of manuscript are available
+    $con = mysql_connect(HOST.':'.PORT, USER, PASSWORD) or die("Unable to connect to MySQL");
+    mysql_select_db(DATABASE, $con) or die("Could not select" .mysql_error());
+
+    class MSEXT_OBJ{
+            public $title  = "--";
+            public $height;
+            public $width;
+            public $height_written;
+            public $width_written;
+            public $no_of_lines;
+            public $dim_staff;
+            public $mscript_obj;
+
+        }
+    //$manuscriptByPartQuery = mysql_query("Select mscript_id from manuscript where mlinknumber = $mlinknumber ") or die(mysql_error());
+
+    $manuscriptByPartQuery = "SELECT ms.mscript_id,  fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff "
+                    ." FROM "
+                ." (manuscript AS ms INNER JOIN origin AS ori ON ms.mscript_id = ori.mscript_id) "
+                    ." INNER JOIN "
+                ." (folios AS fol INNER JOIN location AS loc ON fol.folio_id = loc.folio_id )"
+                    . " ON ms.mscript_id = fol.mscript_id WHERE ms.mlinknumber = $mlinknumber GROUP BY ms.mscript_id ";
+
+
+    $manuscriptsWithParts = array();
+    $manuscriptByPartResults = mysql_query($manuscriptByPartQuery) or die(mysql_error());
+    while($row = mysql_fetch_row($manuscriptByPartResults)){
+            $manuscript_obj = getManuscriptById($row[0]);
+            $mext_obj = new MSEXT_OBJ();
+            $mext_obj->mscript_obj = $manuscript_obj;
+            $mext_obj->mscript_id = $row[0];
+            $mext_obj->title = $row[1];
+            $mext_obj->height = $row[2];
+            $mext_obj->width = $row[3];
+            $mext_obj->height_written = $row[4];
+            $mext_obj->width_written = $row[5];
+            $mext_obj->no_of_lines = $row[6];
+            $mext_obj->dim_staff = $row[7];
+            
+            // $manuscript_ext_objs[] = $mext_obj;
+            $manuscriptsWithParts[] = $mext_obj;
+        } 
+
        
     $manuscript_obj = getManuscriptById($manuscript_id);
-    $folio_objs = getFoliosByManuscriptId($manuscript_id);
+    
+    $folio_objs = array();
+    foreach($manuscriptsWithParts as $part){
+      //$folio_objs[] = getFoliosByManuscriptId($part->mscript_obj->mscript_id);
+      foreach (getFoliosByManuscriptId($part->mscript_obj->mscript_id) as $fob_obj) {
+        $folio_objs[] = $fob_obj;
+      }
+    }
+    error_log('fol count: '.count($folio_objs));
+
+    //getFoliosByManuscriptId($manuscript_id);
     $combined_folio_objs = array(); //to hold array of folios with same folio number(will add value from A in this array)
     $prev_page = -1;
     if(count($folio_objs)>0){
-        $prev_page = $folio_objs[0]->folio_num;
+        //$prev_page = $folio_objs[0]->folio_num;
+        $prev_abbreviated_shelf = $folio_objs[0]->abbreviated_shelf;
     }
     $fobs = array();    //each array represent folios belonging to same folio_number LABEL: A 
     foreach($folio_objs as $fob){
         
-        if($prev_page == $fob->folio_num ){
+        //if($prev_page == $fob->folio_num ){
+        if($prev_abbreviated_shelf == $fob->abbreviated_shelf ){
             $fobs[] = $fob;            
         }else{
             $combined_folio_objs[] = $fobs;
-            $prev_page = $fob->folio_num;            
+            //$prev_page = $fob->folio_num; 
+            $prev_abbreviated_shelf = $fob->abbreviated_shelf;         
             $fobs = array();
             $fobs[] = $fob;
         }        
@@ -95,13 +155,18 @@
     	<div class="container">
           <div class="row">
               <div class="col-md-6">
+
+                  <!-- Loop for this block for each part -->
+                  <?php foreach($manuscriptsWithParts as $mobj) { 
+                    $manuscript_obj = $mobj->mscript_obj;
+                  ?>
                   <h2 class="record">manuscriptlink #<?php echo $manuscript_obj->mlinknum . "." . $manuscript_obj->part; ?></h2>
                   <div class="metadata">
                       <dl class="dl-horizontal"> 
                           <dt>Author</dt>
                             <dd><?php echo $manuscript_obj->artist ; ?></dd>
                           <dt>Text</dt>
-                            <dd><?php echo $json_decoded_data->title ; ?></dd>
+                            <dd><?php echo $mobj->title ; ?></dd>
                           <dt>Date</dt>
                             <dd><?php echo $manuscript_obj->date_manu ; ?></dd>
                           <dt>Origin</dt>
@@ -113,9 +178,9 @@
                           <dt>Bibliography</dt>
                             <dd><?php echo $manuscript_obj->biblio ; ?></dd>
                           <dt>Dimensions</dt>
-                            <dd><?php echo $json_decoded_data->width;?> x <?php echo $json_decoded_data->height; ?> mm</dd>
+                            <dd><?php echo $mobj->width;?> x <?php echo $mobj->height; ?> mm</dd>
                           <dt>Justification</dt>
-                            <dd><?php echo $json_decoded_data->width_written;?> x <?php echo $json_decoded_data->height_written; ?> mm</dd>
+                            <dd><?php echo $mobj->width_written;?> x <?php echo $mobj->height_written; ?> mm</dd>
                           <dt>Lines</dt>
                             <dd><?php echo $manuscript_obj->min_lines . ' to ' . $manuscript_obj->max_lines; ?></dd>
                           <dt>Decoration</dt>
@@ -125,12 +190,16 @@
                           <dt>Collation</dt>
                             <dd><?php echo $manuscript_obj->collation ; ?></dd>
                           <dt>Dimensions of Staff</dt>
-                            <dd><?php $json_decoded_data->dim_staff; ?></dd>
+                            <dd><?php $mobj->dim_staff; ?></dd>
                       </dl>
                   </div>
                           <a href="codex.php"><div class="arc-button rec-button puff">Codex</div></a>
                           <a href="panzoom.php"><div class="arc-button rec-button puff">Pan &amp; Zoom</div></a><br />
                   <a href="searchresults.php"><div class="escape arc-search puff">Back to Search</div></a>
+
+                  <?php } ?>
+                  <!-- End loop here for each part -->
+
               </div>
 
               <div id="listings" class="col-md-6">                  
@@ -140,7 +209,7 @@
                   <?php $count=1; foreach($combined_folio_objs as $folio_obj_array){ ?>
                   <form name='<?php echo $count; ?>' method="GET" action='codex.php'>
                         <input type="hidden" name='id' value ='<?php echo $folio_obj_array[0]->mscript_id; ?>'/>
-                        <input type="hidden" name='data' value ='<?php echo $_GET['data']; ?>'/>
+                        <input type="hidden" name='data' value ='<?php //echo $_GET['data']; ?>'/>
                   </form>
                   
                   <div class="holding">                      

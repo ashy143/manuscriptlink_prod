@@ -252,7 +252,9 @@
                     <?php $count=1; foreach($manuscript_ext_objs as $mobj){ ?>
                         <form name='<?php echo $count; ?>' method="GET" action='record.php'>
                             <input type="hidden" name='id' value ='<?php echo $mobj->mscript_obj->mscript_id; ?>'/>
-                            <input type="hidden" name='data' value ='<?php echo json_encode($mobj);?>'/>
+                            <!-- Send mlink number rather than complete data-->
+                            <!-- <input type="hidden" name='data' value ='<?php //echo json_encode($mobj);?>'/> -->
+                            <input type="hidden" name='mlinknum' value ='<?php echo $mobj->mscript_obj->mlinknum ;?>'/>
                         </form>
                         <div class="search-result" data-mscriptId = "<?php echo $mobj->mscript_id; ?>"  >                            
                             <h4><a onclick="view_record(document.getElementsByName('<?php echo $count;?>'));"><?php echo 'manuscriptlink # ' . htmlspecialchars($mobj->mscript_obj->mlinknum . "." . $mobj->mscript_obj->part)  ; ?></a></h4>
