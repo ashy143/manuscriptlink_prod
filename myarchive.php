@@ -93,7 +93,7 @@
                             echo $fol_obj->folio_location->municipality.', '.$fol_obj->folio_location->state.', '.$fol_obj->abbreviated_shelf.'('.$fol_obj->folio_num . $fol_obj->folio_side.')';
                           ?>
                         </h4>
-                        <div class="delButton">Delete</div>
+                        <div data-folioid="<?php echo $fol_obj->folio_id; ?>" class="delButton">Delete</div>
                         <a href="codex.php?id=<?php echo $fol_obj->mscript_id; ?>"><div class="codexButton">Codex</div></a>
                         <a href="#collapse<?php echo $count; ?>" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
                         <div id="collapse<?php echo $count; ?>" class="panel-collapse collapse">
@@ -146,7 +146,21 @@
 
       $(".delButton").click(function(event) {
         event.preventDefault();
-        $(this).parents('.holding').fadeOut();
+        var folioIdSelected = $(this).data('folioid');
+        $.ajax({
+            url: 'deleteArchivedFolio.php',
+            type: 'GET',
+            data: {folio_id: folioIdSelected },
+            success: function(msg){
+              var msgArray = JSON.parse(msg);
+              if(msgArray.statusNum == 200){
+                $(this).parents('.holding').fadeOut();
+                window.location.href = 'myarchive.php';
+              }else{
+                alert(msgArray.statusMsg);
+              }
+            }
+        });
       });
 
       $('#delArchConfirm').click(function(){

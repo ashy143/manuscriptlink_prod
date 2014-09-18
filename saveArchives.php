@@ -79,7 +79,7 @@ if( strpos($folio_id  , ',') === false ){
         $msg->statusNum = 200;
         $mysqli->commit();
     }catch(Exception $e){
-        error_log($e);
+        error_log($e->getMessage());
         $mysqli->rollback();
         $msg->statusNum = 201;    
         $msg->statusMsg = "Failed to update database".mysql_error();
