@@ -94,7 +94,7 @@
                           ?>
                         </h4>
                         <div class="delButton">Delete</div>
-                        <a href="codex.php"><div class="codexButton">Codex</div></a>
+                        <a href="codex.php?id=<?php echo $fol_obj->mscript_id; ?>"><div class="codexButton">Codex</div></a>
                         <a href="#collapse<?php echo $count; ?>" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
                         <div id="collapse<?php echo $count; ?>" class="panel-collapse collapse">
                           <div class="rThumb"><a href="panzoom.php?imagepath=<?php echo $fol_obj->res_ident; ?>&mscript_id=<?php echo $fol_obj->mscript_id ;?>"><img style =" height:200px; width: 144px; " src = '<?php echo "image.php?img_path=".$fol_obj->res_ident ;?>' alt = '' /><br /><?php echo $fol_obj->folio_num . $fol_obj->folio_side ; ?></a></div>
