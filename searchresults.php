@@ -75,7 +75,6 @@
             $count++;    
         }
         
-        
         $codQueryStr = '';
         $count = 0;
         foreach($codologQueries as $cod){            

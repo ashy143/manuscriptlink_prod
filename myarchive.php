@@ -78,7 +78,7 @@
                 <h3 class="pageTitle">My Archive</h3>
                 <div class="arc-button">Export Selections</div>
                 <div class="arc-button">Print Selections</div>
-                <a href="juxtapose.php"><div class="arc-button">Juxtapose &amp; Compare</div></a>
+                <a href="#"><div id='juxtaposeBtn' class="arc-button">Juxtapose &amp; Compare</div></a>
                 <a href="searchresults.php"><div class="arc-search">Back to Search</div></a>
                 <div class="arc-clear"><a href="#" data-toggle="modal" data-target="#clearArchive">Clear Archive</a></div>
             </div>
@@ -87,7 +87,7 @@
               <div id="archive" class="col-md-8">
 
                     <?php $count = 1; foreach($archived_folios as $fol_obj){ ?>
-                      <div class="holding">
+                      <div class="holding" data-folioid = "<?php echo $fol_obj->folio_id; ?>" >
                         <h4>
                           <?php
                             echo $fol_obj->folio_location->municipality.', '.$fol_obj->folio_location->state.', '.$fol_obj->abbreviated_shelf.'('.$fol_obj->folio_num . $fol_obj->folio_side.')';
@@ -113,6 +113,13 @@
         </div>
     </div>
 
+    <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
+
+<!--     <div id="bookshelf">
+        
+    </div>
+ -->
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script launguage="JavaScript">
@@ -125,6 +132,18 @@
         });
     </script> 
     <script type="text/javascript">
+
+      // $(document).ready(function(){
+      //     $.ajax({
+      //         url: 'bookshelf.php',
+      //         type: 'GET',
+      //         dataType: 'html',
+      //         success: function(data){
+      //             $('#bookshelf').html(data);
+      //         }
+      //     });
+      // });
+
       $(".delButton").click(function(event) {
         event.preventDefault();
         $(this).parents('.holding').fadeOut();
@@ -141,6 +160,35 @@
               }else{
                 alert(msgArray.statusMsg);
               }
+            }
+        });
+          
+      });
+
+      $('#juxtaposeBtn').click(function(){
+        var folioIdsSelected = [];
+        $("#archive .holding").each(function(){
+            if($(this).hasClass('clickedArc')){
+              folioIdsSelected.push($(this).data('folioid'));
+            }
+        });
+
+        alert(folioIdsSelected);
+
+        $.ajax({    
+            url: 'saveArchivesMultiple.php', //current page
+            type: 'GET',
+            data: {folio_id: folioIdsSelected.toString(), is_juxta: 'true' },
+                              
+            success: function (msg) {
+                //Add this folio to books
+                console.log(msg);
+                var decodedMsg = JSON && JSON.parse(msg) || $.parseJSON(msg);
+                if(decodedMsg.statusNum == 200){
+                  window.location.href = 'juxtapose.php';
+                }else{
+                  alert('Unable to display juxta and compare. Please try again.');
+                }
             }
         });
           

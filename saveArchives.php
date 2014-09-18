@@ -34,32 +34,55 @@ $msg = new Msg();
 //$con = mysql_connect(HOST.':'.PORT, USER, PASSWORD) or die("Unable to connect to MySQL");
 //mysql_select_db(DATABASE, $con) or die("Could not select" .mysql_error());
 
-$page_result_exists = $mysqli->query("SELECT folio_id from  archives WHERE folio_id=$folio_id AND user_id=$user_id AND archive_juxta='".$archiveORjuxta."'");
-    
-if(!$page_result_exists){
-    //TODO: Return error message on select query
-    $msg->statusNum = 201;    
-    $msg->statusMsg = mysql_error();
-}else{        
-//    $count = mysql_num_rows($page_result_exists);
-    if($page_result_exists->num_rows > 0){
+if( strpos($folio_id  , ',') === false ){
+    $page_result_exists = $mysqli->query("SELECT folio_id from  archives WHERE folio_id=$folio_id AND user_id=$user_id AND archive_juxta='".$archiveORjuxta."'");
+    if(!$page_result_exists){
+        //TODO: Return error message on select query
         $msg->statusNum = 201;    
-        $msg->statusMsg = $PAGE_EXISTS_ARCHIVE_MSG;
-        if($is_juxta==='true'){
-            $msg->statusMsg = $PAGE_EXISTS_JUXTAPOSE_MSG;
-        }
+        $msg->statusMsg = mysql_error();
     }else{        
-        $sql_query_result = $mysqli->query("INSERT INTO archives (folio_id, user_id, archive_juxta) values ($folio_id,$user_id,'$archiveORjuxta')");
-        if(!$sql_query_result){        
+    //    $count = mysql_num_rows($page_result_exists);
+        if($page_result_exists->num_rows > 0){
             $msg->statusNum = 201;    
-            $msg->statusMsg = "Failed to update database".mysql_error();
-        }else{
-            $msg->statusMsg = "Folio successfully added to your archives";
+            $msg->statusMsg = $PAGE_EXISTS_ARCHIVE_MSG;
             if($is_juxta==='true'){
-                $msg->statusMsg = "Folio successfully added for juxtaposing";
+                $msg->statusMsg = $PAGE_EXISTS_JUXTAPOSE_MSG;
             }
-            $msg->statusNum = 200;
+        }else{        
+            $sql_query_result = $mysqli->query("INSERT INTO archives (folio_id, user_id, archive_juxta) values ($folio_id, $user_id, '$archiveORjuxta')");
+            if(!$sql_query_result){        
+                $msg->statusNum = 201;    
+                $msg->statusMsg = "Failed to update database".mysql_error();
+            }else{
+                $msg->statusMsg = "Folio successfully added to your archives";
+                if($is_juxta==='true'){
+                    $msg->statusMsg = "Folio successfully added for juxtaposing";
+                }
+                $msg->statusNum = 200;
+            }
         }
+    }
+}else{
+    try{
+        $mysqli->begin_transaction();
+        //The query below should be executed only when you want to delete all the folios and replace with new one.
+        //TODO: Need to put a logic to bypass this code when you only want to add folios to archives/juxta and not replacing
+        $mysqli->query("DELETE from  archives WHERE user_id = $user_id AND archive_juxta = '$archiveORjuxta' ");
+        $folioIds = explode(',', $folio_id);
+        foreach ($folioIds as $folId ) {
+            $sql_query_result = $mysqli->query("INSERT INTO archives (folio_id, user_id, archive_juxta) values ($folId, $user_id, '$archiveORjuxta')");
+        }
+        $msg->statusMsg = "Folios successfully added to your archives";
+        if($is_juxta==='true'){
+            $msg->statusMsg = "Folios successfully added for juxtaposing";
+        }
+        $msg->statusNum = 200;
+        $mysqli->commit();
+    }catch(Exception $e){
+        error_log($e);
+        $mysqli->rollback();
+        $msg->statusNum = 201;    
+        $msg->statusMsg = "Failed to update database".mysql_error();
     }
 }
 //Return the status message

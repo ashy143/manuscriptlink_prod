@@ -202,7 +202,6 @@ function getArchivedImagesForLoggedInUser(){
             .' ON arc.folio_id = fol.folio_id '
             .' where arc.user_id = ' .$user_id .' and arc.archive_juxta = "ARCHIVE" ' ;
     $result = $mysqli->query($query) or die(mysql_errno());
-    error_log($query);
     $folio_objs = array();
     if($result->num_rows > 0) {
         error_log("executed");

@@ -16,16 +16,16 @@
     mysql_select_db(DATABASE, $con) or die("Could not select" .mysql_error());
 
     class MSEXT_OBJ{
-            public $title  = "--";
-            public $height;
-            public $width;
-            public $height_written;
-            public $width_written;
-            public $no_of_lines;
-            public $dim_staff;
-            public $mscript_obj;
+        public $title  = "--";
+        public $height;
+        public $width;
+        public $height_written;
+        public $width_written;
+        public $no_of_lines;
+        public $dim_staff;
+        public $mscript_obj;
 
-        }
+    }
     //$manuscriptByPartQuery = mysql_query("Select mscript_id from manuscript where mlinknumber = $mlinknumber ") or die(mysql_error());
 
     $manuscriptByPartQuery = "SELECT ms.mscript_id,  fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff "
