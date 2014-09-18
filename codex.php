@@ -25,6 +25,10 @@
         .tooltiptext{
             display: none;
         }
+
+        .imageSelectBorder{
+            border: 3px solid blue;
+        }
     </style>
     <script type="text/javascript">
         function view_record(form) {
@@ -130,23 +134,11 @@
         
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script language="javascript">
-      $('.fa-caret-square-o-down').click(function () {
-        $('#bookBody').slideToggle('2000',"swing", function () {
-          // Animation complete.
-        });
-        $(".fa").toggleClass("fa-caret-square-o-up fa-caret-square-o-down");
-      });
-      $(".delButton").click(function(event) {
-        event.preventDefault();
-        $(this).parents('.myBook').fadeOut();
-      });
-
-    </script> 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>    
     <script type="text/javascript" src="js/models/Page.js"></script>
     <script type="text/javascript" src="js/jquery.qtip.js"></script>
+    <script type="text/javascript" src="js/codexBookshelf.js"></script>
     <script>         
             
             function getMetadataDiv(page_obj){
@@ -315,6 +307,11 @@
                     '</form>');
                     $('body').append(form);
                     $(form).submit();
+                });
+
+                $(".page").click(function(){
+                    //Navigate to pan zoom page
+                    $(this).toggleClass('imageSelectBorder');
                 });
             });
             
