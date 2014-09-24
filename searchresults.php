@@ -224,7 +224,7 @@
     	<div class="container">
             <div class="row">
                 <div class="col-md-3 sideButtons">
-                    <h4 class="arc-button puff" id="addToArchives" ><a href="user.php">Add to My Archive</a></h4>
+                    <h4 class="arc-button puff" id="addToArchives" ><a href="#">Add to My Archive</a></h4>
                     <h4 class="arc-search puff"><a href="search.php"><i class="fa fa-wrench"></i> Refine Results</a></h4>
                 </div>
                 <div id="results" class="col-md-9">
@@ -255,7 +255,7 @@
                             <!-- <input type="hidden" name='data' value ='<?php //echo json_encode($mobj);?>'/> -->
                             <input type="hidden" name='mlinknum' value ='<?php echo $mobj->mscript_obj->mlinknum ;?>'/>
                         </form>
-                        <div class="search-result" data-mscriptId = "<?php echo $mobj->mscript_id; ?>"  >                            
+                        <div class="search-result" data-mscriptid = "<?php echo $mobj->mscript_id; ?>"  >                            
                             <h4><a onclick="view_record(document.getElementsByName('<?php echo $count;?>'));"><?php echo 'manuscriptlink # ' . htmlspecialchars($mobj->mscript_obj->mlinknum . "." . $mobj->mscript_obj->part)  ; ?></a></h4>
                             <p><?php echo $mobj->title . ",  " . $mobj->mscript_obj->origin->country . ", " . $mobj->mscript_obj->date_manu ;  ?> <br />                               
                                <?php echo "Available Folios: " . htmlspecialchars($mobj->mscript_obj->no_of_avail_fol)  ?>
@@ -277,10 +277,28 @@
         
         $('#addToArchives').click(function(){
             //Iterate through each search result and check if it is selected
+            var msIdsSelected = [];
             $('.search-result').each(function(){
                if($(this).hasClass('clicked')){
-                   
+                   var mscriptId = $(this).data('mscriptid');
+                   msIdsSelected.push(mscriptId);
                } 
+            });
+            $.ajax({    
+                url: 'addManuscriptsToArchives.php',
+                type: 'GET',
+                data: {mscript_ids: msIdsSelected.toString() },
+                                  
+                success: function (msg) {
+                    //Add this folio to books
+                    console.log(msg);
+                    var decodedMsg = JSON && JSON.parse(msg) || $.parseJSON(msg);
+                    if(decodedMsg.statusNum == 200){
+                      alert('Manuscripts successfully added to your archives');
+                    }else{
+                      alert('Unable to add manuscripts to your archives. Please try again.');
+                    }
+                }
             });
             
         });

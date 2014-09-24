@@ -186,9 +186,6 @@
               folioIdsSelected.push($(this).data('folioid'));
             }
         });
-
-        alert(folioIdsSelected);
-
         $.ajax({    
             url: 'saveArchivesMultiple.php', //current page
             type: 'GET',
