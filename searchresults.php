@@ -178,6 +178,10 @@
     <script type="text/javascript">
         function view_record(form) {
             $(form).submit(); 
+        };
+
+        function goBack() {
+            history.back()
         }
     </script>
   </head>
@@ -225,7 +229,7 @@
             <div class="row">
                 <div class="col-md-3 sideButtons">
                     <h4 class="arc-button puff" id="addToArchives" ><a href="#">Add to My Archive</a></h4>
-                    <h4 class="arc-search puff"><a href="search.php"><i class="fa fa-wrench"></i> Refine Results</a></h4>
+                    <h4 class="arc-search puff" onclick="goBack()"><a href="#" onclick="goBack()" ><i class="fa fa-wrench"></i> Refine Results</a></h4>
                 </div>
                 <div id="results" class="col-md-9">
                     <!-- THis is the line where you will output the search terms, all of which wrapped in a span tag with class search-terms -->
@@ -256,7 +260,7 @@
                             <input type="hidden" name='mlinknum' value ='<?php echo $mobj->mscript_obj->mlinknum ;?>'/>
                         </form>
                         <div class="search-result" data-mscriptid = "<?php echo $mobj->mscript_id; ?>"  >                            
-                            <h4><a onclick="view_record(document.getElementsByName('<?php echo $count;?>'));"><?php echo 'manuscriptlink # ' . htmlspecialchars($mobj->mscript_obj->mlinknum . "." . $mobj->mscript_obj->part)  ; ?></a></h4>
+                            <h4><a href="#" onclick="view_record(document.getElementsByName('<?php echo $count;?>'));"><?php echo 'manuscriptlink # ' . htmlspecialchars($mobj->mscript_obj->mlinknum . "." . $mobj->mscript_obj->part)  ; ?></a></h4>
                             <p><?php echo $mobj->title . ",  " . $mobj->mscript_obj->origin->country . ", " . $mobj->mscript_obj->date_manu ;  ?> <br />                               
                                <?php echo "Available Folios: " . htmlspecialchars($mobj->mscript_obj->no_of_avail_fol)  ?>
                         </div>

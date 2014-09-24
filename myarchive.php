@@ -79,7 +79,7 @@
                 <div class="arc-button">Export Selections</div>
                 <div class="arc-button">Print Selections</div>
                 <a href="#"><div id='juxtaposeBtn' class="arc-button">Juxtapose &amp; Compare</div></a>
-                <a href="searchresults.php"><div class="arc-search">Back to Search</div></a>
+                <a href="search.php"><div class="arc-search">Back to Search</div></a>
                 <div class="arc-clear"><a href="#" data-toggle="modal" data-target="#clearArchive">Clear Archive</a></div>
             </div>
 
@@ -186,22 +186,26 @@
               folioIdsSelected.push($(this).data('folioid'));
             }
         });
-        $.ajax({    
-            url: 'saveArchivesMultiple.php', //current page
-            type: 'GET',
-            data: {folio_id: folioIdsSelected.toString(), is_juxta: 'true' },
-                              
-            success: function (msg) {
-                //Add this folio to books
-                console.log(msg);
-                var decodedMsg = JSON && JSON.parse(msg) || $.parseJSON(msg);
-                if(decodedMsg.statusNum == 200){
-                  window.location.href = 'juxtapose.php';
-                }else{
-                  alert('Unable to display juxta and compare. Please try again.');
-                }
-            }
-        });
+        if(folioIdsSelected.length > 0){
+          $.ajax({
+              url: 'saveArchivesMultiple.php', //current page
+              type: 'GET',
+              data: {folio_id: folioIdsSelected.toString(), is_juxta: 'true' },
+                                
+              success: function (msg) {
+                  //Add this folio to books
+                  console.log(msg);
+                  var decodedMsg = JSON && JSON.parse(msg) || $.parseJSON(msg);
+                  if(decodedMsg.statusNum == 200){
+                    window.location.href = 'juxtapose.php';
+                  }else{
+                    alert('Unable to display juxta and compare. Please try again.');
+                  }
+              }
+          });
+        }else{
+          alert('Please select some folios.');
+        }
           
       });
 

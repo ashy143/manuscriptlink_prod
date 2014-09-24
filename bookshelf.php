@@ -9,7 +9,7 @@
 
 <div id="bookHead">
     <h4>Bookshelf</h4>
-    <i class="fa fa-caret-square-o-down"></i>
+    <a href="#"><i class="fa fa-caret-square-o-down"></i></a>
 </div>
 <div id="bookBody">
     <div class="book" id="book1">

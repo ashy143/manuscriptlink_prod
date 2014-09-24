@@ -194,8 +194,11 @@
                       </dl>
                   </div>
                           <a href="codex.php"><div class="arc-button rec-button puff">Codex</div></a>
-                          <a href="panzoom.php"><div class="arc-button rec-button puff">Pan &amp; Zoom</div></a><br />
-                  <a href="searchresults.php"><div class="escape arc-search puff">Back to Search</div></a>
+                          <!-- <a href="panzoom.php"><div class="arc-button rec-button puff">Pan &amp; Zoom</div></a><br /> -->
+                          <a href="search.php"><div class="arc-button rec-button puff">Back to Search</div></a><br />
+                  <!-- <a href="search.php"><div class="escape arc-search puff">Back to Search</div></a> -->
+
+                  <BR><BR>
 
                   <?php } ?>
                   <!-- End loop here for each part -->
