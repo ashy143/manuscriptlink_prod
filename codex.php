@@ -7,6 +7,7 @@
     }
 
    $mlinknum = getMlinkNumberOfManuscript($_GET['id']);
+   $folioIdToBeOpened = $_GET['folio_id'];
 
 ?>
 
@@ -33,6 +34,7 @@
             border: 3px solid blue;
         }
     </style>
+
     <script type="text/javascript">
         function view_record(form) {
             $(form).submit(); 
@@ -153,6 +155,8 @@
             
             $(document).ready(function(){
 
+                //This particular folio will be opened and highlighted
+                var folioIdToBeOpened = parseInt(<?php echo $folioIdToBeOpened; ?>) ;
                 $.ajax({
                     url: 'bookshelf.php',
                     type: 'GET',
@@ -215,6 +219,21 @@
                             
                         });
                         
+                        //Logic to open the selected folio directly of manuscript and highlight it
+                        if(folioIdToBeOpened !== -1){
+                            while(ptr < pages.length - 1 ){
+                                if(parseInt(pages[ptr].pageId) === folioIdToBeOpened || parseInt(pages[ptr+1].pageId) === folioIdToBeOpened){
+                                    if(parseInt(pages[ptr].pageId) === folioIdToBeOpened){
+                                        $("#lpage").addClass('imageSelectBorder');
+                                    }else if(parseInt(pages[ptr+1].pageId) === folioIdToBeOpened){
+                                        $("#rpage").addClass('imageSelectBorder');
+                                    }
+                                    break;
+                                }
+                                ptr = ptr + 2;
+                            }
+                        }
+                        
                         $("#lpage").attr('src', 'image.php?img_path='+pages[ptr].image); 
                         $("#lpage").data('obj',pages[ptr]);
                         $("#leftShelf").text(pages[ptr].getAbbrShelf());                        
@@ -245,6 +264,7 @@
                 });
                 
                 $("#left").click(function(){
+                    $(".page").removeClass('imageSelectBorder');
                     ptr = ptr -2;
                     $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
@@ -271,6 +291,7 @@
                 });
                 
                 $("#right").click(function(){
+                    $(".page").removeClass('imageSelectBorder');
                     ptr = ptr + 2;
                     $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);

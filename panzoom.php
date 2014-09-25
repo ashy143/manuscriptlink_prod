@@ -118,6 +118,7 @@
     <script src='js/jquery.contextMenu.js'></script>
     <script src='js/e-smart-zoom-jquery.min.js'></script>
     <script src='js/panzoom.js'></script>
+    <script src='js/panzoomBookshelf.js'></script>
         
   </body>
 </html>

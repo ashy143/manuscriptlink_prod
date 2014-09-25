@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-     $('#bookshelf').delegate('.fa', 'click', function () {
+	$('#bookshelf').delegate('.fa', 'click', function () {
         $('#bookBody').slideToggle('2000',"swing", function () {
         //Animation complete
         });
@@ -30,38 +30,16 @@ $(document).ready(function(){
     });
 
     $('#bookshelf').delegate('.codexButton', 'click', function(event) {
-        event.stopPropagation();
+    	event.stopPropagation();
         var codexButton = $(event.target);
         var mscriptId = codexButton.parent().find('h4').attr('data-mscriptid');
         var folioId = codexButton.parent().find('h4').attr('data-folioid');
         window.location.href = 'codex.php?id='+mscriptId+'&folio_id='+folioId;
+        
     });
     
     $('#bookshelf').delegate('#juxtaBtn', 'click', function(){
-        var folioIdToBeAdded = -1 ;
-        //Do validation and get proper folio id
-        if( $('#lpage').hasClass('imageSelectBorder') && $('#rpage').hasClass('imageSelectBorder') ){
-            alert('Select only one folio at a time');
-            return;
-        }else if($('#lpage').hasClass('imageSelectBorder')){
-            if( $('#lpage').data('obj').pageNum === 'x'){
-                alert("You have selected missing folio. Please select existing folio. ");
-                return;
-            }else{
-                folioIdToBeAdded = $('#lpage').data('obj').pageId ;
-            }
-        }else if($('#rpage').hasClass('imageSelectBorder')){
-            if( $('#rpage').data('obj').pageNum === 'x'){
-                alert("You have selected missing folio. Please select existing folio. ");
-                return;
-            }else{
-                folioIdToBeAdded = $('#rpage').data('obj').pageId ;
-            }
-        }else{
-            alert('No folio selected. Please select one.');
-            return;
-        }
-
+        var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
         $.ajax({    
             url: 'saveArchives.php', //current page
             type: 'GET',
@@ -79,30 +57,7 @@ $(document).ready(function(){
     });
     
     $('#bookshelf').delegate('#archiveBtn', 'click', function(){
-        var folioIdToBeAdded = -1 ;
-        //Do validation and get proper folio id
-        if( $('#lpage').hasClass('imageSelectBorder') && $('#rpage').hasClass('imageSelectBorder') ){
-            alert('Select only one folio at a time');
-            return;
-        }else if($('#lpage').hasClass('imageSelectBorder')){
-            if( $('#lpage').data('obj').pageNum === 'x'){
-                alert("You have selected missing folio. Please select existing folio. ");
-                return;
-            }else{
-                folioIdToBeAdded = $('#lpage').data('obj').pageId ;
-            }
-        }else if($('#rpage').hasClass('imageSelectBorder')){
-            if( $('#rpage').data('obj').pageNum === 'x'){
-                alert("You have selected missing folio. Please select existing folio. ");
-                return;
-            }else{
-                folioIdToBeAdded = $('#rpage').data('obj').pageId ;
-            }
-        }else{
-            alert('No folio selected. Please select one.');
-            return;
-        }
-
+        var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
         $.ajax({    
             url: 'saveArchives.php', //current page
             type: 'GET',
@@ -114,6 +69,6 @@ $(document).ready(function(){
             }
         });
     });
-    
+
 
 });
