@@ -6,7 +6,8 @@
         header("location: ./index.php");
     }
 
-   // error_log($_GET['id']);
+   $mlinknum = getMlinkNumberOfManuscript($_GET['id']);
+
 ?>
 
 <!DOCTYPE html>
@@ -105,7 +106,7 @@
            <div class='row-fluid'>
                <form name='recordForm' method="GET" action='record.php'>
                     <input type="hidden" name='id' value ='<?php echo $_GET['id']; ?>'/>
-                    <input type="hidden" name='mlinknum' value ='<?php echo 1 ; ?>'/>
+                    <input type="hidden" name='mlinknum' value ='<?php echo $mlinknum ; ?>'/>
                </form>
                
                 <div class="span1"></div>
@@ -144,8 +145,6 @@
     <script>         
             
             function getMetadataDiv(page_obj){
-                console.log(page_obj);
-                
                 return "<span> <strong>"+ page_obj.author + ', ' + page_obj.text + ', ' + page_obj.date+" <BR>"+
                         page_obj.writing_sup + ', ' + page_obj.width + ' x ' + page_obj.height + ', ' + page_obj.no_of_col + ' col. ' + page_obj.no_of_lines + ' lines '+ "<BR>" +
                             page_obj.contents +

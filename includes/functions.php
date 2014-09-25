@@ -204,7 +204,6 @@ function getArchivedImagesForLoggedInUser(){
     $result = $mysqli->query($query) or die(mysql_errno());
     $folio_objs = array();
     if($result->num_rows > 0) {
-        error_log("executed");
         while($row = $result->fetch_assoc()){
              
             $folio = new Folio();
@@ -223,8 +222,18 @@ function getArchivedImagesForLoggedInUser(){
     return $folio_objs;
 }
 
-function delete(){
-    
+function getMlinkNumberOfManuscript($manuscriptId){
+    global $mysqli;
+
+    $query = "SELECT mlinknumber "
+            . "FROM manuscript WHERE manuscript.mscript_id = ". $manuscriptId ;
+    $result = $mysqli->query($query) or die(mysql_errno());
+    if($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+        return $row['mlinknumber'];
+    }else{
+        return -1;
+    }
 }    
 
 
