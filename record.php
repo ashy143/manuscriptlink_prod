@@ -193,8 +193,7 @@
                             <dd><?php $mobj->dim_staff; ?></dd>
                       </dl>
                   </div>
-                          <a href="codex.php"><div class="arc-button rec-button puff">Codex</div></a>
-                          <!-- <a href="panzoom.php"><div class="arc-button rec-button puff">Pan &amp; Zoom</div></a><br /> -->
+                          <a href="codex.php?id=<?php echo $mobj->mscript_id; ?>"><div class="arc-button rec-button puff">Codex</div></a>
                           <a href="search.php"><div class="arc-button rec-button puff">Back to Search</div></a><br />
                   <!-- <a href="search.php"><div class="escape arc-search puff">Back to Search</div></a> -->
 
@@ -212,7 +211,6 @@
                   <?php $count=1; foreach($combined_folio_objs as $folio_obj_array){ ?>
                   <form name='<?php echo $count; ?>' method="GET" action='codex.php'>
                         <input type="hidden" name='id' value ='<?php echo $folio_obj_array[0]->mscript_id; ?>'/>
-                        <input type="hidden" name='data' value ='<?php //echo $_GET['data']; ?>'/>
                   </form>
                   
                   <div class="holding">                      

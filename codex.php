@@ -5,6 +5,8 @@
     if(login_check() == false){
         header("location: ./index.php");
     }
+
+   // error_log($_GET['id']);
 ?>
 
 <!DOCTYPE html>
@@ -103,7 +105,7 @@
            <div class='row-fluid'>
                <form name='recordForm' method="GET" action='record.php'>
                     <input type="hidden" name='id' value ='<?php echo $_GET['id']; ?>'/>
-                    <input type="hidden" name='data' value ='<?php echo $_GET['data']; ?>'/>
+                    <input type="hidden" name='mlinknum' value ='<?php echo 1 ; ?>'/>
                </form>
                
                 <div class="span1"></div>
