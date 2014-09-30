@@ -35,7 +35,8 @@ $msg = new Msg();
 //mysql_select_db(DATABASE, $con) or die("Could not select" .mysql_error());
 
 try{
-    $mysqli->begin_transaction();
+    // $mysqli->begin_transaction();
+    $mysqli->autocommit(FALSE);
     //The query below should be executed only when you want to delete all the folios and replace with new one.
     //TODO: Need to put a logic to bypass this code when you only want to add folios to archives/juxta and not replacing
     $mysqli->query("DELETE from  archives WHERE user_id = $user_id AND archive_juxta = '$archiveORjuxta' ");
