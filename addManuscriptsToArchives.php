@@ -18,7 +18,7 @@ $ms_ids = $_GET['mscript_ids'];
 
 $archiveORjuxta = "ARCHIVE"; //to check if action is for archive or juxtapose.
 
-class Msg{
+class Msg{  
     //set statusNum to 201 for existing page in archives
     public $statusNum = 200;
     public $statusMsg = "Ok";

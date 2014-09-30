@@ -91,7 +91,7 @@
             <div class="row-fluid">
                 <div class="span1" style="height: 80vh; position: relative;  top: 40vh;">
                     <img id="left" src="./images/arrow-left-double.png" style="width: 30px; height: 30px;" alt=""/>
-                    <img id="prev" src="./images/prev.png" style="width: 30px; height: 30px;" alt="" />
+                    <!-- <img id="prev" src="./images/prev.png" style="width: 30px; height: 30px;" alt="" /> -->
                 </div>
                 <div class="span5">
                     <img id="lpage" class="page" title="test" style="max-width: 100%; max-height: 100%; float: right;" src=""/>
@@ -101,7 +101,7 @@
                     <img id="rpage"  class="page" title="test" style="max-width: 100%; max-height: 100%; float:left; " src=""/>                    
                 </div>
                 <div class="span1" style="height: 80vh; position: relative;  top: 40vh; " >
-                    <img id="next" src="./images/next.png" style="width: 30px; height: 30px;" alt=''/>
+                    <!-- <img id="next" src="./images/next.png" style="width: 30px; height: 30px;" alt=''/> -->
                     <img id="right" src="./images/arrow-right-double.png" style="width: 30px; height: 30px;" alt=''/>                    
                 </div>
             </div>
