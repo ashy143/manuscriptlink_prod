@@ -2,7 +2,6 @@
     
     include_once './includes/config.php';
     include_once './includes/functions.php';
-    include_once './utils/process_search.php';
     include_once './data_models/CodicologicalQuery.php';
     include_once './data_models/BibliographicalQuery.php';
     include_once './utils/SearchTermsMap.php';

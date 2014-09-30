@@ -17,9 +17,6 @@ $user_id = $_SESSION['user_id'];
 $ms_ids = $_GET['mscript_ids'];
 
 $archiveORjuxta = "ARCHIVE"; //to check if action is for archive or juxtapose.
-if($is_juxta==='true'){
-    $archiveORjuxta = "JUXTA";
-}
 
 class Msg{
     //set statusNum to 201 for existing page in archives
