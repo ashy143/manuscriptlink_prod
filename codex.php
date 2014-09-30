@@ -152,11 +152,56 @@
                             page_obj.contents +
                         "</strong><span>";
             };
+
+            function getRemainingBlackPagesForPrevNext(ptr, pages){
+
+                /* Caluclation for prev and next page navigation */
+                var currentPageNumForBack = 0;
+                var currentPageNumForForw = 0;
+
+                if(pages[ptr].pageNum !== 'x'){
+                    currentPageNumForBack = pages[ptr].pageNum ;
+                }else if(pages[ptr+1].pageNum !== 'x'){
+                    currentPageNumForBack = pages[ptr+1].pageNum ;
+                }
+
+                if(pages[ptr+1].pageNum !== 'x'){
+                    currentPageNumForForw = pages[ptr+1].pageNum ;
+                }else if(pages[ptr].pageNum !== 'x'){
+                    currentPageNumForForw = pages[ptr].pageNum ;
+                }
+
+                /* calculate black pages backward and forward to current page*/
+                var index = ptr; 
+                while(pages[index].pageNum === 'x' && index > 0){
+                    index-- ;
+                }
+                remaining_blank_back = parseInt(currentPageNumForBack) - parseInt((pages[index].pageNum === 'x')? 0 : parseInt(pages[index].pageNum));
+                var index = ptr+1;  //check from right page 
+                while(pages[index].pageNum === 'x' && index < pages.length - 1){    //-1 because for last page we don't want to increment
+                    index++ ;
+                }
+                if(pages[index].pageNum === 'x'){
+                    remaining_blank_forward = 0 ;
+                }else{
+                    remaining_blank_forward = parseInt(pages[index].pageNum) - parseInt(currentPageNumForForw);
+                }
+                /* Caluclation for prev and next page navigation ends here */
+
+                var values = [];
+                values.push(remaining_blank_back);
+                values.push(remaining_blank_forward);
+
+                return values;
+            };
             
             $(document).ready(function(){
 
                 //This particular folio will be opened and highlighted
-                var folioIdToBeOpened = parseInt(<?php echo $folioIdToBeOpened; ?>) ;
+                var folioIdToBeOpened = parseInt(<?php echo $folioIdToBeOpened; ?>);
+                var remaining_blank_back = 0;
+                var remaining_blank_forward = 0;
+
                 $.ajax({
                     url: 'bookshelf.php',
                     type: 'GET',
@@ -219,6 +264,20 @@
                             
                         });
                         
+                        /* Single page navigation logic */
+
+                        //take the pointer to point to first available valid folio (usually ptr = 1, ptr = 0 is missing leaf)
+                        remaining_blank_back = parseInt(pages[ptr + 1].pageNum) - 1 ;
+                        ptr = 3 ;
+                        while(pages[ptr].pageNum === 'x' ){
+                            ptr++ ;
+                        }
+                        remaining_blank_forward = parseInt(pages[ptr + 1].pageNum) - parseInt(pages[1].pageNum);
+                        
+                        /* single page navigation logic end */
+
+                        //reset the ptr to point to first folio
+                        ptr = 0;
                         //Logic to open the selected folio directly of manuscript and highlight it
                         if(folioIdToBeOpened !== -1){
                             while(ptr < pages.length - 1 ){
@@ -233,7 +292,12 @@
                                 ptr = ptr + 2;
                             }
                         }
-                        
+
+                        //disable single back button if remaining blank pages behind are 0
+                        if(remaining_blank_back > 0){
+                            $('#prev').attr('disabled', true);
+                        }
+
                         $("#lpage").attr('src', 'image.php?img_path='+pages[ptr].image); 
                         $("#lpage").data('obj',pages[ptr]);
                         $("#leftShelf").text(pages[ptr].getAbbrShelf());                        
@@ -266,6 +330,11 @@
                 $("#left").click(function(){
                     $(".page").removeClass('imageSelectBorder');
                     ptr = ptr -2;
+
+                    var values = getRemainingBlackPagesForPrevNext(ptr, pages);
+                    remaining_blank_back = values[0];
+                    remaining_blank_forward = values[1];
+                    
                     $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
                     $("#leftShelf").text(pages[ptr].getAbbrShelf());
@@ -293,6 +362,11 @@
                 $("#right").click(function(){
                     $(".page").removeClass('imageSelectBorder');
                     ptr = ptr + 2;
+                    
+                    var values = getRemainingBlackPagesForPrevNext(ptr, pages);
+                    remaining_blank_back = values[0];
+                    remaining_blank_forward = values[1];
+
                     $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
                     $("#leftShelf").text( pages[ptr].getAbbrShelf());                    
@@ -315,6 +389,68 @@
                         $("#right").prop('disabled', true);
                     }                    
                     $("#left").prop('disabled', false);
+                    
+                });
+
+                $("#prev").click(function(){    //single nav
+                    $(".page").removeClass('imageSelectBorder');
+
+                    var values = getRemainingBlackPagesForPrevNext(ptr, pages);
+                    remaining_blank_back--;
+                    remaining_blank_forward++;
+                    
+                    $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
+                    $("#lpage").data('obj',pages[ptr]);
+                    $("#leftShelf").text(pages[ptr].getAbbrShelf());
+                    if(pages[ptr].pageNum !== 'x'){
+                        $('#lefttooltip').html(getMetadataDiv(pages[ptr]));                            
+                    }else{
+                       $('#lefttooltip').html('Void Page');
+                    }
+                    
+                    $("#rpage").attr('src','image.php?img_path='+pages[ptr+1].getImage());
+                    $("#rpage").data('obj',pages[ptr+1]);
+                    $("#rightShelf").text(pages[ptr+1].getAbbrShelf());
+                    if(pages[ptr+1].pageNum !== 'x'){
+                        $('#righttooltip').html(getMetadataDiv(pages[ptr+1]));                         
+                    }else{
+                        $('#righttooltip').html('Void Page');
+                    }
+                    if(ptr===0){
+                        $("#left").prop('disabled', true);
+                    }                    
+                    $("#right").prop('disabled', false);
+                    
+                });
+
+                $("#next").click(function(){    //single nav
+                    $(".page").removeClass('imageSelectBorder');
+
+                    var values = getRemainingBlackPagesForPrevNext(ptr, pages);
+                    remaining_blank_back = values[0];
+                    remaining_blank_forward = values[1];
+                    
+                    $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
+                    $("#lpage").data('obj',pages[ptr]);
+                    $("#leftShelf").text(pages[ptr].getAbbrShelf());
+                    if(pages[ptr].pageNum !== 'x'){
+                            $('#lefttooltip').html(getMetadataDiv(pages[ptr]));                            
+                    }else{
+                       $('#lefttooltip').html('Void Page');
+                    }
+                    
+                    $("#rpage").attr('src','image.php?img_path='+pages[ptr+1].getImage());
+                    $("#rpage").data('obj',pages[ptr+1]);
+                    $("#rightShelf").text(pages[ptr+1].getAbbrShelf());
+                    if(pages[ptr+1].pageNum !== 'x'){
+                        $('#righttooltip').html(getMetadataDiv(pages[ptr+1]));                         
+                    }else{
+                        $('#righttooltip').html('Void Page');
+                    }
+                    if(ptr===0){
+                        $("#left").prop('disabled', true);
+                    }                    
+                    $("#right").prop('disabled', false);
                     
                 });
                 

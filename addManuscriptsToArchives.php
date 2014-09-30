@@ -36,7 +36,7 @@ try{
     //The query below should be executed only when you want to delete all the folios and replace with new one.
     //TODO: Need to put a logic to bypass this code when you only want to add folios to archives/juxta and not replacing
     $query = "SELECT folio_id FROM folios WHERE mscript_id IN ($ms_ids) " ;
-    $sql_query_result = $mysqli->query($query););
+    $sql_query_result = $mysqli->query($query);
     $query_value_part = array();
     if($sql_query_result->num_rows > 0) {        
         while($row =$sql_query_result->fetch_assoc()){
