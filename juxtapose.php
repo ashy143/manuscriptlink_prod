@@ -1,7 +1,7 @@
 <?php 
     include_once './includes/functions.php';
     session_start();
-    $juxt_folio_objs = getJuxtaImagesForLoggedInUser();
+    $juxt_folio_objs = getJuxtaImagesForFolios($_GET['folio_ids']);
     $colSizeClass = 'span12';
     if($juxt_folio_objs > 0){
       $colSizeClass = 'span' . 12/count($juxt_folio_objs);

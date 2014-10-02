@@ -194,6 +194,30 @@ function getJuxtaImagesForLoggedInUser(){
     return $folio_objs;
 }
 
+function getJuxtaImagesForFolios($folio_ids){
+    global $mysqli;
+    $user_id = $_SESSION['user_id'];    
+    $query = 'SELECT arc.folio_id, fol.abreviated_shelf, fol.mscript_id, fol.folio_num, fol.folio_side, fol.res_ident FROM archives As arc INNER JOIN folios As fol ON arc.folio_id = fol.folio_id '
+            .' where arc.user_id = ' .$user_id .' and arc.archive_juxta = "JUXTA" and arc.folio_id in ('. $folio_ids .')' ;
+    error_log($query);
+    $result = $mysqli->query($query) or die(mysql_errno());
+    $folio_objs = array();
+    if($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()){
+             
+            $folio = new Folio();
+            $folio->folio_id = $row['folio_id'];
+            $folio->mscript_id = $row['mscript_id'];
+            $folio->abbreviated_shelf = $row['abreviated_shelf'];
+            $folio->folio_num = $row['folio_num'];
+            $folio->folio_side = $row['folio_side'];
+            $folio->res_ident = $row['res_ident'];
+            $folio_objs[] = $folio;
+        }
+    }    
+    return $folio_objs;
+}
+
 function getArchivedImagesForLoggedInUser(){
     global $mysqli;
     $user_id = $_SESSION['user_id'];    

@@ -114,6 +114,17 @@ $(document).ready(function(){
             }
         });
     });
+
+    $('#bookshelf').delegate('#jxtAndCmpBtn', 'click', function(){
+        var folio_ids = [];
+        $('#bookshelf').find('input:checkbox').each(function(){
+            if($(this).is(':checked') ){
+                folio_ids.push($(this).parent().children('h4').data('folioid'));
+            }
+        });
+        window.location.href = 'juxtapose.php?folio_ids='+folio_ids.toString();
+    
+    });
     
 
 });

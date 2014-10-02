@@ -197,7 +197,7 @@
                   console.log(msg);
                   var decodedMsg = JSON && JSON.parse(msg) || $.parseJSON(msg);
                   if(decodedMsg.statusNum == 200){
-                    window.location.href = 'juxtapose.php';
+                    window.location.href = 'juxtapose.php?folio_ids='+folioIdsSelected.toString();
                   }else{
                     alert('Unable to display juxta and compare. Please try again.');
                   }
