@@ -14,6 +14,7 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/mslink.css" rel="stylesheet">
+    <link href="css/menubarStyles.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
@@ -37,10 +38,10 @@
             <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" alt=''/></a></div>
             <div class="col-md-9" style=" height: 55px;">
                 <ul class="link-nav pull-right" >
-                    <li><a href="search.php">search</a></li>
+                    <li class="active"><a href="search.php">search</a></li>
                     <li><a href="about.php">about</a></li>
                     <li><a href="browse.php">browse</a></li>
-                    <li class="active"><a href="resources.php">resources</a></li>
+                    <li><a href="resources.php">resources</a></li>
                     <li><a href="#">citation shelfmarks</a></li>
                     <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
                 </ul>
@@ -51,14 +52,15 @@
         <div class="row">
             <div class="col-md-12">
                 <ol class="breadcrumb pull-right">
-                    <li><a href="#">search</a></li>
-                    <li><a href="#">results</a></li>
-                    <li><a href="#">record</a></li>
-                    <li><a href="#">codex</a></li>
-                    <li class="active"><a href="#">pan&zoom</a></li>
-                    <li><a href="#">juxtapose&compare</a></li>
                     <li ><a href="myarchive.php">my archive</a></li>
                     <li><a href="utils/process_logout.php">logout</a></li>
+                </ol>
+                <ol class="breadcrumb pull-right">
+                    <li>results</a></li>
+                    <li>record</li>
+                    <li>codex</li>
+                    <li class="active">pan&zoom</li>
+                    <li>juxtapose&compare</li>
                 </ol>
             </div>
         </div>

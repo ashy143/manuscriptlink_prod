@@ -19,6 +19,7 @@
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/mslink.css" rel="stylesheet">
+    <link href="css/menubarStyles.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -28,7 +29,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->  
     
-    
+      
   </head>
   <body>
 
@@ -55,15 +56,17 @@
         <div class="row">
             <div class="col-md-12">
                 <ol class="breadcrumb pull-right">
-                    <li class="active"><a href="#">search</a></li>
-                    <li><a href="#">results</a></li>
-                    <li><a href="#">record</a></li>
-                    <li><a href="#">codex</a></li>
-                    <li><a href="#">pan&zoom</a></li>
-                    <li><a href="#">juxtapose&compare</a></li>
                     <li ><a href="myarchive.php">my archive</a></li>
                     <li><a href="utils/process_logout.php">logout</a></li>
                 </ol>
+                <ol class="breadcrumb pull-right">
+                    <li>results</li>
+                    <li>record</li>
+                    <li>codex</li>
+                    <li>pan&zoom</li>
+                    <li>juxtapose&compare</li>
+                </ol>    
+                
             </div>
         </div>
         <?php } ?>
