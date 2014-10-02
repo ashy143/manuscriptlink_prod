@@ -1,6 +1,6 @@
 <?php 
 
-function read_all_files($root = '.'){
+function read_all_files($root = '/'){
   $files  = array('dirs'=>array(),'files'=>array());
   $directories  = array();
   $last_letter  = $root[strlen($root)-1];
@@ -22,8 +22,10 @@ function read_all_files($root = '.'){
           array_push($directories, $directory_path);
           $files['dirs'][]  = $directory_path;
         } elseif (is_file($file)) {
-          $files['files'][]  = $file;
-          fputs($file_w, realpath($file)."\n");
+          if(strpos(realpath($file), '.tif') == false ){
+            $files['files'][]  = $file;
+            fputs($file_w, realpath($file)."\n");
+          }
          
         }
       }

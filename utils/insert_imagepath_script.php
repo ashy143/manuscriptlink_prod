@@ -6,15 +6,14 @@
  * and open the template in the editor.
  */
 
-$host = "localhost:3306";
-$databaseName = "mydb";
-$tableName = "folios";
+$host = "localhost";
+$databaseName = "mlinkdb";
 $username = "root";
-$con = mysql_connect($host,$username) or die("Unable to connect to MySQL");
+$con = mysql_connect($host,$username, 'root') or die("Unable to connect to MySQL");
 
 mysql_select_db($databaseName, $con) or die("Could not select" .mysql_error());
 
-$handle = fopen("C:\\xampp\\htdocs\\manuscriptlink_prod\\utils\\abc.txt", 'r');
+$handle = fopen("/Users/ashwin/Downloads/codex_master.csv", 'r');
 
 
 
