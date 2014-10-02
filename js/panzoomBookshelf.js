@@ -1,13 +1,13 @@
 $(document).ready(function(){
 
-	$('#bookshelf').delegate('.fa', 'click', function () {
+	$('#bookshelfOverrided').delegate('.fa', 'click', function () {
         $('#bookBody').slideToggle('2000',"swing", function () {
         //Animation complete
         });
         $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
     });
   
-    $('#bookshelf').delegate('.delButton', 'click', function(event) {
+    $('#bookshelfOverrided').delegate('.delButton', 'click', function(event) {
         event.stopPropagation();
         var delBtn = $(event.target);
         var folioToBeDeleted = delBtn.parent().find('h4').attr('data-folioid');
@@ -29,7 +29,7 @@ $(document).ready(function(){
         
     });
 
-    $('#bookshelf').delegate('.codexButton', 'click', function(event) {
+    $('#bookshelfOverrided').delegate('.codexButton', 'click', function(event) {
     	event.stopPropagation();
         var codexButton = $(event.target);
         var mscriptId = codexButton.parent().find('h4').attr('data-mscriptid');
@@ -38,7 +38,7 @@ $(document).ready(function(){
         
     });
     
-    $('#bookshelf').delegate('#juxtaBtn', 'click', function(){
+    $('#bookshelfOverrided').delegate('#juxtaBtn', 'click', function(){
         var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
         $.ajax({    
             url: 'saveArchives.php', //current page
@@ -56,7 +56,7 @@ $(document).ready(function(){
         });
     });
     
-    $('#bookshelf').delegate('#archiveBtn', 'click', function(){
+    $('#bookshelfOverrided').delegate('#archiveBtn', 'click', function(){
         var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
         $.ajax({    
             url: 'saveArchives.php', //current page

@@ -26,9 +26,21 @@
     <![endif]-->
     
     
-        <link rel='stylesheet' type="text/css" href='css/bootstrap-responsive.css'>        
-        <link rel="stylesheet" type="text/css" href="css/thumbelina.css">
-        <link rel="stylesheet" type="text/css" href="css/panzoom.css">
+    <link rel='stylesheet' type="text/css" href='css/bootstrap-responsive.css'>        
+    <link rel="stylesheet" type="text/css" href="css/thumbelina.css">
+    <link rel="stylesheet" type="text/css" href="css/panzoom.css">
+    <style>
+      /* Over ride book shelf style from mslink.css*/
+      #bookshelfOverrided{
+        /*position: fixed;
+        left: 2em;*/
+        position: fixed;
+        bottom: 0px;
+        width: 350px;
+        font-weight: 700;
+        float: right;
+      }
+    </style>    
               
   </head>
   <body data-spy="scroll" data-target="#master" data-offset="100">
@@ -70,21 +82,13 @@
     
       <div class="container">
           <div class="row-fluid">
-              <div class="span2" >                
-                <div id="gallery-slider">
-                    <div class="thumbelina-but vert top">Backward</div>
-                    <ul>
-                         <?php foreach ($folio_objs as $fob_obj) {                                
-//                                page=0,side=1,path=2,id=3
-                            $imagePath = $fob_obj->res_ident;
-                         ?>
-                        <li><img class='galleryItem <?php echo ($_GET['folio_id'] == $fob_obj->folio_id)?' imageSelectBorder':'' ; ?>' data-path='<?php echo $imagePath ; ?>' data-folioid='<?php echo $fob_obj->folio_id; ?>' src = '<?php echo "image.php?img_path=".$imagePath ;?>' alt=''/></li>
-                        <?php } ?>
-                    </ul>
-                    <div class="thumbelina-but vert bottom">Forward</div>
-                </div>
-            </div>
-            <div class="span9" >                
+            <div class="span4" style=' height:100%; margin:0px;'>
+                <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
+                <div id="bookshelfOverrided" >
+        
+                </div> 
+            </div>  
+            <div class="span6" style='margin:0px;'>                 
                 <div id="content">
                   <div id="pageContent">				
                       <div id="imgContainer">
@@ -104,14 +108,26 @@
                   </div>
                 </div>            
             </div>
+            <div class="span2" style='margin-left:0px; '>                
+                <div id="gallery-slider">
+                    <div class="thumbelina-but vert top">Backward</div>
+                    <ul>
+                         <?php foreach ($folio_objs as $fob_obj) {                                
+//                                page=0,side=1,path=2,id=3
+                            $imagePath = $fob_obj->res_ident;
+                         ?>
+                        <li><img class='galleryItem <?php echo ($_GET['folio_id'] == $fob_obj->folio_id)?' imageSelectBorder':'' ; ?>' data-path='<?php echo $imagePath ; ?>' data-folioid='<?php echo $fob_obj->folio_id; ?>' src = '<?php echo "image.php?img_path=".$imagePath ;?>' alt=''/></li>
+                        <?php } ?>
+                    </ul>
+                    <div class="thumbelina-but vert bottom">Forward</div>
+                </div>
+            </div>
+
           </div>
     </div>
         
                 
-    <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
-    <div id="bookshelf">
-        
-    </div>    
+       
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
