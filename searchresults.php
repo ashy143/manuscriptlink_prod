@@ -174,15 +174,14 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
+    <style>
+        .arc-button,.arc-search{ cursor: pointer; cursor: hand; }
+    </style>
     <script type="text/javascript">
         function view_record(form) {
             $(form).submit(); 
         };
-
-        function goBack() {
-            history.back()
-        }
+        
     </script>
   </head>
   <body>
@@ -229,8 +228,8 @@
     	<div class="container">
             <div class="row">
                 <div class="col-md-3 sideButtons">
-                    <h4 class="arc-button puff" id="addToArchives" ><a href="#">Add to My Archive</a></h4>
-                    <h4 class="arc-search puff" onclick="goBack()"><a href="#" onclick="goBack()" ><i class="fa fa-wrench"></i> Refine Results</a></h4>
+                    <h4 class="arc-button puff" id="addToArchives" >Add to My Archive</h4>
+                    <h4 class="arc-search puff" ><i class="fa fa-wrench"></i> Refine Results</h4>
                 </div>
                 <div id="results" class="col-md-9">
                     <!-- THis is the line where you will output the search terms, all of which wrapped in a span tag with class search-terms -->
@@ -278,6 +277,12 @@
     <script type="text/javascript">
         $('.search-result').click(function() {            
           $(this).toggleClass('clicked', 1000, "easeOutSine");
+        });
+
+        $('.arc-search').click(function(){
+            parent.history.back();
+            return false;
+            // window.history.go(-1);
         });
         
         $('#addToArchives').click(function(){
