@@ -218,7 +218,7 @@
                   
                   <div class="holding">                      
                       <h4><?php echo $folio_obj_array[0]->abbreviated_shelf ;?></h4>
-                      <a onclick="view_record(document.getElementsByName('<?php echo $count;?>'));"><div class="codexButton">Codex</div></a>
+                      <a href="#" onclick="view_record(document.getElementsByName('<?php echo $count;?>'));"><div class="codexButton">Codex</div></a>
                       <a href="#collapse<?php echo $count ?>" data-toggle="collapse" data-parent="#listings"><div class="imgButton">Images</div></a>
                       <div id="collapse<?php echo $count ?>" class="panel-collapse collapse">
                           <?php foreach($folio_obj_array as $folio_obj){?>

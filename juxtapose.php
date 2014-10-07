@@ -1,7 +1,7 @@
 <?php 
     include_once './includes/functions.php';
     session_start();
-    $juxt_folio_objs = getJuxtaImagesForFolios($_GET['folio_ids']);
+    $juxt_folio_objs = ($_GET['folio_ids'] != '') ? getJuxtaImagesForFolios($_GET['folio_ids']) : getJuxtaImagesForLoggedInUser();
     $colSizeClass = 'span12';
     if($juxt_folio_objs > 0){
       $colSizeClass = 'span' . 12/count($juxt_folio_objs);
@@ -119,17 +119,17 @@
     </div>
     <!-- THIS IS THE BOOKSHELF :: COPY THIS OVER TO OTHER PAGES  & ADD THE COLLAPSE FUNCTION -->
 
-    <!-- <div id="bookshelf">
-        Not required I feel so
-    </div> -->
+    <div id="bookshelf">
+        
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-ui.js"></script>
-<!--script src='js/smart-zoom-tweak.js'></script>-->
     <link href="css/jquery.fs.zoomer.css" rel="stylesheet" type="text/css" media="all">
     <script src="js/jquery.fs.zoomer.js"></script>
+    <script src="js/juxtaposeBookshelf.js"></script>
     <script language="javascript">
 
       $(document).ready(function(){
@@ -155,32 +155,41 @@
          });
 
 
-          $('#bookshelf').delegate('.fa', 'click', function () {
-            $('#bookBody').slideToggle('2000',"swing", function () {
-            //Animation complete
-            });
-            $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
-          });
+          // $('#bookshelf').delegate('.fa', 'click', function () {
+          //   $('#bookBody').slideToggle('2000',"swing", function () {
+          //   //Animation complete
+          //   });
+          //   $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
+          // });
         
-          $('#bookshelf').bind('click', '.delButton', function(event) {
-            event.stopPropagation();
-            var delBtn = $(event.target);
-            var folioToBeDeleted = delBtn.parent().attr('data-folioid');
-            $.ajax({
-                url: 'deleteBookshelfFolio.php',
-                type: 'GET',
-                data: {'folio_id' :folioToBeDeleted },
-                dataType: 'json',
-                contentType: 'application/json',    
-                success: function(msg){
-                    //$('#bookshelf').html(data);
-                    if(msg.statusNum == 201){
-                        alert(msg.statusMsg);
-                    }else{
-                        delBtn.parents('.myBook').fadeOut();
-                    }
-                }
-            });
+          // $('#bookshelf').bind('click', '.delButton', function(event) {
+          //   event.stopPropagation();
+          //   var delBtn = $(event.target);
+          //   var folioToBeDeleted = delBtn.parent().attr('data-folioid');
+          //   $.ajax({
+          //       url: 'deleteBookshelfFolio.php',
+          //       type: 'GET',
+          //       data: {'folio_id' :folioToBeDeleted },
+          //       dataType: 'json',
+          //       contentType: 'application/json',    
+          //       success: function(msg){
+          //           //$('#bookshelf').html(data);
+          //           if(msg.statusNum == 201){
+          //               alert(msg.statusMsg);
+          //           }else{
+          //               delBtn.parents('.myBook').fadeOut();
+          //           }
+          //       }
+          //   });
+          // });
+
+          $.ajax({
+              url: 'bookshelf.php',
+              type: 'GET',
+              dataType: 'html',
+              success: function(data){
+                  $('#bookshelf').html(data);
+              }
           });
       });
     </script>

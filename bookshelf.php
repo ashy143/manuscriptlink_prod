@@ -6,6 +6,18 @@
 
 
 ?>
+<style>
+    .bookBtn,.delButton,.codexButton{ cursor: pointer; cursor: hand; }
+</style>
+
+<script>
+    $(document).ready(function(){
+
+        $('#bookshelf').delegate('#viewArchBtn', 'click', function () {
+            window.location.href = 'myarchive.php';
+        });
+    });
+</script>
 
 <div id="bookHead">
     <h4>Bookshelf</h4>
@@ -56,8 +68,8 @@
 
     <div id="juxtaBtn" class="bookBtn">Add to Bookshelf</div>
     <div id="archiveBtn" class="bookBtn">Add to archive</div>
-    <div id="jxtAndCmpBtn" class="bookBtn"><a href="#">juxtapose &amp; Compare</a></div>
-    <div id="viewArchBtn" class="bookBtn"><a href="myarchive.php">view archive</a></div>
+    <div id="jxtAndCmpBtn" class="bookBtn">juxtapose &amp; Compare</div>
+    <div id="viewArchBtn" class="bookBtn">view archive</div>
 </div>
 
 
