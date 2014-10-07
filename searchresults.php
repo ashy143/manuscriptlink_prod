@@ -294,22 +294,26 @@
                    msIdsSelected.push(mscriptId);
                } 
             });
-            $.ajax({    
-                url: 'addManuscriptsToArchives.php',
-                type: 'GET',
-                data: {mscript_ids: msIdsSelected.toString() },
-                                  
-                success: function (msg) {
-                    //Add this folio to books
-                    console.log(msg);
-                    var decodedMsg = JSON && JSON.parse(msg) || $.parseJSON(msg);
-                    if(decodedMsg.statusNum == 200){
-                      alert('Manuscripts successfully added to your archives');
-                    }else{
-                      alert('Unable to add manuscripts to your archives. Please try again.');
+            if(msIdsSelected.length > 0){
+                $.ajax({    
+                    url: 'addManuscriptsToArchives.php',
+                    type: 'GET',
+                    data: {mscript_ids: msIdsSelected.toString() },
+                                      
+                    success: function (msg) {
+                        //Add this folio to books
+                        console.log(msg);
+                        var decodedMsg = JSON && JSON.parse(msg) || $.parseJSON(msg);
+                        if(decodedMsg.statusNum == 200){
+                          alert('Manuscripts successfully added to your archives');
+                        }else{
+                          alert('Unable to add manuscripts to your archives. Please try again.');
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                alert('Please select some manuscripts.');
+            }
             
         });
     

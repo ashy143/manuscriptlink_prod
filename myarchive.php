@@ -93,7 +93,7 @@
                             echo $fol_obj->folio_location->municipality.', '.$fol_obj->folio_location->state.', '.$fol_obj->abbreviated_shelf.'('.$fol_obj->folio_num . $fol_obj->folio_side.')';
                           ?>
                         </h4>
-                        <div data-folioid="<?php echo $fol_obj->folio_id; ?>" class="delButton">Delete</div>
+                        <a href="#"><div data-folioid="<?php echo $fol_obj->folio_id; ?>" class="delButton">Delete</div></a>
                         <a href="codex.php?id=<?php echo $fol_obj->mscript_id; ?>&folio_id=<?php echo $fol_obj->folio_id; ?>"><div class="codexButton">Codex</div></a>
                         <a href="#collapse<?php echo $count; ?>" data-toggle="collapse" data-parent="#archive"><div class="imgButton">Images</div></a>
                         <div id="collapse<?php echo $count; ?>" class="panel-collapse collapse">
