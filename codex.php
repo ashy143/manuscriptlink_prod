@@ -473,8 +473,15 @@
                 });
 
                 $(".page").click(function(){
-                    //Navigate to pan zoom page
+                    
                     $(this).toggleClass('imageSelectBorder');
+                    if($(this).hasClass('imageSelectBorder')){
+                        if($(this).attr('id') == 'lpage'){
+                            $('#rpage').removeClass('imageSelectBorder');
+                        }else{
+                            $('#lpage').removeClass('imageSelectBorder');
+                        }                        
+                    }
                 });
             });
             
