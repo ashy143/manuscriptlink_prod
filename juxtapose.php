@@ -61,7 +61,8 @@
 
     <div class="container">
       	<div class="row">
-            <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" /></div>
+            <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" />
+            </div>
           	<div class="col-md-9" style=" height: 55px;">
             		<ul class="link-nav pull-right">
               		<li class="active"><a href="search.php">search</a></li>
