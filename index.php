@@ -399,15 +399,30 @@
                         <li><a href="browse.php">browse</a></li>
                         <li><a href="resources.php">resources</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#shelfmarks">citation shelfmarks</a></li>
+                        <?php if(login_check()) { ?>
+                        <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
+                        <?php }else{ ?>
                         <li><a href="login.php">login</a></li>
+                        <?php } ?>
                     </ul>
                 </div>
             </div>
+            <?php if(login_check()) {?>
+            <div class="row">
+                <div class="col-md-12">
+                    <ol class="breadcrumb pull-right">
+                        <li ><a href="myarchive.php">my archive</a></li>
+                        <li><a href="utils/process_logout.php">logout</a></li>
+                    </ol>
+                </div>
+            </div>
+            <?php } ?>
         </div>
 
         <div id="matchbox">
             <div class="container">
                 <div class="row">
+                    <?php if(!login_check()) { ?>
                     <div class="col-md-6 col-md-offset-1" id="home-search">
                         <form role="form">
                             <input type="text" class="form-control" placeholder="Search…">
@@ -430,7 +445,7 @@
 
                         </div>
                     </div>
-
+                    <?php } ?>
                 </div>
             </div>
         </div>
