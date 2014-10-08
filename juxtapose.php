@@ -42,8 +42,7 @@
         background:transparent;
         color: #ffffff;
       }
-    </style>
-    <style>
+    
       .zoomer_wrapper {  height:80%; overflow: hidden; width: 100%; }
 
       /*.zoomer.dark_zoomer { background: #333 url(http://formstone.it/files/demo/zoomer-bg-dark.png) repeat center; }*/
@@ -105,11 +104,11 @@
             <?php $count=1; foreach($juxt_folio_objs as $fol_obj){ ?>
             
             <div  class='drag <?php echo $colSizeClass; ?>' > 
-              <div class="dragPoint" style="max-width: 100%; max-height:4%; ">Click and hold here to drag&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' class='closeText' >x</a></div> 
+              <div class="dragPoint" > <span>Click and hold here to drag&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' class='closeText' >x</a></span></div> 
               <div class="zoomer_wrapper zoomer_basic" style='align:center; max-width:100%; max-height:90%;' >
                 <img  src="image.php?img_path=<?php echo $fol_obj->res_ident ; ?>" alt="" style="max-width: 100%; max-height: 100%; "/>
               </div>
-              <div class="dragPoint" style="max-width: 100%; max-height:4%; ">Click and hold here to drag&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' class='closeText' >x</a></div>
+              <div class="dragPoint" >Click and hold here to drag&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' class='closeText' >x</a></div>
             </div>  
            
 
