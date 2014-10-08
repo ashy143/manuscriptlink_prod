@@ -1,0 +1,41 @@
+.tooltiptext{
+    display: none;
+}
+
+.imageSelectBorder{
+    border: 3px solid gray;
+}
+
+.shelfmark_span{
+    color: white;
+    cursor: pointer;
+    cursor: hand;
+    text-align: center;
+    clear: both;
+}
+
+#rpage{
+    max-width: 100%; 
+    max-height: 95%; 
+    float:left; 
+    position:
+    relative; clear: both;
+}
+
+#lpage{
+    max-width: 100%; 
+    max-height: 95%; 
+    float: right;
+}
+
+.left_shelfmark_div{
+    float:right;
+    clear:both;
+    width:100%;
+}
+
+.right_shelfmark_div{
+    float: left;
+    clear:both;
+    width:100%;
+}

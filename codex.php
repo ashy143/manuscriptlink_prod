@@ -23,19 +23,11 @@
     <link rel="stylesheet" href="css/bootstrap-responsive.css">
     <link href="css/mslink.css" rel="stylesheet">
     <link href="css/menubarStyles.css" rel="stylesheet">
+    <link href="css/codex.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/jquery.qtip.css" />
-    <style>
-        .tooltiptext{
-            display: none;
-        }
-
-        .imageSelectBorder{
-            border: 3px solid blue;
-        }
-    </style>
-
+    
     <script type="text/javascript">
         function view_record(form) {
             $(form).submit(); 
@@ -90,47 +82,40 @@
 
       <div class="tooltiptext" id='lefttooltip' ></div>
       <div class="tooltiptext" id='righttooltip' ></div>
+      <!-- Hidden form to navigate to record page -->
+      <form name='recordForm' method="GET" action='record.php'>
+        <input type="hidden" name='id' value ='<?php echo $_GET['id']; ?>'/>
+        <input type="hidden" name='mlinknum' value ='<?php echo $mlinknum ; ?>'/>
+      </form>
       
     <!--<div class="back">-->
-        <div class="container" style="width: 100%; height:80vh;">
+        <div class="container" style="width: 100%; height:88vh;">
             <div class="row-fluid">
                 <div class="span1" style="height: 80vh; position: relative;  top: 40vh;">
                     <img id="left" src="./images/arrow-left-double.png" style="width: 30px; height: 30px;" alt=""/>
                     <!-- <img id="prev" src="./images/prev.png" style="width: 30px; height: 30px;" alt="" /> -->
                 </div>
                 <div class="span5">
-                    <img id="lpage" class="page" title="test" style="max-width: 100%; max-height: 100%; float: right;" src=""/>
-                    
+                    <img id="lpage" class="page" title="test"  src=""/>
+                    <div class="left_shelfmark_div" >
+                        <p align="center">
+                            <a onclick="view_record(document.getElementsByName('recordForm'));"><span id="leftShelf" class="shelfmark_span"></span></a>
+                        </p>
+                    </div>
                 </div>
-                <div  class="span5" >                    
-                    <img id="rpage"  class="page" title="test" style="max-width: 100%; max-height: 100%; float:left; " src=""/>                    
+                <div  class="span5">                    
+                    <img id="rpage"  class="page" title="test" src=""/>
+                    <div class="right_shelfmark_div" >
+                        <p align="center">
+                            <a onclick="view_record(document.getElementsByName('recordForm'));"><span id="rightShelf" class="shelfmark_span" ></span></a>   
+                        </p>
+                    </div>               
                 </div>
                 <div class="span1" style="height: 80vh; position: relative;  top: 40vh; " >
                     <!-- <img id="next" src="./images/next.png" style="width: 30px; height: 30px;" alt=''/> -->
                     <img id="right" src="./images/arrow-right-double.png" style="width: 30px; height: 30px;" alt=''/>                    
                 </div>
             </div>
-           <div class='row-fluid'>
-               <form name='recordForm' method="GET" action='record.php'>
-                    <input type="hidden" name='id' value ='<?php echo $_GET['id']; ?>'/>
-                    <input type="hidden" name='mlinknum' value ='<?php echo $mlinknum ; ?>'/>
-               </form>
-               
-                <div class="span1"></div>
-                <div class='span5'>
-                    <p align="center">
-                        <a onclick="view_record(document.getElementsByName('recordForm'));"><span id="leftShelf" ></span></a>
-                    </p>
-                </div>
-                <div class='span5'>              
-                    <p align="center">
-                        <a onclick="view_record(document.getElementsByName('recordForm'));"><span id="rightShelf" ></span></a>   
-                    </p>
-                </div>
-                <div class="span1"></div>
-            </div>            
-            <BR>
-            <BR>
         </div>
   
      
@@ -150,13 +135,29 @@
     <script type="text/javascript" src="js/jquery.qtip.js"></script>
     <script type="text/javascript" src="js/codexBookshelf.js"></script>
     <script>         
-            
+
+            /*
+                Function to get the metadata of the folio which is displayed as tooltip when hovered on image
+            */
             function getMetadataDiv(page_obj){
                 return "<span> <strong>"+ page_obj.author + ', ' + page_obj.text + ', ' + page_obj.date+" <BR>"+
                         page_obj.writing_sup + ', ' + page_obj.width + ' x ' + page_obj.height + ', ' + page_obj.no_of_col + ' col. ' + page_obj.no_of_lines + ' lines '+ "<BR>" +
                             page_obj.contents +
                         "</strong><span>";
             };
+
+            /*
+                Function to set the width of div so that it makes look shelfmark aligned center
+            */
+            function setWidthOfShelfmark(){
+                $('.left_shelfmark_div').css('width', $('#lpage').width());
+                $('.right_shelfmark_div').css('width', $('#rpage').width());
+                    
+            }
+
+            /*
+                Function to calculate number of missing pages to the left and right side of current page view
+            */
 
             function getRemainingBlackPagesForPrevNext(ptr, pages){
 
@@ -202,6 +203,7 @@
             
             $(document).ready(function(){
 
+                
                 //This particular folio will be opened and highlighted
                 var folioIdToBeOpened = parseInt(<?php echo $folioIdToBeOpened; ?>);
                 var remaining_blank_back = 0;
@@ -247,7 +249,7 @@
                     data: {mscript_id: <?php echo $_GET['id']?> },
                     dataType: "json",
                     contentType: "application/json",                    
-                    success: function (d) {                      
+                    success: function (d) {
                         $.each(d, function(index, element){
                             var page = new Page();
                             page.pageNum = element.num;
@@ -329,6 +331,7 @@
                         if(ptr+4 >= pages.length ){
                             document.getElementById("left").disabled=true;
                         }
+                        
                     }
                 });
                 
@@ -361,7 +364,7 @@
                         $("#left").prop('disabled', true);
                     }                    
                     $("#right").prop('disabled', false);
-                    
+                    setWidthOfShelfmark();
                 });
                 
                 $("#right").click(function(){
@@ -394,7 +397,7 @@
                         $("#right").prop('disabled', true);
                     }                    
                     $("#left").prop('disabled', false);
-                    
+                    setWidthOfShelfmark();
                 });
 
                 $("#prev").click(function(){    //single nav
@@ -425,7 +428,7 @@
                         $("#left").prop('disabled', true);
                     }                    
                     $("#right").prop('disabled', false);
-                    
+                    setWidthOfShelfmark();
                 });
 
                 $("#next").click(function(){    //single nav
@@ -456,7 +459,7 @@
                         $("#left").prop('disabled', true);
                     }                    
                     $("#right").prop('disabled', false);
-                    
+                    setWidthOfShelfmark();
                 });
                 
                 $(".page").dblclick(function(){
