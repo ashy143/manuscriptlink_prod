@@ -29,18 +29,6 @@
     <link rel='stylesheet' type="text/css" href='css/bootstrap-responsive.css'>        
     <link rel="stylesheet" type="text/css" href="css/thumbelina.css">
     <link rel="stylesheet" type="text/css" href="css/panzoom.css">
-    <style>
-      /* Over ride book shelf style from mslink.css*/
-      #bookshelfOverrided{
-        /*position: fixed;
-        left: 2em;*/
-        position: fixed;
-        bottom: 0px;
-        width: 350px;
-        font-weight: 700;
-        float: right;
-      }
-    </style>    
               
   </head>
   <body data-spy="scroll" data-target="#master" data-offset="100">

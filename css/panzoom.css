@@ -9,6 +9,17 @@ and open the template in the editor.
 */
 
 
+/* Over ride book shelf style from mslink.css*/
+#bookshelfOverrided{
+    /*position: fixed;
+    left: 2em;*/
+    position: fixed;
+    bottom: 0px;
+    width: 350px;
+    font-weight: 700;
+        float: right;
+}
+
 #content {
 	padding-top:0px;
  	padding-bottom:0px;	
@@ -49,7 +60,6 @@ and open the template in the editor.
 
 .zoomableContainer{
     background: transparent;
-    //background-image: url(../images/transparent.png);
     height: 80vh;
     max-width: 100%;
 }
