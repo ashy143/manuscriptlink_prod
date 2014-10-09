@@ -28,24 +28,30 @@
     <![endif]-->
   </head>
   <body>
-<div class="modal fade" id="clearArchive" tabindex="-1" role="dialog" aria-labelledby="clearArchiveLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="clearArchiveLabel"><strong><i class="fa fa-exclamation-triangle"></i> Warning</strong></h2>
-      </div>
-      <div class="modal-body">
-          <p>Clicking Clear Archive will erase your entire archive. Continue?</p>
-      </div>
-      <div class="modal-footer">
-          <div class="pull-right">
-              <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
-              <a href="#"><button id='delArchConfirm' type="button" class="btn btn-danger">Clear Archive</button></a>
+    <!-- copy this block where ever you require citation shelfmark -->
+    <div class="modal fade" id="shelfmarks" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        
+    </div>
+
+
+    <div class="modal fade" id="clearArchive" tabindex="-1" role="dialog" aria-labelledby="clearArchiveLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="clearArchiveLabel"><strong><i class="fa fa-exclamation-triangle"></i> Warning</strong></h2>
           </div>
+          <div class="modal-body">
+              <p>Clicking Clear Archive will erase your entire archive. Continue?</p>
+          </div>
+          <div class="modal-footer">
+              <div class="pull-right">
+                  <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+                  <a href="#"><button id='delArchConfirm' type="button" class="btn btn-danger">Clear Archive</button></a>
+              </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
     <div class="container">
       	<div class="row">
@@ -56,7 +62,7 @@
   		            <li><a href="about.php">about</a></li>
   		            <li><a href="browse.php">browse</a></li>
   		            <li><a href="resources.php">resources</a></li>
-  		            <li><a href="#">citation shelfmarks</a></li>
+  		            <li><a href="#" data-toggle="modal" data-target="#shelfmarks">citation shelfmarks</a></li>
   		            <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
             		</ul>
           	</div>
@@ -122,27 +128,15 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script launguage="JavaScript">
-        $('.holding').click(function() { 
-          $(this).toggleClass('clickedArc', 1000, "easeOutSine");
-        });
-        $('.imgButton').click(function() {
-          $(this).toggleClass('clickedImgButton', 1000, "easeOutSine");
-          $(this).parents('.holding').toggleClass('clickedArc', 1000, "easeOutSine");
-        });
-    </script> 
-    <script type="text/javascript">
+    <script launguage="JavaScript" type="text/javascript">
+      $('.holding').click(function() { 
+        $(this).toggleClass('clickedArc', 1000, "easeOutSine");
+      });
 
-      // $(document).ready(function(){
-      //     $.ajax({
-      //         url: 'bookshelf.php',
-      //         type: 'GET',
-      //         dataType: 'html',
-      //         success: function(data){
-      //             $('#bookshelf').html(data);
-      //         }
-      //     });
-      // });
+      $('.imgButton').click(function() {
+        $(this).toggleClass('clickedImgButton', 1000, "easeOutSine");
+        $(this).parents('.holding').toggleClass('clickedArc', 1000, "easeOutSine");
+      });
 
       $(".delButton").click(function(event) {
         event.preventDefault();
@@ -207,6 +201,10 @@
           alert('Please select some folios.');
         }
           
+      });
+
+      $(document).ready(function(){
+          $("#shelfmarks").load('citationShelfmark.php');
       });
 
     </script>   

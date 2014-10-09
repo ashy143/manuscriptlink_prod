@@ -33,6 +33,11 @@
   </head>
   <body>
 
+    <!-- copy this block where ever you require citation shelfmark -->
+    <div class="modal fade" id="shelfmarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        
+    </div>
+
     <div class="container">
       	<div class="row">
             <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" alt=""/></a></div>
@@ -42,7 +47,7 @@
   		            <li><a href="about.php">about</a></li>
   		            <li><a href="browse.php">browse</a></li>
   		            <li><a href="resources.php">resources</a></li>
-  		            <li><a href="#">citation shelfmarks</a></li>
+  		            <li><a href="#" data-toggle="modal" data-target="#shelfmarks">citation shelfmarks</a></li>
                     <?php if(login_check()) { ?>
   		            <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
                     <?php }else{ ?>
@@ -357,7 +362,12 @@
 //         $.post("searchresults.php", {data : searchQueryParams }); 
             
             $(form).submit(); 
-        }
+    }
+
+    $(document).ready(function(){
+        $("#shelfmarks").load('citationShelfmark.php');
+    });
+
     </script>
   </body>
 </html>

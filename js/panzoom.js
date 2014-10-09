@@ -60,5 +60,6 @@ $(document).ready(function(){
 
     });
 
+    $("#shelfmarks").load('citationShelfmark.php');
 
 });

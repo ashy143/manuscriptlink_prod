@@ -1,3 +1,10 @@
+<?php
+    include_once './includes/dbconnect.php';
+    include_once './includes/functions.php';
+
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,6 +26,11 @@
   </head>
   <body>
 
+    <!-- copy this block where ever you require citation shelfmark -->
+    <div class="modal fade" id="shelfmarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        
+    </div>
+
     <div class="container">
       	<div class="row">
             <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" /></div>
@@ -28,19 +40,30 @@
   		            <li><a href="about.php">about</a></li>
   		            <li><a href="browse.php">browse</a></li>
   		            <li class="active"><a href="resources.php">resources</a></li>
-  		            <li><a href="#">citation shelfmarks</a></li>
-  		            <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
+  		            <li><a href="#" data-toggle="modal" data-target="#shelfmarks">citation shelfmarks</a></li>
+  		            <?php if(login_check()) { ?>
+                  <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
+                  <?php }else{ ?>
+                  <li><a href="login.php">login</a></li>
+                  <?php } ?>
             		</ul>
           	</div>
       	</div>
         <div class="row">
             <div class="col-md-12">
+                <?php if(login_check()) { ?>
+                <ol class="breadcrumb pull-right">
+                    <li ><a href="myarchive.php">my archive</a></li>
+                    <li><a href="utils/process_logout.php">logout</a></li>
+                </ol>
+                <?php } ?>
                 <ol class="breadcrumb pull-right">
                     <li class="active">resources</li>
                     <li><a href="help.php">user guide</a></li>
                 </ol>
             </div>
         </div>
+
 
     </div>
 
@@ -82,5 +105,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function(){
+          $("#shelfmarks").load('citationShelfmark.php');
+      });
+    </script>
   </body>
 </html>

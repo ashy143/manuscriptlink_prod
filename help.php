@@ -1,3 +1,9 @@
+<?php
+    include_once './includes/dbconnect.php';
+    include_once './includes/functions.php';
+
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,17 +31,27 @@
             <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" /></div>
           	<div class="col-md-9" style=" height: 55px;">
             		<ul class="link-nav pull-right">
-              		<li><a href="search.php">search</a></li>
-  		            <li><a href="about.php">about</a></li>
-  		            <li><a href="browse.php">browse</a></li>
-  		            <li class="active"><a href="resources.php">resources</a></li>
-  		            <li><a href="#">citation shelfmarks</a></li>
-  		            <li><a href="login.php">login</a></li>
+                  		<li><a href="search.php">search</a></li>
+      		            <li><a href="about.php">about</a></li>
+      		            <li><a href="browse.php">browse</a></li>
+      		            <li class="active"><a href="resources.php">resources</a></li>
+      		            <li><a href="#">citation shelfmarks</a></li>
+      		            <?php if(login_check()) { ?>
+                        <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
+                        <?php }else{ ?>
+                        <li><a href="login.php">login</a></li>
+                        <?php } ?>
             		</ul>
           	</div>
       	</div>
         <div class="row">
             <div class="col-md-12">
+                <?php if(login_check()) { ?>
+                <ol class="breadcrumb pull-right">
+                    <li ><a href="myarchive.php">my archive</a></li>
+                    <li><a href="utils/process_logout.php">logout</a></li>
+                </ol>
+                <?php } ?>
                 <ol class="breadcrumb pull-right">
                     <li><a href="resources.php">resources</a></li>
                     <li class="active">user guide</li>

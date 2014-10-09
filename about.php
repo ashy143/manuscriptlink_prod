@@ -1,3 +1,9 @@
+<?php
+    include_once './includes/dbconnect.php';
+    include_once './includes/functions.php';
+
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,349 +25,8 @@
   </head>
   <body>
 <div class="modal fade" id="shelfmarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel"><strong>Citation Shelfmarks</strong></h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-        <a name="A"></a>
-        <h3>A</h3>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UKansa MS</h3>
-                        <p>
-                          Lawrence, KS<br />
-                          University of Kansas<br />
-                          Kenneth Spencer Research Library
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCali Med-Ren</h3>
-                        <p>
-                          Los Angeles, CA<br />
-                          University of Southern California Libraries<br />
-                          Special Collections Department
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCaro</h3>
-                        <p>
-                          Columbia, SC<br />
-                          University of South Carolina<br />
-                          Hollings Library<br />
-                          Irvin Department of Rare Books and Special Collections
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UTexas HRC</h3>
-                        <p>
-                          Austin, TX<br />
-                          The University of Texas<br />
-                          Harry Ransom Center
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UKansa MS</h3>
-                        <p>
-                          Lawrence, KS<br />
-                          University of Kansas<br />
-                          Kenneth Spencer Research Library
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCali Med-Ren</h3>
-                        <p>
-                          Los Angeles, CA<br />
-                          University of Southern California Libraries<br />
-                          Special Collections Department
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCaro</h3>
-                        <p>
-                          Columbia, SC<br />
-                          University of South Carolina<br />
-                          Hollings Library<br />
-                          Irvin Department of Rare Books and Special Collections
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UTexas HRC</h3>
-                        <p>
-                          Austin, TX<br />
-                          The University of Texas<br />
-                          Harry Ransom Center
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UKansa MS</h3>
-                        <p>
-                          Lawrence, KS<br />
-                          University of Kansas<br />
-                          Kenneth Spencer Research Library
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCali Med-Ren</h3>
-                        <p>
-                          Los Angeles, CA<br />
-                          University of Southern California Libraries<br />
-                          Special Collections Department
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCaro</h3>
-                        <p>
-                          Columbia, SC<br />
-                          University of South Carolina<br />
-                          Hollings Library<br />
-                          Irvin Department of Rare Books and Special Collections
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UTexas HRC</h3>
-                        <p>
-                          Austin, TX<br />
-                          The University of Texas<br />
-                          Harry Ransom Center
-                        </p>
-                    </div>
-                </div>
-            </div>                        
-        </div>
-        <div class="row">
-        <a name="J"></a>
-        <h3>J</h3>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UKansa MS</h3>
-                        <p>
-                          Lawrence, KS<br />
-                          University of Kansas<br />
-                          Kenneth Spencer Research Library
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCali Med-Ren</h3>
-                        <p>
-                          Los Angeles, CA<br />
-                          University of Southern California Libraries<br />
-                          Special Collections Department
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCaro</h3>
-                        <p>
-                          Columbia, SC<br />
-                          University of South Carolina<br />
-                          Hollings Library<br />
-                          Irvin Department of Rare Books and Special Collections
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UTexas HRC</h3>
-                        <p>
-                          Austin, TX<br />
-                          The University of Texas<br />
-                          Harry Ransom Center
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UKansa MS</h3>
-                        <p>
-                          Lawrence, KS<br />
-                          University of Kansas<br />
-                          Kenneth Spencer Research Library
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCali Med-Ren</h3>
-                        <p>
-                          Los Angeles, CA<br />
-                          University of Southern California Libraries<br />
-                          Special Collections Department
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCaro</h3>
-                        <p>
-                          Columbia, SC<br />
-                          University of South Carolina<br />
-                          Hollings Library<br />
-                          Irvin Department of Rare Books and Special Collections
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UTexas HRC</h3>
-                        <p>
-                          Austin, TX<br />
-                          The University of Texas<br />
-                          Harry Ransom Center
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UKansa MS</h3>
-                        <p>
-                          Lawrence, KS<br />
-                          University of Kansas<br />
-                          Kenneth Spencer Research Library
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCali Med-Ren</h3>
-                        <p>
-                          Los Angeles, CA<br />
-                          University of Southern California Libraries<br />
-                          Special Collections Department
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>USCaro</h3>
-                        <p>
-                          Columbia, SC<br />
-                          University of South Carolina<br />
-                          Hollings Library<br />
-                          Irvin Department of Rare Books and Special Collections
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <div class="caption">
-                        <h3>UTexas HRC</h3>
-                        <p>
-                          Austin, TX<br />
-                          The University of Texas<br />
-                          Harry Ransom Center
-                        </p>
-                    </div>
-                </div>
-            </div>                        
-        </div>
-
-
-      </div>
-      <div class="modal-footer">
-      <strong>Jump to: </strong>
-        <a href="#A">A</a>
-        <a href="#B">B</a>
-        <a href="#C">C</a>
-        <a href="#D">D</a>
-        <a href="#E">E</a>
-        <a href="#F">F</a>
-        <a href="#G">G</a>
-        <a href="#H">H</a>
-        <a href="#I">I</a>
-        <a href="#J">J</a>
-        <a href="#K">K</a>
-        <a href="#L">L</a>
-        <a href="#M">M</a>
-        <a href="#N">N</a>
-        <a href="#O">O</a>
-        <a href="#P">P</a>
-        <a href="#Q">Q</a>
-        <a href="#R">R</a>
-        <a href="#S">S</a>
-        <a href="#T">T</a>
-        <a href="#U">U</a>
-        <a href="#V">V</a>
-        <a href="#W">W</a>
-        <a href="#X">X</a>
-        <a href="#Y">Y</a>
-        <a href="#Z">Z</a>
-      </div>
-    </div>
-  </div>
+                        
+        
 </div>
 
 
@@ -375,12 +40,22 @@
   		            <li><a href="browse.php">browse</a></li>
   		            <li><a href="resources.php">resources</a></li>
   		            <li><a href="#" data-toggle="modal" data-target="#shelfmarks">citation shelfmarks</a></li>
-  		            <li><a href="login.php">login</a></li>
+  		            <?php if(login_check()) { ?>
+                  <li><a href="#"><?php echo $_SESSION['name'];?></a></li>
+                  <?php }else{ ?>
+                  <li><a href="login.php">login</a></li>
+                  <?php } ?>
             		</ul>
           	</div>
       	</div>
         <div class="row">
             <div class="col-md-12">
+                <?php if(login_check()) { ?>
+                <ol class="breadcrumb pull-right">
+                    <li ><a href="myarchive.php">my archive</a></li>
+                    <li><a href="utils/process_logout.php">logout</a></li>
+                </ol>
+                <?php } ?>
                 <ol class="breadcrumb pull-right">
                     <li class="active">mission</li>
                     <li><a href="partners.php">partners</a></li>
@@ -522,5 +197,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function(){
+          $("#shelfmarks").load('citationShelfmark.php');
+      });
+    </script>
   </body>
 </html>
