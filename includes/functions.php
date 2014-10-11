@@ -167,9 +167,29 @@ function getFoliosByManuscriptId($manuscript_id){
         
 }
 
-function getManuscriptByFolioId(){
-    
+function getFolioById($folio_id){
+    global $mysqli;
+    $query = "SELECT *"
+            . "FROM folios " 
+            . "WHERE folios.folio_id = " . $folio_id ;
+    $result = $mysqli->query($query);
+    $folio = new Folio();
+    if($result->num_rows > 0) {        
+        $row =$result->fetch_assoc();
+        
+        $folio->folio_id = $row['folio_id'];
+        $folio->mscript_id = $row['mscript_id'];
+        $folio->title = $row['title'];
+        $folio->abbreviated_shelf = $row['abreviated_shelf'];
+        $folio->folio_num = $row['folio_num'];
+        $folio->folio_side = $row['folio_side'];
+        $folio->folio_location->state = $row['state'];
+        $folio->folio_location->municipality = $row['municipality'];
+        $folio->res_ident = $row['res_ident'];
+    }
+    return $folio;
 }
+        
 
 function getJuxtaImagesForLoggedInUser(){
     global $mysqli;

@@ -2,6 +2,8 @@
     include_once './includes/functions.php';
     session_start();   
     $folio_objs = getFoliosByManuscriptId($_GET['mscript_id']);
+    $folio_obj = getFolioById($_GET['folio_id']);
+    $mlinknum = getMlinkNumberOfManuscript($_GET['mscript_id']);
 
 ?>
 <!DOCTYPE html>
@@ -29,7 +31,11 @@
     <link rel='stylesheet' type="text/css" href='css/bootstrap-responsive.css'>        
     <link rel="stylesheet" type="text/css" href="css/thumbelina.css">
     <link rel="stylesheet" type="text/css" href="css/panzoom.css">
-              
+    <script>
+        function view_record(form) {
+            $(form).submit(); 
+        }
+    </script>   
   </head>
   <body data-spy="scroll" data-target="#master" data-offset="100">
 
@@ -37,6 +43,11 @@
     <div class="modal fade" id="shelfmarks" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         
     </div>
+
+    <form name='recordForm' method="GET" action='record.php'>
+        <input type="hidden" name='id' value ='<?php echo $_GET['mscript_id']; ?>'/>
+        <input type="hidden" name='mlinknum' value ='<?php echo $mlinknum ; ?>'/>
+    </form>
 
     <div class="container">
       	<div class="row">
@@ -81,7 +92,7 @@
         
                 </div> 
             </div>  
-            <div class="span6" style='margin:0px;'>                 
+            <div class="span6" style='margin:0px; height: 95%'>                 
                 <div id="content">
                   <div id="pageContent">				
                       <div id="imgContainer">
@@ -98,6 +109,14 @@
                             
                         </span>
                       </div>
+                      <div align='middle'>
+                        <span>
+                            <p align="center">
+                                <a onclick="view_record(document.getElementsByName('recordForm'));"><span id="shelf" class="shelfmark_span"><?php echo $folio_obj->abbreviated_shelf; ?></span></a>
+                            </p>
+                            
+                        </span>
+                      </div>
                   </div>
                 </div>            
             </div>
@@ -109,7 +128,8 @@
 //                                page=0,side=1,path=2,id=3
                             $imagePath = $fob_obj->res_ident;
                          ?>
-                        <li><img class='galleryItem <?php echo ($_GET['folio_id'] == $fob_obj->folio_id)?' imageSelectBorder':'' ; ?>' data-path='<?php echo $imagePath ; ?>' data-folioid='<?php echo $fob_obj->folio_id; ?>' src = '<?php echo "image.php?img_path=".$imagePath ;?>' alt=''/></li>
+                        <li><img class='galleryItem <?php echo ($_GET['folio_id'] == $fob_obj->folio_id)?' imageSelectBorder':'' ; ?>' data-path='<?php echo $imagePath ; ?>' data-folioid='<?php echo $fob_obj->folio_id; ?>' data-abbrshelf='<?php echo $fob_obj->abbreviated_shelf; ?>' src = '<?php echo "image.php?img_path=".$imagePath ;?>' alt=''/></li>
+
                         <?php } ?>
                     </ul>
                     <div class="thumbelina-but vert bottom">Forward</div>

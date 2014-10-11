@@ -83,3 +83,11 @@ and open the template in the editor.
 
 }
 
+.shelfmark_span{
+    color: white;
+    cursor: pointer;
+    cursor: hand;
+    text-align: center;
+    clear: both;
+}
+

@@ -130,7 +130,7 @@
             <div class="col-md-3" id="logo"><a href="index.php"><img src="img/logo.png" /></div>
           	<div class="col-md-9" style=" height: 55px;">
             		<ul class="link-nav pull-right">
-              		<li class="active"><a href="#">search</a></li>
+              		<li class="active"><a href="search.php">search</a></li>
   		            <li><a href="about.php">about</a></li>
   		            <li><a href="browse.php">browse</a></li>
   		            <li><a href="resources.php">resources</a></li>
@@ -185,9 +185,9 @@
                           <dt>Bibliography</dt>
                             <dd><?php echo $manuscript_obj->biblio ; ?></dd>
                           <dt>Dimensions</dt>
-                            <dd><?php echo $mobj->width;?> x <?php echo $mobj->height; ?> mm</dd>
+                            <dd><?php echo $mobj->height; ?> mm x <?php echo $mobj->width;?> mm</dd>
                           <dt>Justification</dt>
-                            <dd><?php echo $mobj->width_written;?> x <?php echo $mobj->height_written; ?> mm</dd>
+                            <dd><?php echo $mobj->height_written; ?> mm x <?php echo $mobj->width_written;?> mm</dd>
                           <dt>Lines</dt>
                             <dd><?php echo $manuscript_obj->min_lines . ' to ' . $manuscript_obj->max_lines; ?></dd>
                           <dt>Decoration</dt>

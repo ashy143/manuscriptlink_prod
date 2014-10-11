@@ -146,7 +146,7 @@
             */
             function getMetadataDiv(page_obj){
                 return "<span> <strong>"+ page_obj.author + ', ' + page_obj.text + ', ' + page_obj.date+" <BR>"+
-                        page_obj.writing_sup + ', ' + page_obj.width + ' x ' + page_obj.height + ', ' + page_obj.no_of_col + ' col. ' + page_obj.no_of_lines + ' lines '+ "<BR>" +
+                        page_obj.writing_sup + ', ' + page_obj.height + ' mm x'  + page_obj.width +'mm ' + ', ' + page_obj.no_of_col + ' col. ' + page_obj.no_of_lines + ' lines '+ "<BR>" +
                             page_obj.contents +
                         "</strong><span>";
             };

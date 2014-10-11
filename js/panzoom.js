@@ -1,6 +1,4 @@
 $(document).ready(function(){
-
-	
     
     $('#gallery-slider').Thumbelina({
         orientation:'vertical',         // Use vertical mode (default horizontal).
@@ -44,6 +42,7 @@ $(document).ready(function(){
         $(this).toggleClass('imageSelectBorder');
         $("#imageFullScreen").attr('src', 'image.php?img_path=' + $(this).data('path'));
         $("#imageFullScreen").attr('data-folioid', $(this).data('folioid'));
+        $("#shelf").text($(this).attr('data-abbrshelf'));
         $('#imageFullScreen').smartZoom('destroy');
         $('#imageFullScreen').smartZoom({'containerClass':'zoomableContainer'});				
         $('#topPositionMap,#leftPositionMap,#rightPositionMap,#bottomPositionMap').bind("click", moveButtonClickHandler);
@@ -60,6 +59,7 @@ $(document).ready(function(){
 
     });
 
+    
     $("#shelfmarks").load('citationShelfmark.php');
 
 });
