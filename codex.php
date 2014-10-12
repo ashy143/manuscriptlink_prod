@@ -281,10 +281,11 @@
                         //take the pointer to point to first available valid folio (usually ptr = 1, ptr = 0 is missing leaf)
                         remaining_blank_back = parseInt(pages[ptr + 1].pageNum) - 1 ;
                         ptr = 3 ;
-                        while(pages[ptr].pageNum === 'x' ){
+                        while(pages[ptr].pageNum === 'x' && ptr < pages.length - 1){
                             ptr++ ;
+                            remaining_blank_forward = parseInt(pages[ptr + 1].pageNum) - parseInt(pages[1].pageNum);
                         }
-                        remaining_blank_forward = parseInt(pages[ptr + 1].pageNum) - parseInt(pages[1].pageNum);
+                        
                         
                         /* single page navigation logic end */
 
