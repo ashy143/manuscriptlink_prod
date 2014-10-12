@@ -50,7 +50,7 @@ $(document).ready(function(){
                 //Add this folio to bookshelf                                 
                 alert(msg.statusMsg);
                 $.get('bookshelf.php', function(data){
-                    $('#bookshelf').html(data);
+                    $('#bookshelfOverrided').html(data);
                 });
             }
         });

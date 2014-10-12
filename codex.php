@@ -146,7 +146,7 @@
             */
             function getMetadataDiv(page_obj){
                 return "<span> <strong>"+ page_obj.author + ', ' + page_obj.text + ', ' + page_obj.date+" <BR>"+
-                        page_obj.writing_sup + ', ' + page_obj.height + ' mm x'  + page_obj.width +'mm ' + ', ' + page_obj.no_of_col + ' col. ' + page_obj.no_of_lines + ' lines '+ "<BR>" +
+                        page_obj.writing_sup + ', ' + page_obj.height + 'mm x'  + page_obj.width +'mm ' + ', ' + page_obj.no_of_col + ' col. ' + page_obj.no_of_lines + ' lines '+ "<BR>" +
                             page_obj.contents +
                         "</strong><span>";
             };
@@ -279,18 +279,18 @@
                         /* Single page navigation logic */
 
                         //take the pointer to point to first available valid folio (usually ptr = 1, ptr = 0 is missing leaf)
-                        remaining_blank_back = parseInt(pages[ptr + 1].pageNum) - 1 ;
-                        ptr = 3 ;
-                        while(pages[ptr].pageNum === 'x' && ptr < pages.length - 1){
-                            ptr++ ;
-                            remaining_blank_forward = parseInt(pages[ptr + 1].pageNum) - parseInt(pages[1].pageNum);
-                        }
+                        // remaining_blank_back = parseInt(pages[ptr + 1].pageNum) - 1 ;
+                        // ptr = 3 ;
+                        // while(pages[ptr].pageNum === 'x' && ptr < pages.length - 1){
+                        //     ptr++ ;
+                        //     remaining_blank_forward = parseInt(pages[ptr + 1].pageNum) - parseInt(pages[1].pageNum);
+                        // }
                         
                         
                         /* single page navigation logic end */
 
                         //reset the ptr to point to first folio
-                        ptr = 0;
+                        // ptr = 0;
                         //Logic to open the selected folio directly of manuscript and highlight it
                         if(folioIdToBeOpened !== -1){
                             while(ptr < pages.length - 1 ){
@@ -307,9 +307,9 @@
                         }
 
                         //disable single back button if remaining blank pages behind are 0
-                        if(remaining_blank_back > 0){
-                            $('#prev').attr('disabled', true);
-                        }
+                        // if(remaining_blank_back > 0){
+                        //     $('#prev').attr('disabled', true);
+                        // }
 
                         $("#lpage").attr('src', 'image.php?img_path='+pages[ptr].image); 
                         $("#lpage").data('obj',pages[ptr]);
