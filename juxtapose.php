@@ -37,7 +37,9 @@
         text-align: center;
         padding: 1em;
       }
-
+      .dragPoint > span{
+        cursor: pointer; cursor: hand;
+      }
       .closeText {
         background:transparent;
         color: #ffffff;
@@ -52,6 +54,11 @@
         position: relative;
         height: 90%;
       }
+
+      #bookshelf{
+        z-index: 100000;
+      }
+
     </style>
 
     
@@ -113,7 +120,7 @@
               <div class="zoomer_wrapper zoomer_basic" style='align:center; max-width:100%; max-height:90%;' >
                 <img  src="image.php?img_path=<?php echo $fol_obj->res_ident ; ?>" alt="" style="max-width: 100%; max-height: 100%; "/>
               </div>
-              <div class="dragPoint" >Click and hold here to drag&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' class='closeText' >x</a></div>
+              <div class="dragPoint" ><span>Click and hold here to drag&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' class='closeText' >x</a></span></div>
             </div>  
            
 
@@ -150,7 +157,7 @@
            
         $(".closeText").bind('click',function(){
           $('.zoomer_basic').zoomer('destroy');
-          $(this).parent().parent().remove();
+          $(this).parent().parent().parent().remove();
           var children = $('#imgContainer').children().length;
           var colSizeClass = 'span' + 12/children;
           $('#imgContainer').children().each(function(){
