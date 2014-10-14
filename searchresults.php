@@ -64,7 +64,7 @@
                 $bib->actualLogic = 'not';
             }
             
-            $bibQueryStr.= $bib->logic . " CONCAT (fol.title, fol.author, fol.folio_contents, fol.coll_admin, fol.col_staff, fol.faculty_liason, fol.meta_catag, fol.scan_tech, "
+            $bibQueryStr.= $bib->logic . " CONCAT (fol.title, fol.alt_title, fol.author, fol.folio_contents, fol.coll_admin, fol.col_staff, fol.faculty_liason, fol.meta_catag, fol.scan_tech, "
                     ." ms.artist, ms.bibliography, ms.century, ms.collation, ms.date_manuscript, ms.decoration, ms.edition_cited, ms.language, ms.liturgicaluse, ms.miniatures,"
                     . " ms.publisher_digital, ms.writing_support, ms.ruling_medium, ms.ruling_pattern, ms.schoenberg_num, ms.text_contents, ms.text_type, ms.writing_support, " 
                     ." ori.country, ori.institution, ori.commagent, ori.municipality, ori.region, ori.state,"
