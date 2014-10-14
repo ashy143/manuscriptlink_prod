@@ -1,7 +1,7 @@
 <?php 
     include_once './includes/functions.php';
     session_start();   
-    $folio_objs = getFoliosByManuscriptId($_GET['mscript_id']);
+    $folio_objs = getFoliosByManuscriptIdWithParts($_GET['mscript_id']);
     $folio_obj = getFolioById($_GET['folio_id']);
     $mlinknum = getMlinkNumberOfManuscript($_GET['mscript_id']);
 

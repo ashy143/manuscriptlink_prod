@@ -278,6 +278,38 @@ function getMlinkNumberOfManuscript($manuscriptId){
     }else{
         return -1;
     }
+}
+
+function getFoliosByManuscriptIdWithParts($manuscript_id){
+    global $mysqli;
+    $query = "SELECT * "
+            . "FROM folios "   
+            . " LEFT JOIN location ON folios.folio_id = location.folio_id "
+            . " WHERE folios.mscript_id in ( SELECT mscript_id FROM manuscript WHERE mlinknumber =  "
+            . " (SELECT mlinknumber FROM manuscript WHERE mscript_id = " . $manuscript_id . ") )"
+            . " ORDER BY folio_num ASC, folio_side ASC" ;
+    error_log($query);
+    $result = $mysqli->query($query);
+    $folio_objs = array();
+    if($result->num_rows > 0) {        
+        while($row =$result->fetch_assoc()){
+            $folio = new Folio();
+            $folio->folio_id = $row['folio_id'];
+            $folio->mscript_id = $row['mscript_id'];
+            $folio->title = $row['title'];
+            $folio->abbreviated_shelf = $row['abreviated_shelf'];
+            $folio->folio_num = $row['folio_num'];
+            $folio->folio_side = $row['folio_side'];
+            $folio->folio_location->state = $row['state'];
+            $folio->folio_location->municipality = $row['municipality'];
+            $folio->res_ident = $row['res_ident'];
+            
+
+            $folio_objs[] = $folio;
+        } 
+    }
+    return $folio_objs;
+        
 }    
 
 

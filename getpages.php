@@ -14,7 +14,12 @@ if (mysqli_connect_errno())
 {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }else{
-    $sql_pages = "SELECT fol.folio_num, fol.folio_side, fol.res_ident, fol.folio_id, fol.abreviated_shelf, fol.author, fol.height, fol.width, fol.no_of_col, fol.no_of_lines, fol.folio_contents, ms.text_type, ms.date_manuscript, ms.writing_support FROM ".$tableName." as fol LEFT JOIN manuscript as ms ON fol.mscript_id = ms.mscript_id where ms.mscript_id=".$_GET['mscript_id']." order by folio_num asc, folio_side asc";
+    $sql_pages = "SELECT fol.folio_num, fol.folio_side, fol.res_ident, fol.folio_id, fol.abreviated_shelf, fol.author, fol.height, fol.width, fol.no_of_col, fol.no_of_lines, fol.folio_contents, ms.text_type, ms.date_manuscript, ms.writing_support " 
+                  . " FROM " .$tableName. " as fol LEFT JOIN manuscript AS ms ON fol.mscript_id = ms.mscript_id WHERE ms.mscript_id IN ( SELECT mscript_id FROM manuscript WHERE mlinknumber = "
+                  . " (SELECT mlinknumber FROM manuscript WHERE mscript_id = " . $_GET['mscript_id']. ") )"
+                  . " ORDER BY folio_num ASC, folio_side ASC ";
+    
+
     $sql_minpage = "SELECT MIN(folio_num) from ".$tableName." WHERE mscript_id=".$_GET['mscript_id'];
     $sql_maxpage = "SELECT MAX(folio_num) from ".$tableName." WHERE mscript_id=".$_GET['mscript_id'];
     
