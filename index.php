@@ -94,7 +94,7 @@
                                     <label for="exampleInputPassword1">Password</label>
                                     <input name="pass" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                                 </div>
-                                <a href="login.php">Not registered?</a>
+                                <a href="login.php">Register</a>
                             </form>
                             <a ><button type="submit" class="btn btn-default pull-right" style="margin-top: -20px;" onclick="login_form_submit(document.getElementsByName('login_form'))">Login</button></a>
 
