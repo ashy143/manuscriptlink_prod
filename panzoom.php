@@ -100,6 +100,14 @@
                       </div>
                       <div align='middle'>
                         <span>
+                            <p align="center">
+                                <a onclick="view_record(document.getElementsByName('recordForm'));"><span id="shelf" class="shelfmark_span"><?php echo $folio_obj->abbreviated_shelf; ?></span></a>
+                            </p>
+                            
+                        </span>
+                      </div>
+                      <div align='middle'>
+                        <span>
                             <img id='zoomInButton' src='img/zoom-in-outline.png' alt='' />
                             <img id='zoomOutButton' src='img/zoom-out-outline.png' alt='' />
                             <img id='leftPositionMap' src='img/arrow-left-thick.png' alt='' />
@@ -109,14 +117,7 @@
                             
                         </span>
                       </div>
-                      <div align='middle'>
-                        <span>
-                            <p align="center">
-                                <a onclick="view_record(document.getElementsByName('recordForm'));"><span id="shelf" class="shelfmark_span"><?php echo $folio_obj->abbreviated_shelf; ?></span></a>
-                            </p>
-                            
-                        </span>
-                      </div>
+                      
                   </div>
                 </div>            
             </div>

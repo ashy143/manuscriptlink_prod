@@ -6,13 +6,13 @@
  * and open the template in the editor.
  */
 
-$host = "127.0.0.1:8889";
-$databaseName = "mlinkdb";
+// $host = "127.0.0.1:8889";
+// $databaseName = "mlinkdb";
 $tableName = "manuscript";
-$username = "root";
-$pass= "root";
+// $username = "root";
+// $pass= "root";
 
-$mysqli = new mysqli("localhost", "root", "root", "mlinkdb", 8889);     
+$mysqli = new mysqli("localhost", "root", "root", "manuscriptlink", 8889);     
 
 // $con = mysql_connect('localhost', 'root', 'root'); or die("Unable to connect to MySQL");
 
@@ -21,7 +21,7 @@ $mysqli = new mysqli("localhost", "root", "root", "mlinkdb", 8889);
 $handle = fopen("/Users/ashwin/Downloads/codex_master.csv", 'r');
 
 fgetcsv($handle);//Skip header
-$count  = 161;
+$count  = 0;
 $found = 0 ;
 while( ($line = fgetcsv($handle)) != FALSE){
     $check_blank_line= implode(',',$line);    

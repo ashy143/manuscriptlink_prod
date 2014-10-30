@@ -59,6 +59,9 @@ function register($name, $email, $pass){
         //$_SESSION['username'] = $email;            
         //header("location: user.php");
         $statement->close();
+        // $headers = 'From: webmaster@manuscriptlink.com' . "\r\n".
+        //             'X-Mailer: PHP/' . phpversion();
+        // return mail('ash.patthi@gmail.com', 'My Subject', 'This is test mail - no reply');
         return true;
     }else{
         //$error="Invalid username or password";        
@@ -310,6 +313,27 @@ function getFoliosByManuscriptIdWithParts($manuscript_id){
     }
     return $folio_objs;
         
+}
+
+function getMinMaxValue($range, $MINorMAX){
+    $numbers =  array();
+    while($range != ''){
+        $currentNumber = '';
+        while( is_numeric(substr($range, 0, 1)) ){
+            $currentNumber = $currentNumber.substr($range, 0, 1);
+            $range = substr($range, 1);         
+        }
+        $numbers[] = $currentNumber;
+        $range = substr($range, 1);
+    }
+    if(count($numbers) > 0){
+        if($MINorMAX == 'MIN')
+            return min($numbers);
+        else
+            return max($numbers);
+    }else{
+        return 0;
+    }
 }    
 
 
