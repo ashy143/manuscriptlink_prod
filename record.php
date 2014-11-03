@@ -189,7 +189,15 @@
                           <dt>Justification</dt>
                             <dd><?php echo $mobj->height_written; ?> mm x <?php echo $mobj->width_written;?> mm</dd>
                           <dt>Lines</dt>
-                            <dd><?php echo $manuscript_obj->min_lines . ' to ' . $manuscript_obj->max_lines; ?></dd>
+                            <dd>
+                              <?php
+                                if($manuscript_obj->min_lines == $manuscript_obj->max_lines){
+                                  echo $manuscript_obj->min_lines ; 
+                                }else{
+                                  echo $manuscript_obj->min_lines . ' to ' . $manuscript_obj->max_lines; 
+                                }
+                              ?>
+                            </dd>
                           <dt>Decoration</dt>
                             <dd><?php echo $manuscript_obj->decoration ; ?></dd>
                           <dt>Script</dt>

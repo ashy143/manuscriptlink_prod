@@ -1,6 +1,10 @@
 <?php 
 
-function read_all_files($root = '/'){
+
+/*
+  This function extracts all the images inside the folder "/content/manuscriptlink"
+*/
+function read_all_files($root = '/content/manuscriptlink'){         //directory path for images of manuscript.
   $files  = array('dirs'=>array(),'files'=>array());
   $directories  = array();
   $last_letter  = $root[strlen($root)-1];
@@ -8,7 +12,7 @@ function read_all_files($root = '/'){
  
   $directories[]  = $root;
  
-  $file_w = fopen("abc.txt", 'w');
+  $file_w = fopen("imagePaths.txt", 'w');
   while (sizeof($directories)) {
     $dir  = array_pop($directories);
     if ($handle = opendir($dir)) {

@@ -1,3 +1,4 @@
+
 <?php
 
 /* 
@@ -7,13 +8,13 @@
  */
 
 $host = "localhost";
-$databaseName = "mlinkdb";
-$username = "root";
-$con = mysql_connect($host,$username, 'root') or die("Unable to connect to MySQL");
+$databaseName = "manuscriptlink";
+$username = "ashwin";
+$con = mysql_connect($host,$username, 'manuscriptlink') or die("Unable to connect to MySQL");
 
 mysql_select_db($databaseName, $con) or die("Could not select" .mysql_error());
 
-$handle = fopen("/Users/ashwin/Downloads/codex_master.csv", 'r');
+$handle = fopen("imagePaths.txt", 'r');
 
 
 
