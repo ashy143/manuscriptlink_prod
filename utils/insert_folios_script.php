@@ -10,12 +10,12 @@
 $host = "localhost";
 $databaseName = "manuscriptlink";
 
-$username = "root";
-$con = mysql_connect($host, $username, 'root') or die("Unable to connect to MySQL");
+$username = "ashwin";
+$con = mysql_connect($host, $username, 'manuscriptlink') or die("Unable to connect to MySQL");
 
 mysql_select_db($databaseName, $con) or die("Could not select" .mysql_error());
 
-$handle = fopen("/Users/ashwin/Downloads/folio_master.csv", 'r');
+$handle = fopen("folio_master.csv", 'r');
 
 fgetcsv($handle);//Skip header
 $count  = 1;

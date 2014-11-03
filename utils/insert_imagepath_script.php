@@ -30,7 +30,7 @@ while( ($linetemp = fgets($handle)) != FALSE){
     $query = "update folios set res_ident = '" . mysql_real_escape_string($line) ."' where res_ident = '" . mysql_real_escape_string($image_name) . "'";
     echo $query;
     echo "\n";
-   // mysql_query($query) or die(mysql_error());
+    mysql_query($query) or die(mysql_error());
     
 }
 
