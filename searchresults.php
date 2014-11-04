@@ -61,7 +61,7 @@
                     $bib->logic = 'AND';
                 }                
                 $like = 'NOT LIKE';                
-                $bib->actualLogic = 'not';
+                $bib->actualLogic = 'NOT';
             }
             
             $bibQueryStr.= $bib->logic . " CONCAT (fol.title, fol.alt_title, fol.author, fol.folio_contents, fol.coll_admin, fol.col_staff, fol.faculty_liason, fol.meta_catag, fol.scan_tech, "
@@ -88,9 +88,9 @@
                 }
                 $between = 'NOT BETWEEN';
                 
-                $cod->actualLogic = 'not';
+                $cod->actualLogic = 'NOT';
             }
-            $codQueryStr.= " " . $cod->logic . " " . $cod->term . "  " . $between . " " .$cod->min .  " AND "  .$cod->max ;
+            $codQueryStr.= " " . $cod->logic . " " . $cod->term . "  " . $between . " " .$cod->min .  " And "  .$cod->max ;
             $count++;
         }
         
@@ -238,7 +238,7 @@
                 </div>
                 <div id="results" class="col-md-9">
                     <!-- THis is the line where you will output the search terms, all of which wrapped in a span tag with class search-terms -->
-                    <h4>Showing results for: 
+                    <h4>Showing <?php echo count($manuscript_ext_objs); ?> results for: 
                         <small>
                             <?php foreach($biblioQueries as $bib){?>
                                 <span class="search-terms"><?php echo $bib->logic . " ". $bib->actualLogic. " " .$bib->term ; ?></span>

@@ -90,7 +90,7 @@
                         <div>
                             <select class="form-control" name="bibliographicalLog1">
                                 <option></option>
-                                <option>Not</option>
+                                <option value = 'NOT' >Not</option>
                             </select>
                             <div class="form-group">
                                 <label class="sr-only" for="bibliographical1">Bibliographial Search String One</label>
@@ -99,9 +99,9 @@
                         </div>
                         <div>
                             <select class="form-control" name="bibliographicalLog2">
-                                <option>And</option>
-                                <option>Or</option>
-                                <option>Not</option>
+                                <option value = 'AND' >And</option>
+                                <option value = 'OR' >Or</option>
+                                <option value = 'NOT' >Not</option>
                             </select>
                             <div class="form-group" >
                                 <label class="sr-only" for="bibliographical2">Bibliographial Search String Two</label>
@@ -110,9 +110,9 @@
                         </div>
                         <div>
                             <select class="form-control" name="bibliographicalLog3">
-                                <option>And</option>
-                                <option>Or</option>
-                                <option>Not</option>
+                                <option value = 'AND' >And</option>
+                                <option value = 'OR' >Or</option>
+                                <option value = 'NOT' >Not</option>
                             </select>
                             <div class="form-group">
                                 <label class="sr-only" for="bibliographical3">Bibliographial Search String Three</label>
@@ -121,9 +121,9 @@
                         </div>
                         <div>
                             <select class="form-control" name="bibliographicalLog4">
-                                <option>And</option>
-                                <option>Or</option>
-                                <option>Not</option>
+                                <option value = 'AND' >And</option>
+                                <option value = 'OR' >Or</option>
+                                <option value = 'NOT' >Not</option>
                             </select>
                             <div class="form-group">
                                 <label class="sr-only" for="bibliographical4">Bibliographial Search String Four</label>
