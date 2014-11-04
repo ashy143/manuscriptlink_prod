@@ -145,10 +145,41 @@
                 Function to get the metadata of the folio which is displayed as tooltip when hovered on image
             */
             function getMetadataDiv(page_obj){
-                return "<span> <strong>"+ page_obj.author + ', ' + page_obj.text + ', ' + page_obj.date+" <BR>"+
-                        page_obj.writing_sup + ', ' + page_obj.height + 'mm x'  + page_obj.width +'mm ' + ', ' + page_obj.no_of_col + ' col. ' + page_obj.no_of_lines + ' lines '+ "<BR>" +
-                            page_obj.contents +
-                        "</strong><span>";
+                
+
+                var line1 = '';
+                if(page_obj.author !== ''){
+                    line1 += page_obj.author + '. ';   
+                }
+                if(page_obj.title_genre !== ''){
+                    line1 += page_obj.title_genre + '. ';   
+                }
+                if(page_obj.country !== ''){
+                    line1 += page_obj.country + '. ';    
+                }
+                line1 += page_obj.height + 'mm x '  + page_obj.width +'mm' + '. '; 
+                //console.log(line1);
+
+                var line2 = '';
+                if(page_obj.writing_sup !== ''){
+                    line2 += page_obj.writing_sup + '. ';
+                }
+                if(page_obj.no_of_col !== ''){
+                    line2 += page_obj.no_of_col + ' col. ';
+                }
+                if(page_obj.no_of_lines !== ''){
+                    line2 += page_obj.no_of_lines + ' lines.';
+                }
+
+                var line3 = page_obj.contents;
+
+
+                return "<span> <strong>"+
+                        line1 + "<BR>" +
+                        line2 + "<BR>" +
+                        line3 +
+                    "</strong> </span> " ;
+                
             };
 
             /*
@@ -164,47 +195,47 @@
                 Function to calculate number of missing pages to the left and right side of current page view
             */
 
-            function getRemainingBlackPagesForPrevNext(ptr, pages){
+            // function getRemainingBlackPagesForPrevNext(ptr, pages){
 
-                /* Caluclation for prev and next page navigation */
-                var currentPageNumForBack = 0;
-                var currentPageNumForForw = 0;
+            //     /* Caluclation for prev and next page navigation */
+            //     var currentPageNumForBack = 0;
+            //     var currentPageNumForForw = 0;
 
-                if(pages[ptr].pageNum !== 'x'){
-                    currentPageNumForBack = pages[ptr].pageNum ;
-                }else if(pages[ptr+1].pageNum !== 'x'){
-                    currentPageNumForBack = pages[ptr+1].pageNum ;
-                }
+            //     if(pages[ptr].pageNum !== 'x'){
+            //         currentPageNumForBack = pages[ptr].pageNum ;
+            //     }else if(pages[ptr+1].pageNum !== 'x'){
+            //         currentPageNumForBack = pages[ptr+1].pageNum ;
+            //     }
 
-                if(pages[ptr+1].pageNum !== 'x'){
-                    currentPageNumForForw = pages[ptr+1].pageNum ;
-                }else if(pages[ptr].pageNum !== 'x'){
-                    currentPageNumForForw = pages[ptr].pageNum ;
-                }
+            //     if(pages[ptr+1].pageNum !== 'x'){
+            //         currentPageNumForForw = pages[ptr+1].pageNum ;
+            //     }else if(pages[ptr].pageNum !== 'x'){
+            //         currentPageNumForForw = pages[ptr].pageNum ;
+            //     }
 
-                /* calculate black pages backward and forward to current page*/
-                var index = ptr; 
-                while(pages[index].pageNum === 'x' && index > 0){
-                    index-- ;
-                }
-                remaining_blank_back = parseInt(currentPageNumForBack) - parseInt((pages[index].pageNum === 'x')? 0 : parseInt(pages[index].pageNum));
-                var index = ptr+1;  //check from right page 
-                while(pages[index].pageNum === 'x' && index < pages.length - 1){    //-1 because for last page we don't want to increment
-                    index++ ;
-                }
-                if(pages[index].pageNum === 'x'){
-                    remaining_blank_forward = 0 ;
-                }else{
-                    remaining_blank_forward = parseInt(pages[index].pageNum) - parseInt(currentPageNumForForw);
-                }
-                /* Caluclation for prev and next page navigation ends here */
+            //     /* calculate black pages backward and forward to current page*/
+            //     var index = ptr; 
+            //     while(pages[index].pageNum === 'x' && index > 0){
+            //         index-- ;
+            //     }
+            //     remaining_blank_back = parseInt(currentPageNumForBack) - parseInt((pages[index].pageNum === 'x')? 0 : parseInt(pages[index].pageNum));
+            //     var index = ptr+1;  //check from right page 
+            //     while(pages[index].pageNum === 'x' && index < pages.length - 1){    //-1 because for last page we don't want to increment
+            //         index++ ;
+            //     }
+            //     if(pages[index].pageNum === 'x'){
+            //         remaining_blank_forward = 0 ;
+            //     }else{
+            //         remaining_blank_forward = parseInt(pages[index].pageNum) - parseInt(currentPageNumForForw);
+            //     }
+            //     /* Caluclation for prev and next page navigation ends here */
 
-                var values = [];
-                values.push(remaining_blank_back);
-                values.push(remaining_blank_forward);
+            //     var values = [];
+            //     values.push(remaining_blank_back);
+            //     values.push(remaining_blank_forward);
 
-                return values;
-            };
+            //     return values;
+            // };
             
             $(document).ready(function(){
 
@@ -271,6 +302,8 @@
                             page.text = element.text;
                             page.date = element.date;
                             page.writing_sup = element.writing_sup;
+                            page.title_genre = element.title_genre;
+                            page.country = element.country;
                             
                             pages.push(page) ;
                             
@@ -317,7 +350,7 @@
                         if(pages[ptr].pageNum !== 'x'){
                             $('#lefttooltip').html(getMetadataDiv(pages[ptr]));                            
                         }else{
-                           $('#lefttooltip').html('Void Page');
+                           $('#lefttooltip').html('Missing leaf');
                         }
                         
                         
@@ -328,7 +361,7 @@
                         if(pages[ptr+1].pageNum !== 'x'){
                             $('#righttooltip').html(getMetadataDiv(pages[ptr+1]));                         
                         }else{
-                            $('#righttooltip').html('Void Page');
+                            $('#righttooltip').html('Missing leaf');
                         }
                         
                         if(ptr===0){

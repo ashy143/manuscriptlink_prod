@@ -14,8 +14,8 @@ if (mysqli_connect_errno())
 {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
 }else{
-    $sql_pages = "SELECT fol.folio_num, fol.folio_side, fol.res_ident, fol.folio_id, fol.abreviated_shelf, fol.author, fol.height, fol.width, fol.no_of_col, fol.no_of_lines, fol.folio_contents, ms.text_type, ms.date_manuscript, ms.writing_support " 
-                  . " FROM " .$tableName. " as fol LEFT JOIN manuscript AS ms ON fol.mscript_id = ms.mscript_id WHERE ms.mscript_id IN ( SELECT mscript_id FROM manuscript WHERE mlinknumber = "
+    $sql_pages = "SELECT fol.folio_num, fol.folio_side, fol.res_ident, fol.folio_id, fol.abreviated_shelf, fol.author, fol.height, fol.width, fol.no_of_col, fol.no_of_lines, fol.folio_contents, ms.text_type, ms.date_manuscript, ms.writing_support, fol.title, ori.country " 
+                  . " FROM (manuscript AS ms INNER JOIN origin AS ori ON ms.mscript_id = ori.mscript_id) INNER JOIN folios as fol ON fol.mscript_id = ms.mscript_id WHERE ms.mscript_id IN ( SELECT mscript_id FROM manuscript WHERE mlinknumber = "
                   . " (SELECT mlinknumber FROM manuscript WHERE mscript_id = " . $_GET['mscript_id']. ") )"
                   . " ORDER BY folio_num ASC, folio_side ASC ";
     
@@ -23,6 +23,7 @@ if (mysqli_connect_errno())
     $sql_minpage = "SELECT MIN(folio_num) from ".$tableName." WHERE mscript_id=".$_GET['mscript_id'];
     $sql_maxpage = "SELECT MAX(folio_num) from ".$tableName." WHERE mscript_id=".$_GET['mscript_id'];
     
+    error_log($sql_pages);
     $result = mysql_query($sql_pages) or die(mysql_error());
     $result_min = mysql_query($sql_minpage) or die(mysql_error());
     $result_max = mysql_query($sql_maxpage) or die(mysql_error());
@@ -47,6 +48,8 @@ if (mysqli_connect_errno())
         public $date = '';
         public $writing_sup='';
         public $contents='';
+        public $title_genre = ''; 
+        public $country = '';
         
     }
     $blank_page = new Page();
@@ -73,13 +76,13 @@ if (mysqli_connect_errno())
             }
         }
         $p = new Page();
-        $p -> num = $row[0];
-        $p -> side = $row[1];
-        $p -> path = $row[2];
-        $p -> id = $row[3];
-        $p -> abbrshelf = $row[4];
-        $p-> author = $row[5];
-        $p-> height = $row[6];
+        $p->num = $row[0];
+        $p->side = $row[1];
+        $p->path = $row[2];
+        $p->id = $row[3];
+        $p->abbrshelf = $row[4];
+        $p->author = $row[5];
+        $p->height = $row[6];
         $p->width = $row[7];
         $p->no_of_cols = $row[8];
         $p->no_of_lines = $row[9];
@@ -87,7 +90,9 @@ if (mysqli_connect_errno())
         $p->text = $row[11];
         $p->date = $row[12];
         $p->writing_sup =$row[13];
-               
+        $p->title_genre = $row[14];
+        $p->country = $row[15];
+
         $pages[] = $p;
         $prev_page = $row[0];
         $prev_side = $row[1];
