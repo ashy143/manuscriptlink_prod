@@ -1,6 +1,6 @@
 <?php 
     require_once './includes/functions.php';
-   session_start();
+    session_start();
 
     if(login_check() == false){
         header("location: ./index.php");
@@ -155,7 +155,7 @@
                 Function to set the width of div so that it makes look shelfmark aligned center
             */
             function setWidthOfShelfmark(){
-                $('.left_shelfmark_div').css('width', $('#lpage').width();
+                $('.left_shelfmark_div').css('width', $('#lpage').width());
                 $('.right_shelfmark_div').css('width', $('#rpage').width());
                     
             }
