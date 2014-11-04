@@ -93,6 +93,8 @@
             $codQueryStr.= " " . $cod->logic . " " . $cod->term . "  " . $between . " " .$cod->min .  " And "  .$cod->max ;
             $count++;
         }
+        error_log($count);
+        error_log($codQueryStr);
         
         $query_place_holder = "SELECT ms.mscript_id, fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff "
                     ." FROM "
@@ -115,7 +117,7 @@
             $query = sprintf("$query_place_holder ", $bibQueryStr );
         }
         
-        $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
+        //$query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
         $query .= " GROUP BY ms.mscript_id ";
         error_log($query);
         $result = mysql_query($query) or die(mysql_error());
