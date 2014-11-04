@@ -129,12 +129,24 @@ function getManuscriptById($manuscriptId){
         $manuscript_obj->script = $row['script'];
         $manuscript_obj->collation = $row['collation'];
         $manuscript_obj->no_of_avail_fol = $row['numof_avail_folios'];
+        $manuscript_obj->language = $row['language'];
+        $manuscript_obj->liturgical_use = $row['liturgicaluse'];
+        $manuscript_obj->ruling_med = $row['ruling_medium'];
+        $manuscript_obj->miniatures = $row['miniatures'];
+        $manuscript_obj->schoen_num = $row['schoenberg_num'];
+        $manuscript_obj->history = $row['history'];
+        $manuscript_obj->writing_sup = $row['writing_support'];
+        $manuscript_obj->edition_cited = $row['edition_cited'];
         
         $manuscript_obj->min_lines = $min;
         $manuscript_obj->max_lines = $max;
         
         $manuscript_obj->origin->country = $row['country'];
         $manuscript_obj->origin->municipality = $row['municipality'];
+        $manuscript_obj->origin->region = $row['region'];
+        $manuscript_obj->origin->commagent = $row['commagent'];
+        $manuscript_obj->origin->institution = $row['institution'];
+        $manuscript_obj->origin->state = $row['state'];
     }
     
     return $manuscript_obj;
