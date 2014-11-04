@@ -257,7 +257,7 @@
                     if(!strcasecmp($manuscript_obj->miniatures, '') == 0){
                       $line8 .= 'Miniatures: ' . $manuscript_obj->miniatures . '. ' ;
                     }
-                    $line8 .= $manuscript_obj->decoration . '.';
+                    $line8 .= $manuscript_obj->decoration;
                     $line9 = '';
                     if(!strcasecmp($manuscript_obj->schoen_num, '') == 0){
                       $line9 .= 'Schoenberg # ' . $manuscript_obj->schoen_num . '. ' ;
@@ -270,7 +270,7 @@
                       $line10 .= 'Edition Cited: ' . $manuscript_obj->edition_cited . '. ' ;
                     }
                     if(!strcasecmp($manuscript_obj->biblio, '') == 0){
-                      $line10 .= 'Secondary Sources: ' . $manuscript_obj->biblio . '. ' ;
+                      $line10 .= 'Secondary Sources: ' . $manuscript_obj->biblio ;
                     }
  
                   ?>

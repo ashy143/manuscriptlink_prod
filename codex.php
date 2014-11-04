@@ -378,9 +378,9 @@
                     $(".page").removeClass('imageSelectBorder');
                     ptr = ptr -2;
 
-                    var values = getRemainingBlackPagesForPrevNext(ptr, pages);
-                    remaining_blank_back = values[0];
-                    remaining_blank_forward = values[1];
+                    // var values = getRemainingBlackPagesForPrevNext(ptr, pages);
+                    // remaining_blank_back = values[0];
+                    // remaining_blank_forward = values[1];
                     
                     $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
@@ -410,9 +410,9 @@
                     $(".page").removeClass('imageSelectBorder');
                     ptr = ptr + 2;
                     
-                    var values = getRemainingBlackPagesForPrevNext(ptr, pages);
-                    remaining_blank_back = values[0];
-                    remaining_blank_forward = values[1];
+                    // var values = getRemainingBlackPagesForPrevNext(ptr, pages);
+                    // remaining_blank_back = values[0];
+                    // remaining_blank_forward = values[1];
 
                     $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
@@ -442,9 +442,9 @@
                 $("#prev").click(function(){    //single nav
                     $(".page").removeClass('imageSelectBorder');
 
-                    var values = getRemainingBlackPagesForPrevNext(ptr, pages);
-                    remaining_blank_back--;
-                    remaining_blank_forward++;
+                    // var values = getRemainingBlackPagesForPrevNext(ptr, pages);
+                    // remaining_blank_back--;
+                    // remaining_blank_forward++;
                     
                     $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
@@ -473,9 +473,9 @@
                 $("#next").click(function(){    //single nav
                     $(".page").removeClass('imageSelectBorder');
 
-                    var values = getRemainingBlackPagesForPrevNext(ptr, pages);
-                    remaining_blank_back = values[0];
-                    remaining_blank_forward = values[1];
+                    // var values = getRemainingBlackPagesForPrevNext(ptr, pages);
+                    // remaining_blank_back = values[0];
+                    // remaining_blank_forward = values[1];
                     
                     $("#lpage").attr('src','image.php?img_path='+pages[ptr].getImage());
                     $("#lpage").data('obj',pages[ptr]);
