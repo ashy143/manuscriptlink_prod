@@ -54,15 +54,10 @@ function register($name, $email, $pass){
     $statement->bind_param('sss',$email,$name, $pass);
     $statement->execute();
     
-    if($statement->affected_rows == 1){       
-        //$_SESSION['name'] = $name;            
-        //$_SESSION['username'] = $email;            
-        //header("location: user.php");
+    if($statement->affected_rows == 1){
+        $id = $statement->insert_id;
         $statement->close();
-        // $headers = 'From: webmaster@manuscriptlink.com' . "\r\n".
-        //             'X-Mailer: PHP/' . phpversion();
-        // return mail('ash.patthi@gmail.com', 'My Subject', 'This is test mail - no reply');
-        return true;
+        return $id;
     }else{
         //$error="Invalid username or password";        
         //header("location: ../index.php?login_error=".$error);
@@ -347,6 +342,22 @@ function getMinMaxValue($range, $MINorMAX){
         return 0;
     }
 }    
+
+function activateUser($userId){
+
+    global $mysqli;
+    $statement = $mysqli->prepare('UPDATE users set isactivated = TRUE where user_id = 10' );
+    $statement->execute();
+    
+    $html_text = '';
+    if($statement->affected_rows > 0){
+        $html_text = "You have successfully activated your account. Please click <a href = 'index.php'>here<a> to login." ;
+    }else{
+        $html_text = "Failed to activate your account. Please try again." ;
+    }
+
+    return $html_text;
+}
 
 
 
