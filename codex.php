@@ -388,7 +388,7 @@
                     if(pages[ptr].pageNum !== 'x'){
                             $('#lefttooltip').html(getMetadataDiv(pages[ptr]));                            
                     }else{
-                       $('#lefttooltip').html('Void Page');
+                       $('#lefttooltip').html('Missing leaf');
                     }
                     
                     $("#rpage").attr('src','image.php?img_path='+pages[ptr+1].getImage());
@@ -397,7 +397,7 @@
                     if(pages[ptr+1].pageNum !== 'x'){
                         $('#righttooltip').html(getMetadataDiv(pages[ptr+1]));                         
                     }else{
-                        $('#righttooltip').html('Void Page');
+                        $('#righttooltip').html('Missing leaf');
                     }
                     if(ptr===0){
                         $("#left").prop('disabled', true);
@@ -420,7 +420,7 @@
                     if(pages[ptr].pageNum !== 'x'){
                         $('#lefttooltip').html(getMetadataDiv(pages[ptr]));                            
                     }else{
-                       $('#lefttooltip').html('Void Page');
+                       $('#lefttooltip').html('Missing leaf');
                     }
                     
                     $("#rpage").attr('src','image.php?img_path='+pages[ptr+1].getImage());
@@ -429,7 +429,7 @@
                     if(pages[ptr+1].pageNum !== 'x'){
                         $('#righttooltip').html(getMetadataDiv(pages[ptr+1]));                         
                     }else{
-                        $('#righttooltip').html('Void Page');
+                        $('#righttooltip').html('Missing leaf');
                     }
                     
                     if(ptr+2 >= pages.length ){
@@ -452,7 +452,7 @@
                     if(pages[ptr].pageNum !== 'x'){
                         $('#lefttooltip').html(getMetadataDiv(pages[ptr]));                            
                     }else{
-                       $('#lefttooltip').html('Void Page');
+                       $('#lefttooltip').html('Missing leaf');
                     }
                     
                     $("#rpage").attr('src','image.php?img_path='+pages[ptr+1].getImage());
@@ -461,7 +461,7 @@
                     if(pages[ptr+1].pageNum !== 'x'){
                         $('#righttooltip').html(getMetadataDiv(pages[ptr+1]));                         
                     }else{
-                        $('#righttooltip').html('Void Page');
+                        $('#righttooltip').html('Missing leaf');
                     }
                     if(ptr===0){
                         $("#left").prop('disabled', true);
@@ -483,7 +483,7 @@
                     if(pages[ptr].pageNum !== 'x'){
                             $('#lefttooltip').html(getMetadataDiv(pages[ptr]));                            
                     }else{
-                       $('#lefttooltip').html('Void Page');
+                       $('#lefttooltip').html('Missing leaf');
                     }
                     
                     $("#rpage").attr('src','image.php?img_path='+pages[ptr+1].getImage());
@@ -492,7 +492,7 @@
                     if(pages[ptr+1].pageNum !== 'x'){
                         $('#righttooltip').html(getMetadataDiv(pages[ptr+1]));                         
                     }else{
-                        $('#righttooltip').html('Void Page');
+                        $('#righttooltip').html('Missing leaf');
                     }
                     if(ptr===0){
                         $("#left").prop('disabled', true);
