@@ -22,19 +22,21 @@ if(isset($_POST['email'],$_POST['pass'],$_POST['name'])){
         
         // return mail('ash.patthi@gmail.com', 'My Subject', 'This is test mail - no reply');
 
+        $encryptedId = encrypt($id);
+
         $from = WEBMAIL_ID;
         $protocol = (strstr('https',$_SERVER['SERVER_PROTOCOL']) === false)?'http':'https';
         $host_url = $protocol.'://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'];
         $to = $email;
         $subject = "Welcome to Manuscript Link";
-        $message = "Dear " . $name . "\n" 
-                    .BASE_URL
-                    . "Thank you for registering with Manuscript Link. Please click <a href = '$host_url/activateuser.php?id=$id'>here</a> to activate your account. \n"; 
+        $message = "Dear " . $name . "\n"
+                    . "Thank you for registering with Manuscript Link. Please click <a href = '$host_url/manuscriptlink_prod/activateuser.php?id=$encryptedId'>here</a> to activate your account. \n";
                     
 
-
-        $headers = 'From: $from' . "\r\n".
-                    'X-Mailer: PHP/' . phpversion();
+        $headers = 'From: ' . $from . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion() . "\r\n" .
+                    'MIME-Version: 1.0\r\n' . '\r\n' .
+                    'Content-Type: text/html; charset=ISO-8859-1\r\n';
         mail($to, $subject, $message, $headers);
         header("location: ../index.php?reg=1");
     }else{

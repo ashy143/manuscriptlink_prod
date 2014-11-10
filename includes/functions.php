@@ -2,6 +2,7 @@
 include_once 'dbconnect.php';
 require_once dirname(__FILE__).'./../data_models/folio.php';
 require_once dirname(__FILE__).'./../data_models/manuscript.php';
+include_once 'constants.php';
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -343,10 +344,30 @@ function getMinMaxValue($range, $MINorMAX){
     }
 }    
 
+function encrypt($id)
+{
+    $id = base_convert($id, 10, 36); // Save some space
+    $data = mcrypt_encrypt(MCRYPT_BLOWFISH, MD5_KEY, $id, 'ecb');
+    $data = bin2hex($data);
+
+    return $data;
+}
+
+function decrypt($encrypted_id)
+{
+    $data = pack('H*', $encrypted_id); // Translate back to binary
+    $data = mcrypt_decrypt(MCRYPT_BLOWFISH, MD5_KEY, $data, 'ecb');
+    $data = base_convert($data, 36, 10);
+
+    return $data;
+}
+
 function activateUser($userId){
 
     global $mysqli;
-    $statement = $mysqli->prepare('UPDATE users set isactivated = TRUE where user_id = 10' );
+    $userIdDecrypted = decrypt($userId);
+    $statement = $mysqli->prepare('UPDATE users set isactivated = TRUE where user_id = ?');
+    $statement->bind_param('d', $userIdDecrypted);
     $statement->execute();
     
     $html_text = '';
@@ -358,6 +379,7 @@ function activateUser($userId){
 
     return $html_text;
 }
+
 
 
 
