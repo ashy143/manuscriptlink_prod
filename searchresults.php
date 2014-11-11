@@ -12,114 +12,130 @@
     } else {
         $logged = 'out';
     }   
-    
+    $loggedInUserId = $_SESSION['user_id'];
     $tableName = "folios";
     $con = mysql_connect(HOST.':'.PORT, USER, PASSWORD) or die("Unable to connect to MySQL");
     mysql_select_db(DATABASE, $con) or die("Could not select" .mysql_error());
 
     if (mysqli_connect_errno()){
       echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    }else{    
-        $biblioQueries = array();
-        for ( $i = 1; $i < 5; $i++ ) {
-           $biblioQuery = new BibliographicalQuery();
-           if($_GET["bibliographical".$i]==''){
-               continue;
-           }
-           if(  count($biblioQueries) > 0 || (strcasecmp($_GET["bibliographicalLog".$i ], 'NOT') == 0)){
-               $biblioQuery->logic = $_GET["bibliographicalLog".$i ]; 
-           }
-           $biblioQuery->term = $_GET["bibliographical".$i];
-           $biblioQueries[] = $biblioQuery;
-        }
-        
-        
-        $codologQueries = array();
-        for ( $i = 1; $i < 8; $i++ ) {
-            $codologQuery = new CodicologicalQuery();
-            if($_GET["codicologicalTerm".$i]=='NA'){
-                continue;
-            }
-            if( count($codologQueries) > 0  ||  (strcasecmp($_GET["codicologicalLogic".$i ], 'NOT') == 0) ){
-                $codologQuery->logic = $_GET["codicologicalLogic".$i ]; 
-            }
-            $codologQuery->min = $_GET["codicologicalMin".$i]; 
-            $codologQuery->max = $_GET["codicologicalMax".$i ]; 
-            $codologQuery->term = $_GET["codicologicalTerm".$i];
-            $codologQueries[] = $codologQuery;
+    }else{
 
-        }
-         //build where class
-        $bibQueryStr = '';        
-        $count = 0; //for first term if user selected  not then we have to search for NOT LIKE
-        foreach($biblioQueries as $bib){
-            $like = 'LIKE';
-            if(strcasecmp($bib->logic , 'NOT') == 0){
-                if($count == 0){
-                    $bib->logic = '';
-                }else{
-                    $bib->logic = 'AND';
-                }                
-                $like = 'NOT LIKE';                
-                $bib->actualLogic = 'NOT';
+        $query = '';
+        //If user has clicked on load previous search results and came here...
+        if( !isset($_GET['load_prev']) ){ 
+            //Here if user came from search page    
+            $biblioQueries = array();
+            for ( $i = 1; $i < 5; $i++ ) {
+               $biblioQuery = new BibliographicalQuery();
+               if($_GET["bibliographical".$i]==''){
+                   continue;
+               }
+               if(  count($biblioQueries) > 0 || (strcasecmp($_GET["bibliographicalLog".$i ], 'NOT') == 0)){
+                   $biblioQuery->logic = $_GET["bibliographicalLog".$i ]; 
+               }
+               $biblioQuery->term = $_GET["bibliographical".$i];
+               $biblioQueries[] = $biblioQuery;
             }
             
-            $bibQueryStr.= $bib->logic . " CONCAT (fol.title, fol.alt_title, fol.author, fol.folio_contents, fol.coll_admin, fol.col_staff, fol.faculty_liason, fol.meta_catag, fol.scan_tech, "
-                    ." ms.mlink_part, ms.artist, ms.bibliography, ms.century, ms.collation, ms.date_manuscript, ms.decoration, ms.edition_cited, ms.language, ms.liturgicaluse, ms.miniatures,"
-                    . " ms.publisher_digital, ms.writing_support, ms.ruling_medium, ms.ruling_pattern, ms.schoenberg_num, ms.text_contents, ms.text_type, ms.writing_support, " 
-                    ." ori.country, ori.institution, ori.commagent, ori.municipality, ori.region, ori.state,"
-                    ." loc.callno, loc.collection, loc.country, loc.division, loc.institution, loc.municipality, loc.series, loc.state  )"
-                    . $like ."  '%" . $bib->term . "%' " ;
-        
-            $count++;    
-        }
-        
-        $codQueryStr = '';
-        $count = 0;
-        foreach($codologQueries as $cod){            
-            $between = 'BETWEEN';
-            if(strcasecmp($cod->logic , 'NOT') == 0){
-                error_log("came for not between ");
-                //if the not is selected for first term then we should not append AND in where clause because querry will be " WHERE AND "
-                if($count == 0){
-                    $cod->logic = '';
-                }else{
-                    $cod->logic = 'AND';
+            
+            $codologQueries = array();
+            for ( $i = 1; $i < 8; $i++ ){
+                $codologQuery = new CodicologicalQuery();
+                if($_GET["codicologicalTerm".$i]=='NA'){
+                    continue;
                 }
-                $between = 'NOT BETWEEN';
-                
-                $cod->actualLogic = 'NOT';
+                if( count($codologQueries) > 0  ||  (strcasecmp($_GET["codicologicalLogic".$i ], 'NOT') == 0) ){
+                    $codologQuery->logic = $_GET["codicologicalLogic".$i ];
+                }
+                $codologQuery->min = $_GET["codicologicalMin".$i]; 
+                $codologQuery->max = $_GET["codicologicalMax".$i ]; 
+                $codologQuery->term = $_GET["codicologicalTerm".$i];
+                $codologQueries[] = $codologQuery;
+
             }
-            $codQueryStr.= " " . $cod->logic . " " . $cod->term . "  " . $between . " " .$cod->min .  " And "  .$cod->max ;
-            $count++;
+             //build where class
+            $bibQueryStr = '';        
+            $count = 0; //for first term if user selected  not then we have to search for NOT LIKE
+            foreach($biblioQueries as $bib){
+                $like = 'LIKE';
+                if(strcasecmp($bib->logic , 'NOT') == 0){
+                    if($count == 0){
+                        $bib->logic = '';
+                    }else{
+                        $bib->logic = 'AND';
+                    }
+                    $like = 'NOT LIKE';                
+                    $bib->actualLogic = 'NOT';
+                }
+                
+                $bibQueryStr.= $bib->logic . " CONCAT (fol.title, fol.alt_title, fol.author, fol.folio_contents, fol.coll_admin, fol.col_staff, fol.faculty_liason, fol.meta_catag, fol.scan_tech, "
+                        ." ms.mlink_part, ms.artist, ms.bibliography, ms.century, ms.collation, ms.date_manuscript, ms.decoration, ms.edition_cited, ms.language, ms.liturgicaluse, ms.miniatures,"
+                        . " ms.publisher_digital, ms.writing_support, ms.ruling_medium, ms.ruling_pattern, ms.schoenberg_num, ms.text_contents, ms.text_type, ms.writing_support, " 
+                        ." ori.country, ori.institution, ori.commagent, ori.municipality, ori.region, ori.state,"
+                        ." loc.callno, loc.collection, loc.country, loc.division, loc.institution, loc.municipality, loc.series, loc.state  )"
+                        . $like ."  '%" . $bib->term . "%' " ;
+            
+                $count++;    
+            }
+            
+            $codQueryStr = '';
+            $count = 0;
+            foreach($codologQueries as $cod){            
+                $between = 'BETWEEN';
+                if(strcasecmp($cod->logic , 'NOT') == 0){
+                    // error_log("came for not between ");
+                    //if the not is selected for first term then we should not append AND in where clause because querry will be " WHERE AND "
+                    if($count == 0){
+                        $cod->logic = '';
+                    }else{
+                        $cod->logic = 'AND';
+                    }
+                    $between = 'NOT BETWEEN';
+                    
+                    $cod->actualLogic = 'NOT';
+                }
+                $codQueryStr.= " " . $cod->logic . " " . $cod->term . "  " . $between . " " .$cod->min .  " And "  .$cod->max ;
+                $count++;
+            }
+            
+            // error_log($count);
+            // error_log($codQueryStr);
+            
+            $query_place_holder = "SELECT ms.mscript_id, fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff "
+                        ." FROM "
+                    ." (manuscript AS ms INNER JOIN origin AS ori ON ms.mscript_id = ori.mscript_id) "
+                        ." INNER JOIN "
+                    ." (folios AS fol INNER JOIN location AS loc ON fol.folio_id = loc.folio_id )"
+                        . " ON ms.mscript_id = fol.mscript_id ";
+            
+            if(count($biblioQueries) < 1 && count($codologQueries) < 1){        
+                $query_place_holder .= " " ;
+                $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
+            }else if(count($biblioQueries) > 0 && count($codologQueries) > 0){
+                $query_place_holder .= " WHERE %s  AND ( %s )" ;
+                $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
+            }else if(count($biblioQueries) < 1){
+                $query_place_holder .= " WHERE %s  " ;
+                $query = sprintf("$query_place_holder ", $codQueryStr );
+            }else if(count($codologQueries) < 1){
+                $query_place_holder .= " WHERE %s  " ;
+                $query = sprintf("$query_place_holder ", $bibQueryStr );
+            }
+            
+            $query .= " GROUP BY ms.mscript_id ";
+
+        }else{
+            //Here if user wants to load pervious search results
+            //Get searchquery using user id
+
+            //This query will actually return search query which user initially ran
+            $search_query_extract = "SELECT search_query FROM user_search_query WHERE user_id = $loggedInUserId" ;
+
+            // error_log($query);
         }
-        error_log($count);
-        error_log($codQueryStr);
         
-        $query_place_holder = "SELECT ms.mscript_id, fol.title, fol.height, fol.width, fol.height_written, fol.width_written, fol.no_of_lines, fol.dim_staff "
-                    ." FROM "
-                ." (manuscript AS ms INNER JOIN origin AS ori ON ms.mscript_id = ori.mscript_id) "
-                    ." INNER JOIN "
-                ." (folios AS fol INNER JOIN location AS loc ON fol.folio_id = loc.folio_id )"
-                    . " ON ms.mscript_id = fol.mscript_id ";
-        
-        if(count($biblioQueries) < 1 && count($codologQueries) < 1){        
-            $query_place_holder .= " " ;
-            $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
-        }else if(count($biblioQueries) > 0 && count($codologQueries) > 0){
-            $query_place_holder .= " WHERE %s  AND ( %s )" ;
-            $query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
-        }else if(count($biblioQueries) < 1){
-            $query_place_holder .= " WHERE %s  " ;
-            $query = sprintf("$query_place_holder ", $codQueryStr );
-        }else if(count($codologQueries) < 1){
-            $query_place_holder .= " WHERE %s  " ;
-            $query = sprintf("$query_place_holder ", $bibQueryStr );
-        }
-        
-        //$query = sprintf("$query_place_holder ", $bibQueryStr, $codQueryStr );
-        $query .= " GROUP BY ms.mscript_id ";
-        error_log($query);
+        // error_log($query);
         $result = mysql_query($query) or die(mysql_error());
         class MSEXT_OBJ{
             public $title  = "--";
@@ -148,7 +164,11 @@
             
             
             $manuscript_ext_objs[] = $mext_obj;
-        }
+        }//end of while loop
+
+        //Save the search results query in the database
+        $save_search_query_insert = "INSERT INTO user_search_query VALUES ($loggedInUserId, mysql_real_escape_string($query)) ON DUPLICATE KEY UPDATE search_query = VALUES($query) " ;
+        mysql_query($save_search_query_insert) or die(mysql_error());
     }
     
             

@@ -336,7 +336,7 @@ function getMinMaxValue($range, $MINorMAX){
     }
     if(count($numbers) > 0){
         if($MINorMAX == 'MIN')
-            return min($numbers);
+            return min($numbers);  
         else
             return max($numbers);
     }else{
