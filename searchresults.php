@@ -14,12 +14,7 @@
     }   
     $loggedInUserId = $_SESSION['user_id'];
     $tableName = "folios";
-    $con = mysql_connect(HOST.':'.PORT, USER, PASSWORD) or die("Unable to connect to MySQL");
-    mysql_select_db(DATABASE, $con) or die("Could not select" .mysql_error());
-
-    if (mysqli_connect_errno()){
-      echo "Failed to connect to MySQL: " . mysqli_connect_error();
-    }else{
+    global $mysqli;
 
         $query = '';
         //If user has clicked on load previous search results and came here...
@@ -136,7 +131,7 @@
         }
         
         // error_log($query);
-        $result = mysql_query($query) or die(mysql_error());
+        $result = $mysqli->query($query);
         class MSEXT_OBJ{
             public $title  = "--";
             public $height;
@@ -149,18 +144,18 @@
 
         }
         $manuscript_ext_objs = array();
-        while($row = mysql_fetch_row($result)){
-            $manuscript_obj = getManuscriptById($row[0]);
+        while($row = $result->fetch_assoc()){
+            $manuscript_obj = getManuscriptById($row['mscript_id']);  //0 offset if using procedural style
             $mext_obj = new MSEXT_OBJ();
             $mext_obj->mscript_obj = $manuscript_obj;
-            $mext_obj->mscript_id = $row[0];
-            $mext_obj->title = $row[1];
-            $mext_obj->height = $row[2];
-            $mext_obj->width = $row[3];
-            $mext_obj->height_written = $row[4];
-            $mext_obj->width_written = $row[5];
-            $mext_obj->no_of_lines = $row[6];
-            $mext_obj->dim_staff = $row[7];
+            $mext_obj->mscript_id = $row['mscript_id'];
+            $mext_obj->title = $row['title'];   //1
+            $mext_obj->height = $row['height']; //2
+            $mext_obj->width = $row['width'];   //3
+            $mext_obj->height_written = $row['height_written']; //4
+            $mext_obj->width_written = $row['width_written'];   //5
+            $mext_obj->no_of_lines = $row['no_of_lines'];   //6
+            $mext_obj->dim_staff = $row['dim_staff']; //7
             
             
             $manuscript_ext_objs[] = $mext_obj;
@@ -168,12 +163,8 @@
 
         //Save the search results query in the database
         $save_search_query_insert = "INSERT INTO user_search_query VALUES ($loggedInUserId, mysql_real_escape_string($query)) ON DUPLICATE KEY UPDATE search_query = VALUES($query) " ;
-        mysql_query($save_search_query_insert) or die(mysql_error());
-    }
+        $mysqli->query($save_search_query_insert);
     
-            
-//    $search_util = new SearchUtil();
-//    $result_set = $search_util->process_search();
     
 ?>
 <!DOCTYPE html>
