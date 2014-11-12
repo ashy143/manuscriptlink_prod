@@ -55,6 +55,7 @@
         height: 90%;
       }
 
+      /* zindex index so large here because we always want bookshelf at top while dragging images so that bookshelf view is not blocked */
       #bookshelf{
         z-index: 100000;
       }
@@ -115,7 +116,7 @@
           
             <?php $count=1; foreach($juxt_folio_objs as $fol_obj){ ?>
             
-            <div  class='drag <?php echo $colSizeClass; ?>' > 
+            <div  class='drag <?php echo $colSizeClass; ?>' data-folioid = <?php echo $fol_obj->folio_id; ?> > 
               <div class="dragPoint" > <span>Click and hold here to drag&nbsp;&nbsp;&nbsp;&nbsp;<a href='#' class='closeText' >x</a></span></div> 
               <div class="zoomer_wrapper zoomer_basic" style='align:center; max-width:100%; max-height:90%;' >
                 <img  src="image.php?img_path=<?php echo $fol_obj->res_ident ; ?>" alt="" style="max-width: 100%; max-height: 100%; "/>
@@ -154,46 +155,25 @@
         $(window).on("resize", function(e) {
           $(".zoomer_wrapper").zoomer("resize");
         });
-           
+
         $(".closeText").bind('click',function(){
           $('.zoomer_basic').zoomer('destroy');
           $(this).parent().parent().parent().remove();
           var children = $('#imgContainer').children().length;
           var colSizeClass = 'span' + 12/children;
+          var folIdsToLoadAfterDeleting = [];
           $('#imgContainer').children().each(function(){
               $(this).removeAttr('class').addClass(colSizeClass).addClass('drag '+colSizeClass);
+              //save the new list of folios to be loaded
+              folIdsToLoadAfterDeleting.push($(this).data('folioid'));
           });
            $(".zoomer_basic").zoomer();
+           console.log(folIdsToLoadAfterDeleting.toString());
+           //load the new list of folios by calling the same page again. We are doing this because when we drag and then
+           //delete the image the newly loaded image doesn't relocate properly so we load the page with new list
+           window.location.href = 'juxtapose.php?folio_ids='+folIdsToLoadAfterDeleting.toString();
+
          });
-
-
-          // $('#bookshelf').delegate('.fa', 'click', function () {
-          //   $('#bookBody').slideToggle('2000',"swing", function () {
-          //   //Animation complete
-          //   });
-          //   $(".fa").toggleClass("fa-caret-square-o-down fa-caret-square-o-up");
-          // });
-        
-          // $('#bookshelf').bind('click', '.delButton', function(event) {
-          //   event.stopPropagation();
-          //   var delBtn = $(event.target);
-          //   var folioToBeDeleted = delBtn.parent().attr('data-folioid');
-          //   $.ajax({
-          //       url: 'deleteBookshelfFolio.php',
-          //       type: 'GET',
-          //       data: {'folio_id' :folioToBeDeleted },
-          //       dataType: 'json',
-          //       contentType: 'application/json',    
-          //       success: function(msg){
-          //           //$('#bookshelf').html(data);
-          //           if(msg.statusNum == 201){
-          //               alert(msg.statusMsg);
-          //           }else{
-          //               delBtn.parents('.myBook').fadeOut();
-          //           }
-          //       }
-          //   });
-          // });
 
           $.ajax({
               url: 'bookshelf.php',
