@@ -67,11 +67,12 @@
         <div class="row">
             <div class="col-md-12">
                 <ol class="breadcrumb pull-right">
+                    <li ><a href="searchresults.php?load_prev=">my results</a></li>
                     <li ><a href="myarchive.php">my archive</a></li>
                     <li><a href="utils/process_logout.php">logout</a></li>
                 </ol>
                 <ol class="breadcrumb pull-right">
-                    <li>results</a></li>
+                    <li>results</li>
                     <li>record</li>
                     <li class="active">codex</li>
                     <li>pan&zoom</li>

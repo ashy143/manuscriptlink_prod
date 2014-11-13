@@ -126,11 +126,14 @@
 
             //This query will actually return search query which user initially ran
             $search_query_extract = "SELECT search_query FROM user_search_query WHERE user_id = $loggedInUserId" ;
-
+            $temp_result = $mysqli->query($search_query_extract);
+            if($row = $temp_result->fetch_assoc()){
+                $query = $row['search_query'];
+            }
             // error_log($query);
         }
         
-        // error_log($query);
+        error_log($query);
         $result = $mysqli->query($query);
         class MSEXT_OBJ{
             public $title  = "--";
@@ -162,11 +165,16 @@
         }//end of while loop
 
         //Save the search results query in the database
-        $save_search_query_insert = "INSERT INTO user_search_query VALUES ($loggedInUserId, mysql_real_escape_string($query)) ON DUPLICATE KEY UPDATE search_query = VALUES($query) " ;
-        $mysqli->query($save_search_query_insert);
-    
-    
+        $save_search_query_insert = "INSERT INTO user_search_query VALUES ($loggedInUserId, '" . $mysqli->real_escape_string($query) . "') ON DUPLICATE KEY UPDATE search_query = '"  . $mysqli->real_escape_string($query) . "'" ;
+        error_log($save_search_query_insert);
+        $res = $mysqli->query($save_search_query_insert);
+
+        if (!$res) {
+           printf("Errormessage: %s\n", $mysqli->error);
+        }
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -227,11 +235,13 @@
         <div class="row">
             <div class="col-md-12">
                 <ol class="breadcrumb pull-right">
+                    
+                    <li <?php if(isset($_GET['load_prev'])){ echo "class='active'"; } ?> ><a href="searchresults.php?load_prev=">my results</a></li>
                     <li ><a href="myarchive.php">my archive</a></li>
                     <li><a href="utils/process_logout.php">logout</a></li>
                 </ol>
                 <ol class="breadcrumb pull-right">
-                    <li class="active">results</li>
+                    <li <?php if(!isset($_GET['load_prev'])){ echo "class='active'"; } ?> >results</li>
                     <li>record</li>
                     <li>codex</li>
                     <li>pan&zoom</li>

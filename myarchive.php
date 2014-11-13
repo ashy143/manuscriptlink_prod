@@ -70,6 +70,7 @@
         <div class="row">
             <div class="col-md-12">
                 <ol class="breadcrumb pull-right">
+                    <li ><a href="searchresults.php?load_prev=">my results</a></li>
                     <li class="active"><a href="myarchive.php">my archive</a></li>
                     <li><a href="utils/process_logout.php">logout</a></li>
                 </ol>
