@@ -16,6 +16,8 @@
     $tableName = "folios";
     global $mysqli;
 
+        $search_desc = '';
+        $manuscript_ext_objs = array();     //this variable saves the search query results
         $query = '';
         //If user has clicked on load previous search results and came here...
         if( !isset($_GET['load_prev']) ){ 
@@ -125,52 +127,69 @@
             //Get searchquery using user id
 
             //This query will actually return search query which user initially ran
-            $search_query_extract = "SELECT search_query FROM user_search_query WHERE user_id = $loggedInUserId" ;
+            $search_query_extract = "SELECT search_query, search_desc FROM user_search_query WHERE user_id = $loggedInUserId" ;
             $temp_result = $mysqli->query($search_query_extract);
             if($row = $temp_result->fetch_assoc()){
                 $query = $row['search_query'];
+                $search_desc = $row['search_desc'];
             }
             // error_log($query);
         }
         
-        error_log($query);
-        $result = $mysqli->query($query);
-        class MSEXT_OBJ{
-            public $title  = "--";
-            public $height;
-            public $width;
-            public $height_written;
-            public $width_written;
-            public $no_of_lines;
-            public $dim_staff;
-            public $mscript_obj;
+        if($query !== ''){
+        
+            error_log($query);
+            $result = $mysqli->query($query);
+            class MSEXT_OBJ{
+                public $title  = "--";
+                public $height;
+                public $width;
+                public $height_written;
+                public $width_written;
+                public $no_of_lines;
+                public $dim_staff;
+                public $mscript_obj;
 
-        }
-        $manuscript_ext_objs = array();
-        while($row = $result->fetch_assoc()){
-            $manuscript_obj = getManuscriptById($row['mscript_id']);  //0 offset if using procedural style
-            $mext_obj = new MSEXT_OBJ();
-            $mext_obj->mscript_obj = $manuscript_obj;
-            $mext_obj->mscript_id = $row['mscript_id'];
-            $mext_obj->title = $row['title'];   //1
-            $mext_obj->height = $row['height']; //2
-            $mext_obj->width = $row['width'];   //3
-            $mext_obj->height_written = $row['height_written']; //4
-            $mext_obj->width_written = $row['width_written'];   //5
-            $mext_obj->no_of_lines = $row['no_of_lines'];   //6
-            $mext_obj->dim_staff = $row['dim_staff']; //7
+            }
             
-            
-            $manuscript_ext_objs[] = $mext_obj;
-        }//end of while loop
+            while($row = $result->fetch_assoc()){
+                $manuscript_obj = getManuscriptById($row['mscript_id']);  //0 offset if using procedural style
+                $mext_obj = new MSEXT_OBJ();
+                $mext_obj->mscript_obj = $manuscript_obj;
+                $mext_obj->mscript_id = $row['mscript_id'];
+                $mext_obj->title = $row['title'];   //1
+                $mext_obj->height = $row['height']; //2
+                $mext_obj->width = $row['width'];   //3
+                $mext_obj->height_written = $row['height_written']; //4
+                $mext_obj->width_written = $row['width_written'];   //5
+                $mext_obj->no_of_lines = $row['no_of_lines'];   //6
+                $mext_obj->dim_staff = $row['dim_staff']; //7
+                
+                $manuscript_ext_objs[] = $mext_obj;
+            }//end of while loop
 
-        //Save the search results query in the database
-        $save_search_query_insert = "INSERT INTO user_search_query VALUES ($loggedInUserId, '" . $mysqli->real_escape_string($query) . "') ON DUPLICATE KEY UPDATE search_query = '"  . $mysqli->real_escape_string($query) . "'" ;
-        error_log($save_search_query_insert);
-        $res = $mysqli->query($save_search_query_insert);
+            if(!isset($_GET['load_prev'])){
+                //Save the search results query in the database
+                foreach($biblioQueries as $bib){
+                    $search_desc .= $bib->logic . " ". $bib->actualLogic. " " .$bib->term. " ";
+                }
+                    
+                if(count($codologQueries) > 0){
+                    $search_desc .= " AND "; 
+                }
+                        
+                foreach($codologQueries as $cod){
+                    $search_desc .= $cod->logic . " ". $columnNamesMap[$cod->term] . " " . $cod->actualLogic . " between ". $cod->min . " to " . $cod->max ;
+                }
 
-        if (!$res) {
-           printf("Errormessage: %s\n", $mysqli->error);
+                $save_search_query_insert = "INSERT INTO user_search_query VALUES ($loggedInUserId, '" . $mysqli->real_escape_string($query) . "', '" . $mysqli->real_escape_string($search_desc)  ."') ON DUPLICATE KEY UPDATE search_query = '"  . $mysqli->real_escape_string($query) . "', search_desc = '" .$mysqli->real_escape_string($search_desc). "'"  ;
+                error_log($save_search_query_insert);
+                $res = $mysqli->query($save_search_query_insert);
+
+                if (!$res) {
+                   error_log($mysqli->error);
+                }
+            }
         }
 
 ?>
@@ -255,47 +274,66 @@
 
     	<div class="container">
             <div class="row">
-                <div class="col-md-3 sideButtons">
-                    <h4 class="arc-button puff" id="addToArchives" >Add to My Archive</h4>
-                    <h4 class="arc-search puff" ><i class="fa fa-wrench"></i> Refine Results</h4>
-                </div>
-                <div id="results" class="col-md-9">
-                    <!-- THis is the line where you will output the search terms, all of which wrapped in a span tag with class search-terms -->
-                    <h4>Showing <?php echo count($manuscript_ext_objs); ?> results for: 
-                        <small>
-                            <?php foreach($biblioQueries as $bib){?>
-                                <span class="search-terms"><?php echo $bib->logic . " ". $bib->actualLogic. " " .$bib->term ; ?></span>
-                            <?php } ?>
-                                
-                                <?php if(count($codologQueries) > 0){ ?>
-                                    <span> &nbsp; AND &nbsp; </span>
-                                <?php }?>
-                                    
-                            <?php foreach($codologQueries as $cod){?>
-                                <span class="search-terms"><?php echo $cod->logic . " ". $columnNamesMap[$cod->term] . " " . $cod->actualLogic . " between ". $cod->min . " to " . $cod->max ;   ?></span>
-                            <?php } ?>
-                                
-                        </small>
-                    </h4>
-                
-                    
-                        <!--Here we will display the search results-->
-                    <?php $count=1; foreach($manuscript_ext_objs as $mobj){ ?>
-                        <form name='<?php echo $count; ?>' method="GET" action='record.php'>
-                            <input type="hidden" name='id' value ='<?php echo $mobj->mscript_obj->mscript_id; ?>'/>
-                            <!-- Send mlink number rather than complete data-->
-                            <!-- <input type="hidden" name='data' value ='<?php //echo json_encode($mobj);?>'/> -->
-                            <input type="hidden" name='mlinknum' value ='<?php echo $mobj->mscript_obj->mlinknum ;?>'/>
-                        </form>
-                        <div class="search-result" data-mscriptid = "<?php echo $mobj->mscript_id; ?>"  >                            
-                            <h4><a href="#" onclick="view_record(document.getElementsByName('<?php echo $count;?>'));"><?php echo 'manuscriptlink # ' . htmlspecialchars($mobj->mscript_obj->mlinknum . "." . $mobj->mscript_obj->part)  ; ?></a></h4>
-                            <p><?php echo $mobj->title . ",  " . $mobj->mscript_obj->origin->country . ", " . $mobj->mscript_obj->date_manu ;  ?> <br />                               
-                               <?php echo "Available Folios: " . htmlspecialchars($mobj->mscript_obj->no_of_avail_fol)  ?>
-                        </div>
+
+                <?php if(isset($_GET['load_prev']) && count($manuscript_ext_objs) < 1 ){ ?>
+                    <div class="no-entries">
+                        <p>You don't currently have any previous search results. <a href="search.php">Click Here</a> to search through our database and begin building your collection</p>
+                    </div>
+
+                <?php }else{ ?>
+
+
+                    <div class="col-md-3 sideButtons">
+                        <h4 class="arc-button puff" id="addToArchives" >Add to My Archive</h4>
+                        <?php if(!isset($_GET['load_prev'])){ ?>
+                            <h4 class="arc-search puff" ><i class="fa fa-wrench"></i> Refine Results</h4>
+                        <?php } ?>
+                    </div>
+                    <div id="results" class="col-md-9">
+                        <!-- THis is the line where you will output the search terms, all of which wrapped in a span tag with class search-terms -->
+                            <h4>Showing <?php echo count($manuscript_ext_objs); ?> results for: 
+                                <?php if(!isset($_GET['load_prev'])){ ?>
+                                    <small>
+                                        <?php foreach($biblioQueries as $bib){?>
+                                            <span class="search-terms"><?php echo $bib->logic . " ". $bib->actualLogic. " " .$bib->term ; ?></span>
+                                        <?php } ?>
+                                            
+                                            <?php if(count($codologQueries) > 0){ ?>
+                                                <span> &nbsp; AND &nbsp; </span>
+                                            <?php }?>
+                                                
+                                        <?php foreach($codologQueries as $cod){?>
+                                            <span class="search-terms"><?php echo $cod->logic . " ". $columnNamesMap[$cod->term] . " " . $cod->actualLogic . " between ". $cod->min . " to " . $cod->max ;   ?></span>
+                                        <?php } ?>
+                                            
+                                    </small>
+                                <?php }else{ ?>
+                                    <small>
+                                        <span class="search-terms"> <?php echo $search_desc; ?> </span>
+                                    </small>
+                                <?php } ?>
+
+                            </h4>
+                        
                             
-                    <?php $count = $count+1; } ?>
-                   
-                </div>               
+                                <!--Here we will display the search results-->
+                            <?php $count=1; foreach($manuscript_ext_objs as $mobj){ ?>
+                                <form name='<?php echo $count; ?>' method="GET" action='record.php'>
+                                    <input type="hidden" name='id' value ='<?php echo $mobj->mscript_obj->mscript_id; ?>'/>
+                                    <!-- Send mlink number rather than complete data-->
+                                    <!-- <input type="hidden" name='data' value ='<?php //echo json_encode($mobj);?>'/> -->
+                                    <input type="hidden" name='mlinknum' value ='<?php echo $mobj->mscript_obj->mlinknum ;?>'/>
+                                </form>
+                                <div class="search-result" data-mscriptid = "<?php echo $mobj->mscript_id; ?>"  >                            
+                                    <h4><a href="#" onclick="view_record(document.getElementsByName('<?php echo $count;?>'));"><?php echo 'manuscriptlink # ' . htmlspecialchars($mobj->mscript_obj->mlinknum . "." . $mobj->mscript_obj->part)  ; ?></a></h4>
+                                    <p><?php echo $mobj->title . ",  " . $mobj->mscript_obj->origin->country . ", " . $mobj->mscript_obj->date_manu ;  ?> <br />                               
+                                       <?php echo "Available Folios: " . htmlspecialchars($mobj->mscript_obj->no_of_avail_fol)  ?>
+                                </div>
+                                    
+                            <?php $count = $count+1; } ?>
+                    </div>
+
+                <?php } ?>
 
             </div>
     	</div>
