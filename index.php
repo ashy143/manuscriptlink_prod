@@ -1,6 +1,7 @@
 <?php
     include_once './includes/dbconnect.php';
     include_once './includes/functions.php';
+    include_once './includes/constants.php';
 
     session_start();
 
@@ -78,10 +79,20 @@
             <div class="container">
                 <div class="row">
                     <?php if(!login_check()) { ?>
-                    <div class="col-md-6 col-md-offset-1" id="home-search">
+                    <div class="col-md-6 col-md-offset-1" >
+                        <!--
                         <form role="form">
                             <input type="text" class="form-control" placeholder="Search…">
                         </form>
+                        -->
+                        <?php if( isset($_GET['reg_error']) && $_GET['reg_error']=='0' ) { ?>
+                            <div id="login-box">
+                                <p>Thank you for registering. An activation link has been sent to your registered email account. Please click that link to activate your account.
+                                   Please check your spam folder if you cannot find an activation email from <?php echo " " . WEBMAIL_ID . " "; ?> in your inbox.
+                                </p>
+                            </div>
+                        <?php } ?>
+
                     </div>
                     <div class="col-md-3 col-md-offset-2">
                         <div id="login-box">

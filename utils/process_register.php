@@ -38,7 +38,7 @@ if(isset($_POST['email'],$_POST['pass'],$_POST['name'])){
                     'MIME-Version: 1.0\r\n' . '\r\n' .
                     'Content-Type: text/html; charset=ISO-8859-1\r\n';
         mail($to, $subject, $message, $headers);
-        header("location: ../index.php?reg=1");
+        header("location: ../index.php?reg_error=0");
     }else{
         //Login failed
         header("location: ../index.php?reg_error=1");

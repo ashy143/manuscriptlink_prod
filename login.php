@@ -87,33 +87,41 @@
                             <form role="form" name="reg_form" action="utils/process_register.php" method="post">
 
                                 <div class="form-group" >
+                                    <div id='reg_form_name_errorloc' ></div>
                                     <label for="inputName">Name</label>
                                     <input type="name" name="name" class="form-control" id="inputName" placeholder="Enter name">
                                 </div>
 
                                 <div class="form-group">
+                                    <div id='reg_form_email_errorloc' ></div>
                                     <label for="inputEmail">Email address</label>
                                     <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Enter email">
                                 </div>
                                 <div class="form-group">
+                                    <div id='reg_form_pass_errorloc' ></div>
                                     <label for="inputPassword">Password</label>
                                     <input type="password" name="pass" class="form-control" id="inputPassword" placeholder="Password">
                                 </div>
                                 <div class="form-group">
+                                    <div id='reg_form_confirm_pass_errorloc' ></div>
                                     <label for="confirmPassword">Confirm password</label>
                                     <input type="password" name="confirm_pass" class="form-control" id="confirmPassword" placeholder="Password">
                                 </div>                                
                             </form>
                             <button type="submit" class="btn btn-default pull-right" onclick="register_form_submit(document.getElementsByName('reg_form'))">Submit</button>                  
                             <script>
+
+                                
                                 var reg_form_validator = new Validator("reg_form");
-//                                    reg_form_validator.EnableOnPageErrorDisplay();
+                                reg_form_validator.EnableOnPageErrorDisplay();
                                 reg_form_validator.EnableMsgsTogether();
                                 reg_form_validator.addValidation('name','req','Please enter your name');
                                 reg_form_validator.addValidation('email','req','Please enter your email');
                                 reg_form_validator.addValidation('pass','req','Please enter your password');
-                                reg_form_validator.addValidation("pass","minlen=7","Minimum length for Password is 7");
+                                reg_form_validator.addValidation('pass','minlen=7','Minimum length for Password is 7');
                                 reg_form_validator.addValidation('confirm_pass','req','Please retype your password');
+                                reg_form_validator.addValidation('email','email','Invalid email format');
+                                reg_form_validator.addValidation('confirm_pass' ,'eqelmnt=pass', 'The confirmed password is not same as password');
 
                             </script>
                         </div>
