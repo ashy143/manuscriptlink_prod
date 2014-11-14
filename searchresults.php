@@ -301,7 +301,7 @@
                                             <?php if(count($codologQueries) > 0){ ?>
                                                 <span> &nbsp; AND &nbsp; </span>
                                             <?php }?>
-                                                
+                                                                                                        
                                         <?php foreach($codologQueries as $cod){?>
                                             <span class="search-terms"><?php echo $cod->logic . " ". $columnNamesMap[$cod->term] . " " . $cod->actualLogic . " between ". $cod->min . " to " . $cod->max ;   ?></span>
                                         <?php } ?>

@@ -58,10 +58,21 @@ $(document).ready(function(){
     
     $('#bookshelfOverrided').delegate('#archiveBtn', 'click', function(){
         var folioIdToBeAdded = $('#imageFullScreen').data('folioid');
+        var folio_ids = [];
+        folio_ids.push(folioIdToBeAdded);
+        $('#bookshelfOverrided').find('input:checkbox').each(function(){
+            if($(this).is(':checked') ){
+                folio_ids.push($(this).parent().children('h4').data('folioid'));
+            }
+        }); 
+        if(folio_ids.length < 1){
+            alert('No folio selected. Please select one from bookshelf.');
+            return;
+        }
         $.ajax({    
-            url: 'saveArchives.php', //current page
+            url: 'saveArchivesMultiple.php', //current page
             type: 'GET',
-            data: {folio_id: folioIdToBeAdded, is_juxta: 'false' }, //false says its for juxtaposing
+            data: {folio_id: folio_ids.toString(), is_juxta: 'false' }, //false says its for archiving
             dataType: "json",
             contentType: "application/json",                    
             success: function (msg) {

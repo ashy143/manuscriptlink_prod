@@ -37,15 +37,17 @@ $msg = new Msg();
 try{
     // $mysqli->begin_transaction();
     $mysqli->autocommit(FALSE);
-    //The query below should be executed only when you want to delete all the folios and replace with new one.
+    //The query below should be executed only when you want to delete all the folios and replace with new one for juxtapose and compare.
     //TODO: Need to put a logic to bypass this code when you only want to add folios to archives/juxta and not replacing
-    $mysqli->query("DELETE from  archives WHERE user_id = $user_id AND archive_juxta = '$archiveORjuxta' ");
+    if($is_juxta==='true'){ 
+        $mysqli->query("DELETE from  archives WHERE user_id = $user_id AND archive_juxta = '$archiveORjuxta' ");
+    }
     $folioIds = explode(',', $folio_id);
     foreach ($folioIds as $folId ) {
-        $sql_query_result = $mysqli->query("INSERT INTO archives (folio_id, user_id, archive_juxta) values ($folId, $user_id, '$archiveORjuxta')");
+        $sql_query_result = $mysqli->query("INSERT INTO archives (folio_id, user_id, archive_juxta) values ($folId, $user_id, '$archiveORjuxta') ON DUPLICATE KEY UPDATE folio_id = $folId ");
     }
     $msg->statusMsg = "Folios successfully added to your archives";
-    if($is_juxta==='true'){
+    if($is_juxta==='true'){ //this will be true as this script is called only when saving folios as juxta
         $msg->statusMsg = "Folios successfully added for juxtaposing";
     }
     $msg->statusNum = 200;

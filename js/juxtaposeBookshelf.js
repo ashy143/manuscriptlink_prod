@@ -79,43 +79,31 @@ $(document).ready(function(){
     //         }
     //     });
     // });
-    
-    // $('#bookshelf').delegate('#archiveBtn', 'click', function(){
-    //     var folioIdToBeAdded = -1 ;
-    //     //Do validation and get proper folio id
-    //     if( $('#lpage').hasClass('imageSelectBorder') && $('#rpage').hasClass('imageSelectBorder') ){
-    //         alert('Select only one folio at a time');
-    //         return;
-    //     }else if($('#lpage').hasClass('imageSelectBorder')){
-    //         if( $('#lpage').data('obj').pageNum === 'x'){
-    //             alert("You have selected missing folio. Please select existing folio. ");
-    //             return;
-    //         }else{
-    //             folioIdToBeAdded = $('#lpage').data('obj').pageId ;
-    //         }
-    //     }else if($('#rpage').hasClass('imageSelectBorder')){
-    //         if( $('#rpage').data('obj').pageNum === 'x'){
-    //             alert("You have selected missing folio. Please select existing folio. ");
-    //             return;
-    //         }else{
-    //             folioIdToBeAdded = $('#rpage').data('obj').pageId ;
-    //         }
-    //     }else{
-    //         alert('No folio selected. Please select one.');
-    //         return;
-    //     }
+    $('#bookshelf').delegate('#archiveBtn', 'click', function(){
+        var folio_ids = [];
+        $('#bookshelf').find('input:checkbox').each(function(){
+            if($(this).is(':checked') ){
+                folio_ids.push($(this).parent().children('h4').data('folioid'));
+            }
+        });
 
-    //     $.ajax({    
-    //         url: 'saveArchives.php', //current page
-    //         type: 'GET',
-    //         data: {folio_id: folioIdToBeAdded, is_juxta: 'false' }, //false says its for juxtaposing
-    //         dataType: "json",
-    //         contentType: "application/json",                    
-    //         success: function (msg) {
-    //             alert(msg.statusMsg);
-    //         }
-    //     });
-    // });
+        if(folio_ids.length < 1){
+            alert('No folio selected. Please select one from bookshelf.');
+            return;
+        }
+
+        $.ajax({    
+            url: 'saveArchivesMultiple.php',
+            type: 'GET',
+            data: {folio_id: folio_ids.toString(), is_juxta: 'false' }, //false says its for archiving
+            dataType: "json",
+            contentType: "application/json",                    
+            success: function (msg) {
+                alert(msg.statusMsg);
+            }
+        });
+
+    });
 
     $('#bookshelf').delegate('#jxtAndCmpBtn', 'click', function(){
         var folio_ids = [];

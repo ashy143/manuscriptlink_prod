@@ -80,6 +80,22 @@ $(document).ready(function(){
     
     $('#bookshelf').delegate('#archiveBtn', 'click', function(){
         var folioIdToBeAdded = -1 ;
+        var folio_ids = [];
+        $('#bookshelf').find('input:checkbox').each(function(){
+            if($(this).is(':checked') ){
+                folio_ids.push($(this).parent().children('h4').data('folioid'));
+            }
+        });
+
+        if($('#rpage').hasClass('imageSelectBorder') && $('#rpage').data('obj').pageNum != 'x'){
+            folio_ids.push($('#rpage').data('obj').pageId );
+        }
+
+        if($('#lpage').hasClass('imageSelectBorder') && $('#lpage').data('obj').pageNum != 'x' ){
+            folio_ids.push($('#lpage').data('obj').pageId );    
+        }
+
+        /*
         //Do validation and get proper folio id
         if( $('#lpage').hasClass('imageSelectBorder') && $('#rpage').hasClass('imageSelectBorder') ){
             alert('Select only one folio at a time');
@@ -90,6 +106,7 @@ $(document).ready(function(){
                 return;
             }else{
                 folioIdToBeAdded = $('#lpage').data('obj').pageId ;
+                folio_ids.push($('#lpage').data('obj').pageId );
             }
         }else if($('#rpage').hasClass('imageSelectBorder')){
             if( $('#rpage').data('obj').pageNum === 'x'){
@@ -102,11 +119,17 @@ $(document).ready(function(){
             alert('No folio selected. Please select one.');
             return;
         }
+        */
+
+        if(folio_ids.length < 1){
+            alert('No folio selected. Please select one from bookshelf or from the codex.');
+            return;
+        }
 
         $.ajax({    
-            url: 'saveArchives.php', //current page
+            url: 'saveArchivesMultiple.php',
             type: 'GET',
-            data: {folio_id: folioIdToBeAdded, is_juxta: 'false' }, //false says its for juxtaposing
+            data: {folio_id: folio_ids.toString(), is_juxta: 'false' }, //false says its for archiving
             dataType: "json",
             contentType: "application/json",                    
             success: function (msg) {
