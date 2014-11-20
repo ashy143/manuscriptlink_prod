@@ -120,15 +120,15 @@
             <div class="row about-mss">
                 <div class="col-md-5">
                     <p class="lead intro">
-                        "And withal it is very simple, David.  The earth was once a nebulous mass.  It cooled, and as it cooled it shrank.  At length a thin crust of solid matter formed upon its outer surface&mdash;a sort of shell; but within it was partially molten matter and highly expanded gases
+                        Welcome to manuscriptlink, an innovative online resource for scholars, librarians, and teachers that seeks to reunite digital images of dismembered and dispersed medieval manuscript leaves into virtual codices.
                     </p>
                 </div>
                 <div class="col-md-7">
                     <p>
-                        As it continued to cool, what happened?  Centrifugal force burled the particles of the nebulous center toward the crust as rapidly as they approached a solid state.  You have seen the same principle practically applied in the modern cream separator.  Presently there was only a small super-heated core of gaseous matter remaining within a huge vacant interior left by the contraction of the cooling gases.  
+                        manuscriptlink provides a worldwide “collective collection” of virtual manuscripts from ca. 800 to ca. 1600, drawn from thousands of individual manuscript constituents held by its international partners. Our suite of image navigation tools enables users to study individual fragments either as independent objects or as the aggregated components of reconstructed medieval and Renaissance books. Comprehensive and accurate metadata on each item is provided.
                     </p>
                     <p>
-                        The equal attraction of the solid crust from all directions maintained this luminous core in the exact center of the hollow globe.  What remains of it is the sun you saw today&mdash;a relatively tiny thing at the exact center of the earth.  Equally to every part of this inner world it diffuses its perpetual noonday light and torrid heat.
+                        Whether comparing the paleographical features of multiple manuscripts simultaneously or attempting to recover and read previously lost texts, manuscriptlink conveys a treasury of information engaging a host of Humanities disciplines. Users can customize a personal image archive as well. Imagine the immense cultural and scholarly value of restoring a lost medieval library amounting to thousands of volumes, studying high-resolution images under magnification, comparing multiple features from the same or different sources, and shaping the results of one’s scholarship in a personalized archive.
                     </p>
                 </div>
 
