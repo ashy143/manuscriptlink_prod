@@ -127,9 +127,7 @@
                     <p>
                         manuscriptlink provides a worldwide “collective collection” of virtual manuscripts from ca. 800 to ca. 1600, drawn from thousands of individual manuscript constituents held by its international partners. Our suite of image navigation tools enables users to study individual fragments either as independent objects or as the aggregated components of reconstructed medieval and Renaissance books. Comprehensive and accurate metadata on each item is provided.
                     </p>
-                    <p>
-                        Whether comparing the paleographical features of multiple manuscripts simultaneously or attempting to recover and read previously lost texts, manuscriptlink conveys a treasury of information engaging a host of Humanities disciplines. Users can customize a personal image archive as well. Imagine the immense cultural and scholarly value of restoring a lost medieval library amounting to thousands of volumes, studying high-resolution images under magnification, comparing multiple features from the same or different sources, and shaping the results of one’s scholarship in a personalized archive.
-                    </p>
+                    
                 </div>
 
             </div>
@@ -149,50 +147,11 @@
                 <div id="resting" class="col-md-7 reader">
                     <a name="stay"></a>
                     <div class="news post">
-                        <h3>"Knife? Aye, aye," cried Queequeg, and seizing</h3>
+                        <h3>Sample blog post</h3>
                         <h6>Posted on 4/22/2014 by <a href="#">Scott Gwara</a></h6>
-                        <p>Then came the night of the first falling star.  It was seen early in the morning, rushing over Winchester eastward, a line of flame high in the atmosphere.  Hundreds must have seen it, and taken it for an ordinary falling star.  Albin described it as leaving a greenish streak behind it that glowed for some seconds.  Denning, our greatest authority on meteorites, stated that the height of its first appearance was about ninety or one hundred miles.  It seemed to him that it fell to earth about one hundred miles east of him.</p>
-
-                        <p>I was at home at that hour and writing in my study; and although my French windows face towards Ottershaw and the blind was up (for I loved in those days to look up at the night sky), I saw nothing of it. Yet this strangest of all things that ever came to earth from outer space must have fallen while I was sitting there, visible to me had I only looked up as it passed.  Some of those who saw its flight say it travelled with a hissing sound.  I myself heard nothing of that.  Many people in Berkshire, Surrey, and Middlesex must have seen the fall of it, and, at most, have thought that another meteorite had descended. No one seems to have troubled to look for the fallen mass that night.</p>
-                    </div>
-
-                    <div class="blog post">
-                        <h3>'Why, what are YOUR shoes done</h3>
-                        <h6>Posted on 4/22/2014 by <a href="#">Digital Scriptorium</a></h6>
-
-                        <p>The Queen turned to the mice that attended her and told them to go at once and get all her people.  As soon as they heard her orders they ran away in every direction as fast as possible.</p>
-
-                        <p>"Now," said the Scarecrow to the Tin Woodman, "you must go to those trees by the riverside and make a truck that will carry the Lion."</p>
-
-                        <p>So the Woodman went at once to the trees and began to work; and he soon made a truck out of the limbs of trees, from which he chopped away all the leaves and branches.  He fastened it together with wooden pegs and made the four wheels out of short pieces of a big tree trunk.  So fast and so well did he work that by the time the mice began to arrive the truck was all ready for them.</p>
-                    </div>
-
-                    <div class="video post">
-                        <h3>Then came the night of the first falling star.</h3>
-                        <h6>Posted on 4/22/2014 by <a href="#">Scott Gwara</a></h6>
-                        <div class="player">
-                            <iframe src="//player.vimeo.com/video/67805732?byline=0&amp;portrait=0&amp;color=D9305B"  frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        </div>
-                    </div>
-
-                    <div class="blog post">
-                        <h3>'Why, what are YOUR shoes done</h3>
-                        <h6>Posted on 4/22/2014 by <a href="#">Scott Gwara</a></h6>
-
-                        <p>The Queen turned to the mice that attended her and told them to go at once and get all her people.  As soon as they heard her orders they ran away in every direction as fast as possible.</p>
-
-                        <p>"Now," said the Scarecrow to the Tin Woodman, "you must go to those trees by the riverside and make a truck that will carry the Lion."</p>
-
-                        <p>So the Woodman went at once to the trees and began to work; and he soon made a truck out of the limbs of trees, from which he chopped away all the leaves and branches.  He fastened it together with wooden pegs and made the four wheels out of short pieces of a big tree trunk.  So fast and so well did he work that by the time the mice began to arrive the truck was all ready for them.</p>
-                    </div>
-
-                    <div class="video post">
-                        <h3>Then came the night of the first falling star.</h3>
-                        <h6>Posted on 4/22/2014 by <a href="#">Scott Gwara</a></h6>
-
-                        <div class="player">
-                            <iframe src="//player.vimeo.com/video/73617382?byline=0&amp;portrait=0&amp;color=D9305B" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-                        </div>
+                        <p>
+                            Whether comparing the paleographical features of multiple manuscripts simultaneously or attempting to recover and read previously lost texts, manuscriptlink conveys a treasury of information engaging a host of Humanities disciplines. Users can customize a personal image archive as well. Imagine the immense cultural and scholarly value of restoring a lost medieval library amounting to thousands of volumes, studying high-resolution images under magnification, comparing multiple features from the same or different sources, and shaping the results of one’s scholarship in a personalized archive.
+                        </p>
                     </div>
                 </div>
             </div>
