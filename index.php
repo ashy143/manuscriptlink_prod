@@ -153,6 +153,27 @@
                             Whether comparing the paleographical features of multiple manuscripts simultaneously or attempting to recover and read previously lost texts, manuscriptlink conveys a treasury of information engaging a host of Humanities disciplines. Users can customize a personal image archive as well. Imagine the immense cultural and scholarly value of restoring a lost medieval library amounting to thousands of volumes, studying high-resolution images under magnification, comparing multiple features from the same or different sources, and shaping the results of one’s scholarship in a personalized archive.
                         </p>
                     </div>
+                    <div class="news post">
+                        <h3>Sample blog post</h3>
+                        <h6>Posted on 4/22/2014 by <a href="#">Scott Gwara</a></h6>
+                        <p>
+                            Whether comparing the paleographical features of multiple manuscripts simultaneously or attempting to recover and read previously lost texts, manuscriptlink conveys a treasury of information engaging a host of Humanities disciplines. Users can customize a personal image archive as well. Imagine the immense cultural and scholarly value of restoring a lost medieval library amounting to thousands of volumes, studying high-resolution images under magnification, comparing multiple features from the same or different sources, and shaping the results of one’s scholarship in a personalized archive.
+                        </p>
+                    </div>
+                    <div class="news post">
+                        <h3>Sample blog post</h3>
+                        <h6>Posted on 4/22/2014 by <a href="#">Scott Gwara</a></h6>
+                        <p>
+                            Whether comparing the paleographical features of multiple manuscripts simultaneously or attempting to recover and read previously lost texts, manuscriptlink conveys a treasury of information engaging a host of Humanities disciplines. Users can customize a personal image archive as well. Imagine the immense cultural and scholarly value of restoring a lost medieval library amounting to thousands of volumes, studying high-resolution images under magnification, comparing multiple features from the same or different sources, and shaping the results of one’s scholarship in a personalized archive.
+                        </p>
+                    </div>
+                    <div class="news post">
+                        <h3>Sample blog post</h3>
+                        <h6>Posted on 4/22/2014 by <a href="#">Scott Gwara</a></h6>
+                        <p>
+                            Whether comparing the paleographical features of multiple manuscripts simultaneously or attempting to recover and read previously lost texts, manuscriptlink conveys a treasury of information engaging a host of Humanities disciplines. Users can customize a personal image archive as well. Imagine the immense cultural and scholarly value of restoring a lost medieval library amounting to thousands of volumes, studying high-resolution images under magnification, comparing multiple features from the same or different sources, and shaping the results of one’s scholarship in a personalized archive.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
