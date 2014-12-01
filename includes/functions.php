@@ -14,19 +14,20 @@ include_once 'constants.php';
 function login($email, $password){
     //Use of prepared statements to login
         global $mysqli;
-        $statement = $mysqli->prepare('SELECT user_id, email, name FROM users where email = ? and password = ?' );
+        $statement = $mysqli->prepare('SELECT user_id, email, name, role FROM users where email = ? and password = ?' );
         $statement->bind_param('ss',$email,$password);
         $statement->execute();
         $statement->store_result();
         
         //getting variables from the result
-        $statement->bind_result($userid, $email, $name);
+        $statement->bind_result($userid, $email, $name, $role);
         $statement->fetch();
         
         if($statement->num_rows == 1){       
             $_SESSION['name'] = $name;            
             $_SESSION['username'] = $email;
             $_SESSION['user_id'] = $userid;
+            $_SESSION['role'] = $role;
             $statement->close();
             //header("location: user.php");
             return true;
@@ -118,22 +119,27 @@ function getManuscriptById($manuscriptId){
         $manuscript_obj->artist = $row['artist'];   //row col from db
         $manuscript_obj->text_type = $row['text_type']; 
         $manuscript_obj->date_manu = $row['date_manuscript'];
+        $manuscript_obj->century = $row['century'];
         $manuscript_obj->script = $row['script'];
         $manuscript_obj->scribe = $row['scribe'];
         $manuscript_obj->biblio = $row['bibliography'];
         $manuscript_obj->decoration = $row['decoration'];
-        $manuscript_obj->script = $row['script'];
         $manuscript_obj->collation = $row['collation'];
         $manuscript_obj->no_of_avail_fol = $row['numof_avail_folios'];
+        $manuscript_obj->no_of_fol = $row['numof_folios'];
         $manuscript_obj->language = $row['language'];
         $manuscript_obj->liturgical_use = $row['liturgicaluse'];
         $manuscript_obj->ruling_med = $row['ruling_medium'];
+        $manuscript_obj->ruling_pat = $row['ruling_pattern'];
         $manuscript_obj->miniatures = $row['miniatures'];
         $manuscript_obj->schoen_num = $row['schoenberg_num'];
         $manuscript_obj->history = $row['history'];
         $manuscript_obj->writing_sup = $row['writing_support'];
         $manuscript_obj->edition_cited = $row['edition_cited'];
-        
+        $manuscript_obj->pub_digital = $row['publisher_digital'];
+        $manuscript_obj->text_contents = $row['text_contents'];
+        $manuscript_obj->subject_lcsh = $row['subject.lcsh'];
+
         $manuscript_obj->min_lines = $min;
         $manuscript_obj->max_lines = $max;
         

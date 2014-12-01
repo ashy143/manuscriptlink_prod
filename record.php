@@ -160,7 +160,7 @@
                     <li><a href="utils/process_logout.php">logout</a></li>
                 </ol>
                 <ol class="breadcrumb pull-right">
-                    <li>results</a></li>
+                    <li>results</li>
                     <li class="active">record</li>
                     <li>codex</li>
                     <li>pan&zoom</li>

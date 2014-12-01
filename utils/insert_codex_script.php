@@ -25,6 +25,8 @@ while( ($line = fgetcsv($handle)) != FALSE){
     $mscriptlink = $mscript_link_part[0];
     $part = $mscript_link_part[1];
 
+    $mlink_part = $mscriptlink . '.' . $part;
+
     $query = sprintf("INSERT INTO manuscript values 
         (%d, %d, '%s', '%s', '%s', 
         '%s', '%s', '%s', '%s', '%s', 

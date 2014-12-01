@@ -1,0 +1,12 @@
+#form-box h4 { color: #2d3133; }
+
+#form-box {   
+  background: rgba(255,255,255,0.8);
+  padding: 1em;
+  padding-bottom: 3.5em;
+  margin-top: 3em;
+  margin-bottom: 3em;
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow:    0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow:         0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+}

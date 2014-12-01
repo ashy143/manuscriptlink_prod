@@ -67,6 +67,10 @@
             <div class="row">
                 <div class="col-md-12">
                     <ol class="breadcrumb pull-right">
+                        <!-- Display admin link only if role is editor or admin -->
+                        <?php if( strcmp($_SESSION['role'], ROLE_EDITOR)==0 || strcmp($_SESSION['role'], ROLE_ADMIN)==0 ){ ?>
+                            <li ><a href="backend/manuscripts.php">admin</a></li>
+                        <?php } ?>
                         <li ><a href="myarchive.php">my archive</a></li>
                         <li><a href="utils/process_logout.php">logout</a></li>
                     </ol>

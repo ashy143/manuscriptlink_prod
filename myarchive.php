@@ -70,6 +70,9 @@
         <div class="row">
             <div class="col-md-12">
                 <ol class="breadcrumb pull-right">
+                    <?php if( strcmp($_SESSION['role'], ROLE_EDITOR)==0 || strcmp($_SESSION['role'], ROLE_ADMIN)==0 ){ ?>
+                      <li ><a href="backend/manuscripts.php">admin panel</a></li>
+                    <?php } ?>
                     <li ><a href="searchresults.php?load_prev=">my results</a></li>
                     <li class="active"><a href="myarchive.php">my archive</a></li>
                     <li><a href="utils/process_logout.php">logout</a></li>
