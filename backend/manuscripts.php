@@ -36,7 +36,7 @@
         <style>
             .form-horizontal .control-label{
                 padding-top: 7px;
-                text-align: right;;
+                text-align: right;
             }
 
             .table{
@@ -140,7 +140,7 @@
                     var row = '';
                     row += "<tr>" ;
                     row += "<td>" + data.mlink_part + "</td>" ;
-                    row += "<td data-id=" + data.mscript_id + "> <input type='button' class = 'form-control btn-success view_folios_btn' value = 'View Folios'></td>" ;
+                    row += "<td data-id=" + data.mscript_id + "></td>" ;//<input type='button' class = 'form-control btn-success view_folios_btn' value = 'View Folios'></td>" ;
                     row += "<td data-id=" + data.mscript_id + "> <input type='button' class = 'form-control btn-success edit_btn' value = 'Edit'></td>" ;
                     row += "</tr>" ;
 

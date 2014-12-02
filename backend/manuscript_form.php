@@ -30,7 +30,7 @@
                   <label class="control-label col-xs-2" for="mlinkno">Manuscript Link #</label>
                   <div id='manu_form_mlinkno_errorloc' ></div>
                   <div class="col-xs-3">
-                    <input id="mlinkno" name="mlinkno" type="text" placeholder="Mlink #" class="form-control" required="true" value=<?php if($edit){echo "'" . $manuscript->mlinknum . "'"; }?> >
+                    <input id="mlinkno" name="mlinkno" type="text" placeholder="Mlink #" class="form-control" required="true" value=<?php if($edit){echo "'" . $manuscript->mlinknum . "'"; }?> <?php if(isset($_GET['id'])){echo "disabled=true"; }?>>
                   </div>
 
                   <label class="control-label col-xs-2" for="part">Manuscript Part</label>

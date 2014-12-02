@@ -22,6 +22,8 @@ class Msg{
 $msg = new Msg();
 
 $mlink_part = $_GET['mlinkno'] . '.' . $_GET['part'];
+
+//Same query will be used both for edit/add. We will be using some paramenters passed through request to identify if its edit or add
 //The order of fields can be viewed from table schema (used phpmyadmin's table structure)
 $query = sprintf("INSERT INTO manuscript values 
         (%d, %d, '%s', '%s', '%s', 
