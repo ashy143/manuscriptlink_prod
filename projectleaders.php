@@ -405,6 +405,8 @@
                 <h3>Scott Gwara</h3>
                 <h4>University of South Carolina</h4>
                 <p> <!-- About Scott Gwara here --></p>
+                <a href="mailto:gwaras@mailbox.sc.edu">gwaras@mailbox.sc.edu</a><br />
+                803-920-3582</p>
                 
             </div>
         </div>

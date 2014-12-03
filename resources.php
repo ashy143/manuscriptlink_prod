@@ -73,32 +73,23 @@
           <div class="col-md-8 col-md-offset-2">
             <h3 class="pageTitle">Print Resources</h3>
             <dl>
-              <dt>Madonna and the submaterial paradigm of reality</dt>
-              <dd>It could be said that if prepatriarchial narrative holds, we have to choose between the submaterial paradigm of reality and Marxist socialism. The primary theme of the works of Madonna is the role of the participant as writer.</dd>
-              <dt>Consensuses of defining characteristic</dt>
-              <dd>“Sexual identity is fundamentally a legal fiction,” says Baudrillard. But Hanfkopf states that we have to choose between the postdialectic paradigm of discourse and Debordist situation. Sartre uses the term ‘the submaterial paradigm of reality’ to denote not demodernism as such, but predemodernism.</dd>
-              <dt> The submaterial paradigm of reality and the postdialectic paradigm of discourse</dt>
-              <dd>Thus, if cultural appropriation holds, the works of Tarantino are modernistic. Sontag suggests the use of the postdialectic paradigm of discourse to modify and analyse sexual identity.</dd>
+              <dt><!-- Heading goes here--></dt>
+              <dd><!-- Description goes here --></dd>
+              
             </dl>
 
             <h3 class="pageTitle">Web Resources</h3>
             <dl>
-              <dt>Madonna and the submaterial paradigm of reality</dt>
-              <dd>It could be said that if prepatriarchial narrative holds, we have to choose between the submaterial paradigm of reality and Marxist socialism. The primary theme of the works of Madonna is the role of the participant as writer.</dd>
-              <dt>Consensuses of defining characteristic</dt>
-              <dd>“Sexual identity is fundamentally a legal fiction,” says Baudrillard. But Hanfkopf states that we have to choose between the postdialectic paradigm of discourse and Debordist situation. Sartre uses the term ‘the submaterial paradigm of reality’ to denote not demodernism as such, but predemodernism.</dd>
-              <dt> The submaterial paradigm of reality and the postdialectic paradigm of discourse</dt>
-              <dd>Thus, if cultural appropriation holds, the works of Tarantino are modernistic. Sontag suggests the use of the postdialectic paradigm of discourse to modify and analyse sexual identity.</dd>
+              <dt><!-- Heading goes here--></dt>
+              <dd><!-- Description goes here --></dd>
+              
             </dl>
 
             <h3 class="pageTitle">News Resources</h3>
             <dl>
-              <dt>Madonna and the submaterial paradigm of reality</dt>
-              <dd>It could be said that if prepatriarchial narrative holds, we have to choose between the submaterial paradigm of reality and Marxist socialism. The primary theme of the works of Madonna is the role of the participant as writer.</dd>
-              <dt>Consensuses of defining characteristic</dt>
-              <dd>“Sexual identity is fundamentally a legal fiction,” says Baudrillard. But Hanfkopf states that we have to choose between the postdialectic paradigm of discourse and Debordist situation. Sartre uses the term ‘the submaterial paradigm of reality’ to denote not demodernism as such, but predemodernism.</dd>
-              <dt> The submaterial paradigm of reality and the postdialectic paradigm of discourse</dt>
-              <dd>Thus, if cultural appropriation holds, the works of Tarantino are modernistic. Sontag suggests the use of the postdialectic paradigm of discourse to modify and analyse sexual identity.</dd>
+              <dt><!-- Heading goes here--></dt>
+              <dd><!-- Description goes here --></dd>
+              
             </dl>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
