@@ -186,8 +186,9 @@ function getFoliosByManuscriptId($manuscript_id){
 
 function getFolioById($folio_id){
     global $mysqli;
-    $query = "SELECT *"
-            . "FROM folios " 
+    $query = "SELECT folios.*, location.*, manuscript.mlink_part "
+            ." FROM ( folios LEFT JOIN location ON folios.folio_id = location.folio_id ) "
+            ." INNER JOIN manuscript ON folios.mscript_id = manuscript.mscript_id " 
             . "WHERE folios.folio_id = " . $folio_id ;
     $result = $mysqli->query($query);
     $folio = new Folio();
@@ -196,13 +197,61 @@ function getFolioById($folio_id){
         
         $folio->folio_id = $row['folio_id'];
         $folio->mscript_id = $row['mscript_id'];
+        $folio->mlink_part = $row['mlink_part'];
         $folio->title = $row['title'];
         $folio->abbreviated_shelf = $row['abreviated_shelf'];
         $folio->folio_num = $row['folio_num'];
         $folio->folio_side = $row['folio_side'];
-        $folio->folio_location->state = $row['state'];
-        $folio->folio_location->municipality = $row['municipality'];
         $folio->res_ident = $row['res_ident'];
+
+
+        $folio->alt_title = $row['alt_title'];
+        $folio->author = $row['author'];
+        
+        $folio->date_text = $row['date_text'];
+        $folio->folio_contents = $row['folio_contents'];
+        $folio->folio_prov = $row['folio_prov'];
+        
+        $folio->no_of_lines = $row['no_of_lines'];
+        $folio->no_of_cols = $row['no_of_col'];
+        $folio->height = $row['height'];
+        $folio->width = $row['width'];
+        
+        $folio->height_written = $row['height_written'];
+        $folio->width_written = $row['width_written'];
+        $folio->quire_sign = $row['qurie_sign'];
+        $folio->catch_words = $row['catchwords'];
+        $folio->neumes = $row['neumes'];
+        $folio->staves_per_page = $row['staves_per_page'];
+        $folio->lines_per_staff = $row['lines_per_staff'];
+        $folio->dim_staff = $row['dim_staff'];
+        
+        $folio->col_staff = $row['col_staff'];
+        $folio->website = $row['website'];
+        $folio->contrib_inst = $row['contrib_inst'];
+        $folio->rights_mgmt = $row['rights_mgmt'];
+        $folio->image_format = $row['image_format'];
+        $folio->digit_specs = $row['digit_specs'];
+        $folio->date_digital = $row['date_digital'];
+        
+        $folio->scan_tech = $row['scan_tech'];
+        $folio->meta_catag = $row['meta_catag'];
+        $folio->coll_admin = $row['coll_admin'];
+        $folio->faculty_liason = $row['faculty_liason'];
+
+
+        $folio->folio_location->state = $row['state'];
+        $folio->folio_location->country = $row['country'];
+        $folio->folio_location->municipality = $row['municipality'];
+        $folio->folio_location->division = $row['division'];
+        $folio->folio_location->collection = $row['collection'];
+        $folio->folio_location->series = $row['series'];
+        $folio->folio_location->locationcol = $row['callno'];
+        $folio->folio_location->institution = $row['institution'];
+        
+        
+
+
     }
     return $folio;
 }
@@ -257,7 +306,7 @@ function getJuxtaImagesForFolios($folio_ids){
 
 function getArchivedImagesForLoggedInUser(){
     global $mysqli;
-    $user_id = $_SESSION['user_id'];    
+    $user_id = $_SESSION['user_id'];   
     $query = 'SELECT arc.folio_id, fol.abreviated_shelf, fol.mscript_id, fol.res_ident, fol.folio_num, fol.folio_side, loc.municipality, loc.state FROM archives As arc INNER JOIN '
             .' (folios As fol INNER JOIN location AS loc ON fol.folio_id = loc.folio_id ) '
             .' ON arc.folio_id = fol.folio_id '

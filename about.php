@@ -73,24 +73,27 @@
     <div class="container one">
         <div class="row">
             <div class="col-md-7">
-                <h3 class="pageTitle">Mission</h3>
-                <p class="lead">
-                    I love this planet! I've got wealth, fame, and access to the depths of sleaze that those things bring. 
+                <h3 class="pageTitle">About</h3>
+                
+                <p>
+                Scholars at the University of South Carolina and The Ohio State University are pleased to announce their digital humanities project <i>manuscriptlink</i>, a powerful research tool for librarians, teachers, and scholars worldwide. While live, the site is still under construction and is being updated regularly.
                 </p>
                 <p>
-                    Then throw her in the laundry room, which will hereafter be referred to as "the brig". Fetal stemcells, aren't those controversial? You lived before you met me?! I've been there. My folks were always on me to groom myself and wear underpants. What am I, the pope? There's one way and only one way to determine if an animal is intelligent. Dissect its brain!
+                For centuries, book dealers and connoisseurs across Europe have cut out the pages of medieval and Renaissance manuscripts. These manuscripts comprise, among other things, mammoth choir books “illuminated” with sheets of gold leaf, prayer books with lavish miniatures, venerable relics from defunct monasteries, luxury volumes coveted by emperors and popes, lyric verse in vernacular tongues, and elegant anthologies of Classical texts. Designed at the University of South Carolina’s Center for Digital Humanities, <i>manuscriptlink</i> aims to undo this cultural destruction by identifying, re-aggregating, and publishing an estimated 300,000 manuscript fragments worldwide. This innovative project reunites digital surrogates of dismembered medieval manuscript leaves into virtual codices, thereby restoring thousands of manuscripts lost through the dispersal of individual pages. With its innovative technology, suite of image-navigation tools, archive of images, and comprehensive metadata, <i>manuscriptlink</i> will reveal a “virtual” medieval library and unlock a treasury of information. Such manuscript aggregation engages a host of Humanities disciplines, including art history, literature, book design and production, religious culture, translation, and so on. Imagine the immense cultural value of restoring a lost medieval library amounting to thousands of volumes. Imagine, too, the impact of a large-scale collaboration in which even the smallest repositories will see their holdings gain new value as part of an international consortium.
                 </p>
                 <p>
-                    Yep, I remember. They came in last at the Olympics, then retired to promote alcoholic beverages! I am Singing Wind, Chief of the Martians. Who are you, my warranty?! Ummm…to eBay? Ah, computer dating. It's like pimping, but you rarely have to use the phrase "upside your head." I'm Santa Claus!
+                Users of <i>manuscriptlink</i> will be able to undertake faceted (Boolean) searches in bibliographical and codicological fields. Metadata is exhaustively derived, recorded, and presented, including dimensions, number of lines, number of musical staves per page, provenance, auction catalogues, and texts. All texts and authors are indexed in variant forms for reliable and comprehensive searches. In the CODEX viewer, users can consult discrete fragments and related constituents as virtual codices, literally “turning” the pages in approximation of medieval reading. Users will also have access to advanced image enhancement tools, including a PAN+ZOOM function. Individual hair follicles, animal veins, and the minutest textual and decorative features will be visible at high magnification. An innovative BOOKSHELF enables users to store up to four images for comparison in the JUXTAPOSE & COMPARE function. Each of the four independent panes has PAN+ZOOM capability, and the panes can be repositioned and overlapped for comparison. When individual panes are deleted, the others dynamically re-size to fit your screen dimensions. Finally, all users will have personal ARCHIVE accounts where they will be able to store thousands of images for retrieval, exporting, or printing. Access to <i>manuscriptlink</i> is free for all users.
                 </p>
                 <p>
-                    I've been there. My folks were always on me to groom myself and wear underpants. What am I, the pope? Guess again. You're going back for the Countess, aren't you? I daresay that Fry has discovered the smelliest object in the known universe! Now Fry, it's been a few years since medical school, so remind me. Disemboweling in your species: fatal or non-fatal?
+                Ultimately, <i>manuscriptlink</i> enables its contributors to recapture and redefine the textual and artistic significance of small fragment collections, harnessing the power of collaboration to enrich the research, teaching, and curatorship of medieval culture.
                 </p>
-                <p class="pullQuote">
-                    I think calling him that is an insult to the psychotic lowlife community.
-                </p>
-                <p>
-                    It's funny how the Earth never opens up and swallows you when you want it to. You can't spend the rest of your life waiting for Xander to wake up and smell the hottie. Turns out I suddenly find myself needing to know the plural of apocalypse. Passion rules us all.
+                <i>manuscriptlink</i> Co-Directors
+
+                <p><em>manuscriptlink</em> Co-Directors</p>
+                <p>Dr. Scott Gwara, University of South Carolina<br /><a href="mailto:gwaras@mailbox.sc.edu">gwaras@mailbox.sc.edu</a><br />
+                803-920-3582</p>
+                <p>Dr. Eric J. Johnson, The Ohio State University<br /><a href="mailto:johnson.4156@osu.edu">johnson.4156@osu.edu</a><br />
+                614-688-8795</p>
                 </p>
             </div>
             <div class="col-md-5">
@@ -105,7 +108,7 @@
             <div class="">
                 <h3 class="pageTitle">partners</h3>
                 <p class="lead">
-                    manuscriptlink wouldn't be possible without the generous funding of our partners; we'd like to thank the following institutions for their support in making this project a reality.
+                    <i>manuscriptlink</i> wouldn't be possible without the generous funding of our partners; we'd like to thank the following institutions for their support in making this project a reality.
                 </p>
             </div>
         </div>

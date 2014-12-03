@@ -70,8 +70,8 @@
                 <div class="col-md-3" id="logo"><a href="../index.php"><img src="../img/logo.png" /></div>
                 <div class="col-md-9" style=" height: 55px;">
                     <ul class="link-nav pull-right">
-                        <li class="active" ><a href="manuscripts.php">manuscripts</a></li>
-                        <li ><a href="folios.php">folios</a></li>
+                        <li ><a href="manuscripts.php">manuscripts</a></li>
+                        <li class="active" ><a href="#">folios</a></li>
                         <li ><a href="#">Admin Panel (Scott Gwara)</a></li>
                     </ul>
                 </div>
@@ -94,7 +94,7 @@
                             <li class="active">add</li>
                         <?php } ?>
                         <li ><a href="./publishFolios.php">unpublished</a></li>
-                    </ol>List
+                    </ol>
                 </div>
             </div>
             <?php } ?>

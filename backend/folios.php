@@ -102,22 +102,22 @@
 
                             <form class="form-horizontal" >
                                 <div class="form-group">
-                                    <label class="control-label col-xs-2" for="mlinkno">Manuscript #</label>
+                                    <label class="control-label col-xs-2" for="mlinkno">Folio </label>
                                     <div class="col-xs-3">
-                                        <input id="mlinkno" name="mlinkno" type="text" placeholder="Mlink #" class="form-control ui-autocomplete-input" required="">
-                                        <ul id="mlink_ids"></ul>
+                                        <input id="folio_search_text" name="folio_search_text" type="text" placeholder="Folio name" class="form-control ui-autocomplete-input" required="">
                                     </div>
                                 </div>
-                                <legend> </legend> <!-- Just for an horizontal line. -->
-
+                                <legend> </legend>
                             </form>
 
 
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Manuscript #</th>
-                                        <th></th>
+                                        <th>Folio </th>
+                                        <th>
+                                            <input type="button" id="add_btn" value="Add New" class="form-control btn-success" >
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -137,20 +137,23 @@
 
                 
                 function getTableRow(data){
+                    //data variable also has mscript_id which can be used to link this folio with its manuscript
                     var row = '';
+                    var imagePath = data.res_ident;
+                    var imageName = imagePath.substring(imagePath.lastIndexOf("/") + 1, imagePath.length);
+                    var folioName = imageName.substring(0, imageName.lastIndexOf("."));
                     row += "<tr>" ;
-                    row += "<td>" + data.mlink_part + "</td>" ;
-                    row += "<td data-id=" + data.mscript_id + "> <input type='button' class = 'btn-success edit_btn' value = 'Edit'></td>" ;
+                    row += "<td>" + folioName + "</td>" ;
+                    row += "<td data-id=" + data.folio_id + "> <input type='button' class = 'form-control btn-success edit_btn' value = 'Edit'></td>" ;
                     row += "</tr>" ;
 
                     return row;
                 };
 
                 $.ajax({
-                    url: 'searchManuscripts.php',
+                    url: 'searchFolios.php',
                     type: 'GET',
                     dataType: 'json',
-                    url: 'searchManuscripts.php',
                     data: { search_text : '' },
                     success: function(data){
                         $.map( data, function(item) {
@@ -160,10 +163,15 @@
                 });
 
                 $(".table").delegate('.edit_btn', 'click', function(){
-                    window.location.href = 'addManuscripts.php?id=' + $(this).parent().data('id');
+                    window.location.href = 'addFolios.php?id=' + $(this).parent().data('id');
                 });
+
+                $(".table").delegate('#add_btn', 'click', function(){
+                    window.location.href = 'addFolios.php';
+                });
+
             
-                $("#mlinkno").on("keyup paste", function() {
+                $("#folio_search_text").on("keyup paste", function() {
                     var value = $(this).val().toUpperCase();
                     var $rows = $("table tr");
 
@@ -174,11 +182,8 @@
 
                     $rows.each(function(index) {
                         if (index !== 0) {
-
                             $row = $(this);
-
                             var column1 = $row.find("td:first").html().toUpperCase();
-
                             if ((column1.indexOf(value) > -1) ) {
                                 $row.show();
                             }
@@ -187,7 +192,6 @@
                             }
                         }
                     });
-
                 });
 
             });    

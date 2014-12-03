@@ -398,41 +398,29 @@
             <h3 class="pageTitle">Project Leaders</h3>
             <div class="col-md-4">
                 <div class="photoFiller">
-                    <h3>Photo of Scott here</h3>
+                    <h3>Photo of Dr. Gwara here</h3>
                 </div>
             </div>
             <div class="col-md-8 bio">
                 <h3>Scott Gwara</h3>
                 <h4>University of South Carolina</h4>
-                <p>“Society is elitist,” says Marx; however, according to Prinn, it is not so much society that is elitist, but rather the genre, and some would say the meaninglessness, of society. It could be said that McElwaine[2] suggests that we have to choose between the patriarchialist paradigm of context and presemantic desublimation. Sontag promotes the use of postmodern Marxism to modify and read society.</p>
-                <p>In a sense, Derrida uses the term ‘the cultural paradigm of context’ to denote a mythopoetical paradox. If cultural precapitalist theory holds, we have to choose between subconstructivist construction and capitalist nationalism.</p>
-                <p>Therefore, the subject is contextualised into a patriarchialist paradigm of context that includes reality as a reality. The characteristic theme of the works of Smith is the role of the artist as reader.</p>
+                <p> <!-- About Scott Gwara here --></p>
+                
             </div>
         </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="photoFiller">
-                    <h3>Photo of Other Guy here</h3>
+                    <h3>Photo of Dr. Eric here</h3>
                 </div>
             </div>
             <div class="col-md-8 bio">
-                <h3>That Other Guy</h3>
-                <h4>From Some Other University</h4>
-                <p>“Society is elitist,” says Marx; however, according to Prinn, it is not so much society that is elitist, but rather the genre, and some would say the meaninglessness, of society. It could be said that McElwaine[2] suggests that we have to choose between the patriarchialist paradigm of context and presemantic desublimation. Sontag promotes the use of postmodern Marxism to modify and read society.</p>
-                <p>In a sense, Derrida uses the term ‘the cultural paradigm of context’ to denote a mythopoetical paradox. If cultural precapitalist theory holds, we have to choose between subconstructivist construction and capitalist nationalism.</p>
-                <p>Therefore, the subject is contextualised into a patriarchialist paradigm of context that includes reality as a reality. The characteristic theme of the works of Smith is the role of the artist as reader.</p>
+                <h3>Dr. Eric J. Johnson</h3>
+                <h4>The Ohio State University</h4>
+                <p> <!-- About Eric here --></p>
             </div>
         </div>
     </div>
-
-
-
-          
-
-
-
-
-
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
