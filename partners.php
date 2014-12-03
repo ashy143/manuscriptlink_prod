@@ -407,41 +407,18 @@
                 <div class="logoFiller">
                     Insert Logo
                 </div>
-                <h3>Name of Insitute</h3>
-                <p>If one examines pretextual theory, one is faced with a choice: either reject the dialectic paradigm of expression or conclude that consensus comes from the collective unconscious. The subject is interpolated into a constructivism that includes narrativity as a reality.</p>
+                <h3>University of South Carolina</h3>
+                <p><!-- Descritption goes here --></p>
             </div>
 
             <div class="sponsor col-md-4">
                 <div class="logoFiller">
                     Insert Logo
                 </div>
-                <h3>Name of Insitute</h3>
-                <p>However, Baudrillard promotes the use of subcultural capitalism to read sexual identity. The example of pretextual theory prevalent in Madonna’s Sex is also evident in Material Girl, although in a more self-falsifying sense.</p>
+                <h3>The Ohio State University</h3>
+                <p><!-- Descritption goes here --></p>
             </div>
-
-            <div class="sponsor col-md-4">
-                <div class="logoFiller">
-                    Insert Logo
-                </div>
-                <h3>Name of Insitute</h3>
-                <p>In the works of Madonna, a predominant concept is the concept of subsemioticist sexuality. Thus, Baudrillard uses the term ‘textual presemanticist theory’ to denote the genre, and some would say the rubicon, of deconstructive class. Sontag suggests the use of pretextual theory to challenge hierarchy.</p>
-            </div>
-          
-            <div class="sponsor col-md-4">
-                <div class="logoFiller">
-                    Insert Logo
-                </div>
-                <h3>Name of Insitute</h3>
-                <p>However, Baudrillard promotes the use of subcultural capitalism to read sexual identity. The example of pretextual theory prevalent in Madonna’s Sex is also evident in Material Girl, although in a more self-falsifying sense.</p>
-            </div>
-
-            <div class="sponsor col-md-4">
-                <div class="logoFiller">
-                    Insert Logo
-                </div>
-                <h3>Name of Insitute</h3>
-                <p>In the works of Madonna, a predominant concept is the concept of subsemioticist sexuality. Thus, Baudrillard uses the term ‘textual presemanticist theory’ to denote the genre, and some would say the rubicon, of deconstructive class. Sontag suggests the use of pretextual theory to challenge hierarchy.</p>
-            </div>
+            
         </div>
     </div>
 
