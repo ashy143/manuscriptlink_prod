@@ -27,11 +27,14 @@
 
         <legend>Folio Details </legend>
 
+                <!-- Save the refernce folio id if it is edit mode-->
+                <input type="hidden" name='ref_folio_id' value = <?php echo $ref_folio_id; ?> >
+
                 <div class="form-group">
                   <label class="control-label col-xs-2" for="mscript">Manuscript</label>
                   <div class="col-xs-3">
                     <?php if($edit){ ?>
-                      <input id="mscript" name="mscript" type="text" class="form-control"  disabled value=<?php if($edit){echo "'" . $folio->mlink_part . "'"; } ?> >
+                      <input id="mscript" name="mscript" type="text" class="form-control"  value=<?php if($edit){echo "'" . $folio->mlink_part . "'"; } ?> >
                     <?php } else {?>
                       <input id="mscript" name="mscript" type="text" class="form-control"  placeholder="eg. 10000001.1" required="">
                     <?php } ?>
@@ -82,7 +85,7 @@
                 <div class="form-group">
                   <label class="control-label col-xs-2" for="fol_num">Folio Number</label>
                   <div class="col-xs-3">
-                    <input id="fol_num" name="fol_num" type="number" placeholder="" class="form-control" min="1" max="1000" <?php if($edit){echo "value=$folio->folio_num";}; ?>>
+                    <input id="fol_num" name="fol_num" type="number" placeholder="" class="form-control" min="0" max="1000" <?php if($edit){echo "value=$folio->folio_num";}; ?>>
                   </div>
 
                   <label class="control-label col-xs-2" for="fol_side">Folio Side</label>
@@ -109,7 +112,7 @@
                 <div class="form-group">
                   <label class="control-label col-xs-2" for="no_of_col"># of columns</label>
                   <div class="col-xs-3">
-                    <input id="no_of_col" name="no_of_col" type="number" placeholder="" class="form-control" min="1" max="1000" <?php if($edit){echo "value=$folio->no_of_cols";}; ?>>
+                    <input id="no_of_col" name="no_of_col" type="number" placeholder="" class="form-control" min="0" max="1000" <?php if($edit){echo "value=$folio->no_of_cols";}; ?>>
                   </div>
 
                   <label class="control-label col-xs-2" for="no_of_lines_broken"># of columns broken</label>
@@ -137,7 +140,7 @@
                   </div>
                   <label class="control-label col-xs-2" for="lines_per_staff"># of Lines Per Staff</label>
                   <div class="col-xs-3">
-                     <input id="lines_per_staff" name="lines_per_staff" type="number" placeholder="" class="form-control" min="1" max="1000" value= <?php if($edit){echo "'" . $folio->lines_per_staff . "'"; }?> >
+                     <input id="lines_per_staff" name="lines_per_staff" type="number" placeholder="" class="form-control" min="0" max="1000" value= <?php if($edit){echo "'" . $folio->lines_per_staff . "'"; }?> >
                   </div>
                 </div>
 
@@ -361,25 +364,18 @@
                 <div class="col-xs-3">
                   <input id="image_institution" name="image_institution" type="text" placeholder="" class="form-control" required="">
                 </div>
-                <label class="control-label col-xs-2" for="date_acq">Date of acquisition</label>
-                <div class="col-xs-3">
-                  <input id="date_acq" name="date_acq" type="date" placeholder="" class="form-control" required="">
-                </div>
-              </div>
-
-              <div class="form-group">
                 <label class="control-label col-xs-2" for="image_collection">Collection</label>
                 <div class="col-xs-3">
                   <input id="image_collection" name="image_collection" type="text" placeholder="" class="form-control" required="">
                 </div>
-                <label class="control-label col-xs-2" for="ms_call">MS Call No.</label>
-                <div class="col-xs-3">
-                  <input id="ms_call" name="ms_call" type="text" placeholder="" class="form-control" required="">
-                </div>
               </div>
 
               <div class="form-group">
-                <label class="control-label col-xs-2" for="image_name">Image name</label>
+                <label class="control-label col-xs-2" for="image_shelfmark">Shelfmark</label>
+                <div class="col-xs-3">
+                  <input id="image_shelfmark" name="image_shelfmark" type="text" placeholder="" class="form-control" required="">
+                </div>
+                <label class="control-label col-xs-2" for="image_name">Folio name</label>
                 <div class="col-xs-3">
                   <input id="image_name" name="image_name" type="text" placeholder="" class="form-control" required="">
                 </div>
@@ -392,8 +388,7 @@
                 <div class="col-xs-2" style="float:right;">
                   <input type="button" id="cancel_btn" value="<?php echo 'Cancel'; ?>" class="form-control btn-warning" >
                 </div>
-              </div> 
-
+              </div>
 </form>
 
 
