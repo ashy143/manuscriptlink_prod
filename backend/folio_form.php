@@ -6,8 +6,10 @@
     $folio;
     $edit = false;
     $submit_btn_val = "Submit";
+    $ref_folio_id = NULL;
     if(isset($_GET['id'])){
       $edit = true;
+      $ref_folio_id = $_GET['id'];
       $submit_btn_val = "Save Changes";
       $folio = getFolioById($_GET['id']);
       
@@ -21,7 +23,7 @@
     }
 </style>
 
-<form class="form-horizontal" >
+<form class="form-horizontal" method="POST" action="saveFolios.php" enctype="multipart/form-data">
 
         <legend>Folio Details </legend>
 
@@ -29,9 +31,9 @@
                   <label class="control-label col-xs-2" for="mscript">Manuscript</label>
                   <div class="col-xs-3">
                     <?php if($edit){ ?>
-                      <input id="mscript" name="mscript" type="text" class="form-control" maxlength="200" disabled value=<?php if($edit){echo "'" . $folio->mlink_part . "'"; } ?> >
+                      <input id="mscript" name="mscript" type="text" class="form-control"  disabled value=<?php if($edit){echo "'" . $folio->mlink_part . "'"; } ?> >
                     <?php } else {?>
-                      <input id="mscript" name="mscript" type="text" class="form-control" maxlength="200" placeholder="eg. 10000001.1" required="">
+                      <input id="mscript" name="mscript" type="text" class="form-control"  placeholder="eg. 10000001.1" required="">
                     <?php } ?>
                   </div>
                   <label class="control-label col-xs-2" for="title">Title or Genre</label>
@@ -342,19 +344,69 @@
                 </div>
               </div>
 
-              <div class="col-xs-3" style="float:right;">
-                <input type="submit" value="<?php echo $submit_btn_val; ?>" class="form-control btn-success" >
+              <legend>Image Upload </legend>
+
+              <div class="form-group">
+                <label class="control-label col-xs-2" for="file">Select file to upload</label>
+                <div class="col-xs-5">
+                  <input type="file" id="file" name="file" accept="image/*" class="form-control" required="">
+                </div>
+              </div> 
+
+              <!-- User will specify the values we are asking for to create a directory structure and then upload -->
+
+              <p style='color:black;'>Image will be uploaded according to values specified below. For eg. Institution/Date of acquisition/collection/ms call no/images/image name.jpeg</p>
+              <div class="form-group">
+                <label class="control-label col-xs-2" for="image_institution">Institution</label>
+                <div class="col-xs-3">
+                  <input id="image_institution" name="image_institution" type="text" placeholder="" class="form-control" required="">
+                </div>
+                <label class="control-label col-xs-2" for="date_acq">Date of acquisition</label>
+                <div class="col-xs-3">
+                  <input id="date_acq" name="date_acq" type="date" placeholder="" class="form-control" required="">
+                </div>
               </div>
-              
+
+              <div class="form-group">
+                <label class="control-label col-xs-2" for="image_collection">Collection</label>
+                <div class="col-xs-3">
+                  <input id="image_collection" name="image_collection" type="text" placeholder="" class="form-control" required="">
+                </div>
+                <label class="control-label col-xs-2" for="ms_call">MS Call No.</label>
+                <div class="col-xs-3">
+                  <input id="ms_call" name="ms_call" type="text" placeholder="" class="form-control" required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-xs-2" for="image_name">Image name</label>
+                <div class="col-xs-3">
+                  <input id="image_name" name="image_name" type="text" placeholder="" class="form-control" required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="col-xs-2" style="float:right;">
+                  <input type="submit" id="save_btn" value="<?php echo $submit_btn_val; ?>" class="form-control btn-success" >
+                </div>
+                <div class="col-xs-2" style="float:right;">
+                  <input type="button" id="cancel_btn" value="<?php echo 'Cancel'; ?>" class="form-control btn-warning" >
+                </div>
+              </div> 
 
 </form>
 
 
 <script>
+
   $(document).ready(function(){
-
-
+      $("#cancel_btn").click(function(){
+        window.location.href = 'folios.php';
+      });
   });
+
+  
+  
 </script>
 
 

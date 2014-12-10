@@ -6,7 +6,9 @@
     $manuscript;
     $edit = false;
     $submit_btn_val = "Submit";
+    $ref_mscript_id = NULL;
     if(isset($_GET['id'])){
+      $ref_mscript_id = $_GET['id'];
       $edit = true;
       $submit_btn_val = "Save Changes";
       $manuscript = getManuscriptById($_GET['id']);
@@ -30,7 +32,7 @@
                   <label class="control-label col-xs-2" for="mlinkno">Manuscript Link #</label>
                   <div id='manu_form_mlinkno_errorloc' ></div>
                   <div class="col-xs-3">
-                    <input id="mlinkno" name="mlinkno" type="text" placeholder="Mlink #" class="form-control" required="true" value=<?php if($edit){echo "'" . $manuscript->mlinknum . "'"; }?> <?php if(isset($_GET['id'])){echo "disabled=true"; }?>>
+                    <input id="mlinkno" name="mlinkno" type="text" placeholder="Mlink #" class="form-control" required="true" value=<?php if($edit){echo "'" . $manuscript->mlinknum . "'"; }?> > 
                   </div>
 
                   <label class="control-label col-xs-2" for="part">Manuscript Part</label>
@@ -238,17 +240,14 @@
                 </div>
 
 
-               <div class="form-group">
-                  
+                <div class="form-group">
                   <div class="col-xs-2" style="float:right;">
                     <input type="submit" id="save_btn" value="<?php echo $submit_btn_val; ?>" class="form-control btn-success" >
                   </div>
                   <div class="col-xs-2" style="float:right;">
                     <input type="button" id="cancel_btn" value="<?php echo 'Cancel'; ?>" class="form-control btn-warning" >
                   </div>
-                  
                 </div> 
-
 </form>
 
 <script>
@@ -257,25 +256,28 @@
       $("#cancel_btn").click(function(){
         window.location.href = 'manuscripts.php';
       });
+
+      $('form').bind('submit', function () {
+        $.ajax({
+          type: 'get',
+          url: 'saveManuscripts.php',
+          data: $('form').serialize()+"&ref_mscript_id=<?php echo $ref_mscript_id; ?>",
+          contentType: 'application/json',
+          success: function (data) {
+            var msg = jQuery.parseJSON(data);
+            if(msg.statusNum == 201){
+                alert(msg.statusMsg);
+            }else{
+                alert("Manuscript details saved succesfully.");
+                // window.location.href = 'manuscripts.php';
+            }
+          }
+        });
+        return false;
+      });
   });
 
-  $('form').bind('submit', function () {
-    $.ajax({
-      type: 'get',
-      url: 'saveManuscripts.php',
-      data: $('form').serialize(),
-      contentType: 'application/json',
-      success: function (data) {
-        var msg = jQuery.parseJSON(data);
-        if(msg.statusNum == 201){
-            alert(msg.statusMsg);
-        }else{
-            alert("Manuscript details saved succesfully.");
-        }
-      }
-    });
-    return false;
-  });
+  
   
 </script>
 
