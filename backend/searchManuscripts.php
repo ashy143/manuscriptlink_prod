@@ -9,11 +9,14 @@
 	$a_json = array();
 	$a_json_row = array();
 
-
+	$table = 'manuscript';
+	if(isset($_GET['unpublished'])){
+		$table = 'manuscript_temp';
+	}
 
     $query = "SELECT mscript_id, mlink_part "
-            . "FROM manuscript "
-            . "WHERE mlink_part like '%" . $term . "%' ORDER BY mlinknumber ASC " ;
+            . "FROM ". $table 
+            . " WHERE mlink_part like '%" . $term . "%' ORDER BY mlinknumber ASC " ;
     $result = $mysqli->query($query);
 
     if ($data = $mysqli->query($query)) {

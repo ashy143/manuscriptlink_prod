@@ -9,11 +9,14 @@
 	$a_json = array();
 	$a_json_row = array();
 
-
+	$table = 'folios';
+	if(isset($_GET['unpublished'])){
+		$table = 'folios_temp';
+	}
 
     $query = "SELECT mscript_id, folio_id, res_ident "
-            . "FROM folios "
-            . "WHERE res_ident like '%" . $term . "%' ORDER BY mscript_id ASC " ;
+            . "FROM " . $table
+            . " WHERE res_ident like '%" . $term . "%' ORDER BY mscript_id ASC " ;
     $result = $mysqli->query($query);
 
     if ($data = $mysqli->query($query)) {
