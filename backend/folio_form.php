@@ -34,7 +34,7 @@
                   <label class="control-label col-xs-2" for="mscript">Manuscript</label>
                   <div class="col-xs-3">
                     <?php if($edit){ ?>
-                      <input id="mscript" name="mscript" type="text" class="form-control"  value=<?php if($edit){echo "'" . $folio->mlink_part . "'"; } ?> >
+                      <input id="mscript" name="mscript" type="text" class="form-control"  required="" value=<?php if($edit){echo "'" . $folio->mlink_part . "'"; } ?> >
                     <?php } else {?>
                       <input id="mscript" name="mscript" type="text" class="form-control"  placeholder="eg. 10000001.1" required="">
                     <?php } ?>
